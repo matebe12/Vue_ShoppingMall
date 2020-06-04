@@ -7,7 +7,7 @@ import history from 'connect-history-api-fallback';
 //라우토
 import vueRouter from './routers/index.js';
 import vueApi from './api/test.js';
-
+require('dotenv').config();
 const app = express();
 const port = 3000;
 //express
@@ -18,7 +18,8 @@ app.use(morgan('dev')); // log request
 app.use(cookieParser());
 app.use(express.static('public'));
 app.use(history());
-
+process.env.NODE_ENV = 'dev';
+console.log(process.env.NODE_ENV);
 
 app.use('/', vueRouter);
 app.use('/api', vueApi);

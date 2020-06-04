@@ -3,10 +3,10 @@ import MybatisMapper from 'mybatis-mapper';
 require('dotenv').config();
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database : 'shopping_mall',
-    password : 'init1234'
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    database: process.env.MYSQL_DATABASE,
+    password: process.env.MYSQL_PW
 });
 
 const MapperPath = process.env.MYBATIS_PATH;
