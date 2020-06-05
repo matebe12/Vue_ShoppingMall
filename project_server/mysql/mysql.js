@@ -3,19 +3,16 @@ import MybatisMapper from 'mybatis-mapper';
 require('dotenv').config();
 
 const connection = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    database: process.env.MYSQL_DATABASE,
-    password: process.env.MYSQL_PW
+    host: 'localhost',
+    user: 'root',
+    database: 'shopping_mall',
+    password: '156756',
 });
 
 const MapperPath = process.env.MYBATIS_PATH;
 
 MybatisMapper.createMapper([`${MapperPath}testMapper.xml`]);
 
-const param = {
-    stringman : '사람살려'
-};
 
 const format = {
     language: 'sql',
@@ -36,4 +33,4 @@ function getInfo(){
     });
 }
 
-export {getInfo};
+export { getInfo, connection, MybatisMapper, format, MapperPath };

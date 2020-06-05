@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import history from 'connect-history-api-fallback';
 //라우토
 import vueRouter from './routers/index.js';
-import vueApi from './api/test.js';
+import userApi from './api/user/user_sign.js';
 require('dotenv').config();
 const app = express();
 const port = 3000;
@@ -22,7 +22,7 @@ process.env.NODE_ENV = 'dev';
 console.log(process.env.NODE_ENV);
 
 app.use('/', vueRouter);
-app.use('/api', vueApi);
+app.use('/api/user', userApi);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}`);
