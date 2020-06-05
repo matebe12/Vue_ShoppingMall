@@ -1,30 +1,22 @@
 <template>
   <div>
-    <h1>Hello</h1>
-    <button @click="testApi1">테스트 호출</button>
-    <div>
-      <ul v-for="item in items" :key="item.id">
-        <li>{{ item.id }}</li>
-        <li>{{ item.name }}</li>
-      </ul>
-    </div>
+    <header>
+      <router-link to="/login">로그인</router-link>
+      <router-link to="/signup">회원가입</router-link>
+    </header>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      items: [],
-    };
-  },
   methods: {
-    testApi1() {
-      this.$http.get('/api/test').then(response => {
-        console.log('response', response);
-        this.items = response.data;
-      });
-    },
+    // testApi1() {
+    //   this.$http.get('/api/test').then(response => {
+    //     console.log('response', response);
+    //     this.items = response.data;
+    //   });
+    // },
   },
 };
 </script>
