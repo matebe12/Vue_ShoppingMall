@@ -47,17 +47,22 @@ export default {
         .post('/api/user/login', reqData)
         .then(response => {
           console.log(response);
-          if (!response.data.isMatchedPw || !response.data.searchUser) {
+          if (
+            !response.data.resultData.isMatchedPw ||
+            !response.data.resultData.searchUser
+          ) {
             alert('아이디 및 비밀번호가 틀립니다.');
           } else {
             alert('로그인 되었습니다.');
-            //토큰 받아야함 예정
+            this.$store.commit('login', response.data);
+            localStorage.setItem('token', response.data.token);
+            console.log(this.$store.state.user.USER_ID);
             this.$router.push('/');
           }
         })
         .catch(error => {
-          console.log(error);
-          alert('로그인에 실패했습니다.');
+          console.log(error.response);
+          alert(error.response.data);
         });
     },
   },
