@@ -16,7 +16,7 @@
         )
     </insert>
     <select id="selectLoginUser">
-        SELECT USER_ID, USER_PW, USER_PHONE
+        SELECT USER_ID, USER_PW, USER_PHONE,USER_VERIFY
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
         <if test="USER_CHECK != null">

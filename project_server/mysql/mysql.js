@@ -18,7 +18,7 @@ const format = {
     language: 'sql',
     indent : ''
 };
-
+connection.connect();
 function getInfo(){
     const query = MybatisMapper.getStatement('testMapper', 'getInfo', null, format);
 

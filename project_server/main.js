@@ -7,6 +7,8 @@ import history from 'connect-history-api-fallback';
 //라우토
 import vueRouter from './routers/index.js';
 import userApi from './api/user/user_sign.js';
+import goodsApi from './api/Goods/goods.js';
+
 require('dotenv').config();
 const app = express();
 const port = 3000;
@@ -23,6 +25,8 @@ console.log(process.env.NODE_ENV);
 
 app.use('/', vueRouter);
 app.use('/api/user', userApi);
+app.use('/api/goods', goodsApi);
+
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}`);

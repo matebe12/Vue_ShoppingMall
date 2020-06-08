@@ -3,12 +3,13 @@ const router = Router();
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
 import bcrypt from 'bcrypt';
 require('dotenv').config();
-
+import jwt from 'jsonwebtoken';
+import { jwtObj } from '../../config/jwt.js';
 
 MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
 
-connection.connect();
+
 
 router.post('/signup', (req, res) => {
     let reqData = req.body;
@@ -49,12 +50,12 @@ router.post('/login', (req,res) => {
                 console.log('유저를 찾을 수 없음');
                 resultData.searchUser = false;
                 res.status(400);
-                res.send(resultData);
+               return res.send(resultData);
             } else {
                 bcrypt.compare(req.body.USER_PW, results[0].USER_PW, (error, result) => {
                     if (error) {
                         console.log(error);
-                        res.status(500);
+                        return res.status(500).json('Internal Server Error');
                     } else {
                         console.log(result);
                         resultData.searchUser = true;
@@ -62,8 +63,23 @@ router.post('/login', (req,res) => {
                         console.log(`resultData : ${resultData.searchUser}`);
                         if (!resultData.searchUser || !resultData.isMatchedPw){
                             console.log('false 되야함');
-                        } 
-                        res.send(resultData);                       
+                            res.status(400).json('Bad Request please check your account.');
+                        } else {
+                            if (result){
+                                const token = jwt.sign({
+                                    USER_ID: result[0],  //페이로드
+                                },jwtObj.secret, {
+                                 expiresIn: '5m' // 토큰 유지 시간 
+                                });
+                                //res.cookie('token', token);
+                                return res.status(200).send({
+                                    resultData,
+                                    token,
+                                    results
+                                }); 
+                            }
+                            
+                        }                       
                     }
                 });
             }
