@@ -55,8 +55,6 @@ export default {
           } else {
             alert('로그인 되었습니다.');
             this.$store.commit('login', response.data);
-            localStorage.setItem('token', response.data.token);
-            console.log(this.$store.state.user.USER_ID);
             this.$router.push('/');
           }
         })

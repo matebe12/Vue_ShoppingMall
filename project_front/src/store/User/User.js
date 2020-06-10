@@ -1,8 +1,8 @@
+import Cookie from 'js-cookie';
 const state = {
-  USER_ID: localStorage.getItem('USER_ID'),
-  USER_PHONE: localStorage.getItem('USER_PHONE'),
-  USER_VERIFY: localStorage.getItem('USER_VERIFY'),
-  USER_TOKEN: localStorage.getItem('USER_TOKEN'),
+  USER_ID: JSON.parse(Cookie.get('user')).USER_ID,
+  USER_PHONE: JSON.parse(Cookie.get('user')).USER_PHONE,
+  USER_VERIFY: JSON.parse(Cookie.get('user')).USER_VERIFY,
 };
 
 const mutations = {
@@ -11,7 +11,9 @@ const mutations = {
     state.USER_PHONE = '';
     state.USER_VERIFY = '';
 
-    localStorage.removeItem('token');
+    Cookie.remove('token');
+    Cookie.remove('user');
+    Cookie.remove('verify');
     alert('로그아웃');
   },
   login(state, data) {

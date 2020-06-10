@@ -3,7 +3,7 @@
     <header id="header">
       <h1 class="title">SHOP</h1>
       <div>
-        <router-link to="/signup">회원가입</router-link>
+        <router-link to="/signup" v-if="!getUser">회원가입</router-link>
         <router-link v-if="this.$store.state.user.USER_VERIFY == 9" to="/admin"
           >관리자 페이지</router-link
         >

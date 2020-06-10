@@ -27,10 +27,10 @@
 </template>
 
 <script>
+//import { getCategory } from '@/api/Goods.js';
+
 export default {
-  mounted() {
-    this.$store.dispatch('getHighCategory');
-  },
+  mounted() {},
   data() {
     return {
       firstCategory: this.$store.state.Goods_Category.first_Cate[0],
