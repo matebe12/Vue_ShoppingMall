@@ -71,7 +71,9 @@ router.post('/login', (req,res) => {
                                 },jwtObj.secret, {
                                  expiresIn: '5m' // 토큰 유지 시간 
                                 });
-                                //res.cookie('token', token);
+                                res.cookie('token', token);
+                                res.cookie('verify', results[0].USER_VERIFY);
+                                res.cookie('user', JSON.stringify(results[0]));
                                 return res.status(200).send({
                                     resultData,
                                     token,
