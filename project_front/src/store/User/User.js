@@ -1,8 +1,13 @@
 import Cookie from 'js-cookie';
 const state = {
-  USER_ID: JSON.parse(Cookie.get('user')).USER_ID,
-  USER_PHONE: JSON.parse(Cookie.get('user')).USER_PHONE,
-  USER_VERIFY: JSON.parse(Cookie.get('user')).USER_VERIFY,
+  USER_ID:
+    Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_ID : '',
+  USER_PHONE:
+    Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_PHONE : '',
+  USER_VERIFY:
+    Cookie.get('user') != null
+      ? JSON.parse(Cookie.get('user')).USER_VERIFY
+      : '',
 };
 
 const mutations = {

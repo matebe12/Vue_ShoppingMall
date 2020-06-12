@@ -55,7 +55,7 @@ export default {
           } else {
             alert('로그인 되었습니다.');
             this.$store.commit('login', response.data);
-            this.$router.push('/');
+            this.$router.back();
           }
         })
         .catch(error => {

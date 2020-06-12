@@ -1,7 +1,15 @@
 import { goods } from './index.js';
 
-function getCategory() {
-  return goods.get('/category');
+function getCategory(reqData) {
+  return goods.get(`/category/${reqData}`);
 }
 
-export { getCategory };
+function InsertGoods(goodsData) {
+  return goods.post('/InsertGoods', goodsData);
+}
+
+function getGoodsList() {
+  return goods.get('/getGoodsList');
+}
+
+export { getCategory, InsertGoods, getGoodsList };

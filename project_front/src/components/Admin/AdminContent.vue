@@ -3,10 +3,11 @@
     <section id="container">
       <div class="container_box">
         <Aside_Admin
-          :productRegist="productRegist"
+          :GoodsRegist="GoodsRegist"
           v-on:changePage="changePage_handler"
         ></Aside_Admin>
-        <ProductRegister v-if="productRegist"></ProductRegister>
+        <GoodsRegister v-if="GoodsRegist"></GoodsRegister>
+        <GoodsList v-if="GoodsList"></GoodsList>
       </div>
     </section>
   </div>
@@ -14,21 +15,27 @@
 
 <script>
 import Aside_Admin from './Aside.vue';
-import ProductRegister from './ProductRegister';
+import GoodsRegister from './GoodsRegister';
+import GoodsList from './GoodsList.vue';
 export default {
   components: {
     Aside_Admin,
-    ProductRegister,
+    GoodsRegister,
+    GoodsList,
   },
   data() {
     return {
-      productRegist: false,
+      GoodsRegist: false,
+      GoodsList: false,
     };
   },
   methods: {
     changePage_handler(num) {
       if (num == 1) {
-        this.productRegist = true;
+        this.GoodsRegist = true;
+      } else if (num == 2) {
+        this.GoodsRegist = false;
+        this.GoodsList = true;
       }
     },
   },

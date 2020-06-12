@@ -2,7 +2,7 @@
   <aside>
     <ul>
       <li><a href="javascript:void(0);" @click="changePage(1)">상품등록</a></li>
-      <li><a href="javascript:void(0);">상품목록</a></li>
+      <li><a href="javascript:void(0);" @click="changePage(2)">상품목록</a></li>
       <li><a href="javascript:void(0);">상품소감</a></li>
       <li><a href="javascript:void(0);">유저목록</a></li>
     </ul>
@@ -11,7 +11,6 @@
 
 <script>
 export default {
-  props: ['productRegist'],
   methods: {
     changePage(num) {
       this.$emit('changePage', num);
