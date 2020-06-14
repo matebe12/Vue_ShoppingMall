@@ -68,6 +68,36 @@ router.get('/getGoodsList', async (req,res) => {
             results
         });
     });
+});
+
+router.post('/updateGoods', async (req,res) => {
+    const query = MybatisMapper.getStatement('goodsMapper', 'updateGoods', req.body, format);
+    connection.query(query, (error, results, fields) => {
+        if(error){
+            console.log(error);
+            return res.status(500);
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
+        
+    });
+})
+
+router.post('/deleteGoods', async (req, res) => {
+    const query = MybatisMapper.getStatement('goodsMapper', 'deleteGoods', req.body, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
+
+    });
 })
 
 

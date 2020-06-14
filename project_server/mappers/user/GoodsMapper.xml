@@ -36,6 +36,7 @@
         A.GDS_NAME,
         A.GDS_PRICE,
         B.CATEGORY_NAME AS GDS_CATEGORY_NAME,
+        A.GDS_CATEGORY_CODE,
         A.GDS_STOCK,
         A.GDS_DESC,
        DATE_FORMAT(A.GDS_DATE, "%Y %c/%e %r") AS GDS_DATE
@@ -44,4 +45,18 @@
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
 
     </select>
+    <update id="updateGoods">
+        UPDATE GOODS_TABLE SET
+        GDS_NAME=#{GDS_NAME},
+        GDS_PRICE=#{GDS_PRICE},
+        GDS_STOCK=#{GDS_STOCK},
+        GDS_DESC=#{GDS_DESC},
+        GDS_DATE=NOW()
+        WHERE GDS_NUM = #{GDS_NUM}
+        
+
+    </update>
+    <delete id="deleteGoods">
+        DELETE FROM GOODS_TABLE WHERE GDS_NUM = #{GDS_NUM}
+    </delete>
 </mapper>
