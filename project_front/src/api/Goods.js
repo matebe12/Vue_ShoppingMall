@@ -12,4 +12,12 @@ function getGoodsList() {
   return goods.get('/getGoodsList');
 }
 
-export { getCategory, InsertGoods, getGoodsList };
+function updateGoods(reqData) {
+  return goods.post('/updateGoods', reqData);
+}
+
+function deleteGoods(reqData) {
+  return goods.post('/deleteGoods', reqData);
+}
+
+export { getCategory, InsertGoods, getGoodsList, updateGoods, deleteGoods };
