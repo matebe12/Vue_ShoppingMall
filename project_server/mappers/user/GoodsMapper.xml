@@ -19,6 +19,7 @@
             GDS_PRICE,
             GDS_STOCK,
             GDS_DESC,
+            GDS_IMG,
             GDS_DATE
         )
         VALUES
@@ -28,6 +29,7 @@
             #{GDS_PRICE},
             #{GDS_STOCK},
             #{GDS_DESC},
+            #{GDS_IMG},
             NOW()
         )
     </insert>
@@ -36,9 +38,11 @@
         A.GDS_NAME,
         A.GDS_PRICE,
         B.CATEGORY_NAME AS GDS_CATEGORY_NAME,
+        B.CATEGORY_REF,
         A.GDS_CATEGORY_CODE,
         A.GDS_STOCK,
         A.GDS_DESC,
+        A.GDS_IMG,
        DATE_FORMAT(A.GDS_DATE, "%Y %c/%e %r") AS GDS_DATE
         FROM GOODS_TABLE AS A
         INNER JOIN GOODS_CATEGORY_TABLE AS B
@@ -51,6 +55,7 @@
         GDS_PRICE=#{GDS_PRICE},
         GDS_STOCK=#{GDS_STOCK},
         GDS_DESC=#{GDS_DESC},
+        GDS_CATEGORY_CODE=#{GDS_CATEGORY_CODE},
         GDS_DATE=NOW()
         WHERE GDS_NUM = #{GDS_NUM}
         

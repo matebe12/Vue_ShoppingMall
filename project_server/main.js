@@ -8,7 +8,6 @@ import history from 'connect-history-api-fallback';
 import vueRouter from './routers/index.js';
 import userApi from './api/user/user_sign.js';
 import goodsApi from './api/Goods/goods.js';
-
 require('dotenv').config();
 const app = express();
 const port = 3000;

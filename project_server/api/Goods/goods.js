@@ -1,30 +1,23 @@
 import { Router } from 'express';
+import multer from 'multer';
 const router = Router();
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
 require('dotenv').config();
 
 MybatisMapper.createMapper([`${MapperPath}/user/GoodsMapper.xml`]);
 
-
-// router.get('/category', async (req,res) => {
-//     const query = MybatisMapper.getStatement('goodsMapper', 'getCategory',null, format);
-//     connection.query(query, (error, results, fields) => {
-//         if (error) {
-//             console.log(error);
-//             return res.status(500);
-//         }
-//         console.log(results);
-//         return res.status(200).send({
-//             results
-//         });
-//     });
-// });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../project_front/src/assets/upload')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname)
+    }
+})
+const upload = multer({ storage });
 
 router.get('/category/:reqData', async (req, res) => {
-    console.log(req);
-    
     const reqData = req.params;
-    console.log(reqData);
     
     const query = MybatisMapper.getStatement('goodsMapper', 'getCategory', reqData, format);
     connection.query(query, (error, results, fields) => {
@@ -39,10 +32,9 @@ router.get('/category/:reqData', async (req, res) => {
     });
 });
 
-router.post('/InsertGoods', async (req,res) => {
+router.post('/InsertGoods', upload.any(), async (req,res) => {
     const reqData = req.body;
-    console.log(reqData);
-    
+    reqData.GDS_IMG = `${req.files[0].filename}`;    
     const query = MybatisMapper.getStatement('goodsMapper', 'insertGoods', reqData, format);
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -98,7 +90,11 @@ router.post('/deleteGoods', async (req, res) => {
         });
 
     });
-})
+});
+
+router.post('/upload', upload.any(), async(req, res) => {
+    console.log(req.body);
+});
 
 
 export default router;
