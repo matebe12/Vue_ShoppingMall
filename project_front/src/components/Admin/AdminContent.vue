@@ -33,6 +33,7 @@ export default {
     changePage_handler(num) {
       if (num == 1) {
         this.GoodsRegist = true;
+        this.GoodsList = false;
       } else if (num == 2) {
         this.GoodsRegist = false;
         this.GoodsList = true;

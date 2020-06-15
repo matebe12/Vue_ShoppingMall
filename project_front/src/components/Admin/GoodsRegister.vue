@@ -4,7 +4,9 @@
       role="form"
       method="post"
       autocomplete="off"
+      enctype="multipart/form-data"
       @submit.prevent="goodsRegist"
+      ref="form"
     >
       <div class="inputArea">
         <label>1차 분류</label>
@@ -13,6 +15,7 @@
           v-model="goods.CATEGORY_CODE1"
           @change="SelectSecond"
           id="firstOption"
+          name="category1"
         >
           <option value="" selected>전체</option>
           <option
@@ -23,7 +26,11 @@
           >
         </select>
         <label>2차 분류</label>
-        <select class="category2" v-model="goods.CATEGORY_CODE2">
+        <select
+          class="category2"
+          v-model="goods.CATEGORY_CODE2"
+          name="category2"
+        >
           <option value="" selected>전체</option>
           <option
             :value="category2.CATEGORY_CODE"
@@ -74,7 +81,7 @@
           name="GDS_DESC"
           v-model="goods.GDS_DESC"
         ></textarea>
-
+        <input type="file" ref="files2" name="sampleFile" id="file" />
         <button type="submit" id="register_Btn" class="btn btn-primary">
           등록
         </button>
@@ -107,6 +114,7 @@ export default {
         GDS_PRICE: 0,
         GDS_STOCK: 0,
         GDS_DESC: '',
+        file: '',
       },
     };
   },
@@ -125,14 +133,14 @@ export default {
     },
     async goodsRegist() {
       try {
-        if (this.goods.CATEGORY_CODE2 === '') {
-          //2차 분류가 없는 경우
-          this.goods.GDS_CATEGORY_CODE = this.goods.CATEGORY_CODE1;
+        const form = this.$refs.form;
+        const formData = new FormData(form);
+        if (formData.get('category2') === '') {
+          formData.append('GDS_CATEGORY_CODE', this.goods.CATEGORY_CODE1);
         } else {
-          // 2차 분류가 있는 경우
-          this.goods.GDS_CATEGORY_CODE = this.goods.CATEGORY_CODE2;
+          formData.append('GDS_CATEGORY_CODE', this.goods.CATEGORY_CODE2);
         }
-        const response = await InsertGoods(this.goods);
+        const response = await InsertGoods(formData);
         console.log(response);
       } catch (error) {
         console.log(error);
