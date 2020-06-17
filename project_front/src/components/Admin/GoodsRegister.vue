@@ -74,13 +74,11 @@
 
       <div class="inputArea">
         <label for="GDS_DESC">상품소개</label>
-        <textarea
-          rows="5"
-          cols="50"
+        <ckeditor
           id="GDS_DESC"
           name="GDS_DESC"
           v-model="goods.GDS_DESC"
-        ></textarea>
+        ></ckeditor>
         <input type="file" ref="files2" name="sampleFile" id="file" />
         <button type="submit" id="register_Btn" class="btn btn-primary">
           등록
@@ -92,7 +90,7 @@
 
 <script>
 import { getCategory, InsertGoods } from '@/api/Goods.js';
-
+import CKEditor from 'ckeditor4-vue';
 export default {
   async created() {
     try {
@@ -118,6 +116,9 @@ export default {
       },
     };
   },
+  components: {
+    ckeditor: CKEditor.component,
+  },
   methods: {
     async SelectSecond() {
       try {
@@ -140,6 +141,9 @@ export default {
         } else {
           formData.append('GDS_CATEGORY_CODE', this.goods.CATEGORY_CODE2);
         }
+        console.log(this.goods.GDS_DESC);
+
+        formData.append('GDS_DESC', this.goods.GDS_DESC);
         const response = await InsertGoods(formData);
         console.log(response);
       } catch (error) {

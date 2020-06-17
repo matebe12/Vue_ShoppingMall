@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div id="#container">
     <h1>상품목록</h1>
-    <table border="1px">
+    <table>
       <thead>
         <tr>
           <th>번호</th>
+          <th>상품</th>
           <th>이름</th>
           <th>카테고리</th>
           <th>등록날짜</th>
@@ -13,6 +14,9 @@
       <tbody>
         <tr v-for="(goods, index) in goodsList" :key="index">
           <td>{{ goods.GDS_NUM }}</td>
+          <td>
+            <img :src="getImgSrc(goods.GDS_IMG)" />
+          </td>
           <td>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
               goods.GDS_NAME
@@ -69,8 +73,33 @@ export default {
       const reflesh = await getGoodsList();
       this.goodsList = reflesh.data.results;
     },
+    getImgSrc(GDS_IMG) {
+      return require('@/assets/upload/' + GDS_IMG);
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#container table {
+  width: 900;
+}
+#container table th {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid #666;
+}
+#container table tr:hover {
+  background: #eee;
+}
+#container table td {
+  padding: 10px;
+  text-align: center;
+}
+#container table img {
+  width: 150px;
+  height: 150px;
+}
+</style>
