@@ -13,7 +13,7 @@ const app = express();
 const port = 3000;
 //express
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev')); // log request
 app.use(cookieParser());

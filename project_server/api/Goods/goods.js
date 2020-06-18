@@ -48,8 +48,16 @@ router.post('/InsertGoods', upload.any(), async (req,res) => {
     });
 });
 
-router.get('/getGoodsList', async (req,res) => {
-    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', null, format);
+router.get('/getGoodsList/:code', async (req,res) => {
+    let reqData;
+    if (req.params.code != null){
+        reqData = req.params;
+    }else {
+        reqData = req.params.code = null;
+    }
+    console.log('reqData : ',reqData);
+    
+    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', reqData, format);
     connection.query(query, (error, results, fields) => {
         if (error) {
             console.log(error);
@@ -62,8 +70,14 @@ router.get('/getGoodsList', async (req,res) => {
     });
 });
 
-router.post('/updateGoods', async (req,res) => {
-    const query = MybatisMapper.getStatement('goodsMapper', 'updateGoods', req.body, format);
+router.post('/updateGoods', upload.any(), async (req,res) => {
+    const reqData = req.body;
+    console.log(reqData);
+    if(req.files.length > 0){
+        reqData.GDS_IMG = `${req.files[0].filename}`;    
+    }
+    reqData.GDS_IMG = '';     
+    const query = MybatisMapper.getStatement('goodsMapper', 'updateGoods', reqData, format);
     connection.query(query, (error, results, fields) => {
         if(error){
             console.log(error);
@@ -89,6 +103,30 @@ router.post('/deleteGoods', async (req, res) => {
             results
         });
 
+    });
+});
+
+router.get('/getGoodsOne/:gds_num', (req,res) => {
+    let reqData;
+    console.log(req.params);
+    
+    if (req.params.gds_num != null) {
+        reqData = req.params;
+    } else {
+        reqData = req.params.gds_num = null;
+    }
+    console.log('reqData : ', reqData);
+
+    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsOne', reqData, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
     });
 });
 

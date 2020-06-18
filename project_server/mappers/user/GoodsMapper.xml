@@ -36,7 +36,7 @@
     <select id="getGoodsList">
         SELECT A.GDS_NUM,
         A.GDS_NAME,
-        A.GDS_PRICE,
+        FORMAT(A.GDS_PRICE, 0) AS GDS_PRICE,
         B.CATEGORY_NAME AS GDS_CATEGORY_NAME,
         B.CATEGORY_REF,
         A.GDS_CATEGORY_CODE,
@@ -47,7 +47,27 @@
         FROM GOODS_TABLE AS A
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
-
+        <if test="code != 'null'">
+            WHERE A.GDS_CATEGORY_CODE = #{code}
+        </if>
+    </select>
+    <select id="getGoodsOne">
+        SELECT A.GDS_NUM,
+        A.GDS_NAME,
+        FORMAT(A.GDS_PRICE, 0) AS GDS_PRICE,
+        B.CATEGORY_NAME AS GDS_CATEGORY_NAME,
+        B.CATEGORY_REF,
+        A.GDS_CATEGORY_CODE,
+        FORMAT(A.GDS_STOCK, 0) AS GDS_STOCK,
+        A.GDS_DESC,
+        A.GDS_IMG,
+       DATE_FORMAT(A.GDS_DATE, "%Y %c/%e %r") AS GDS_DATE
+        FROM GOODS_TABLE AS A
+        INNER JOIN GOODS_CATEGORY_TABLE AS B
+        ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE       
+        <if test="gds_num != 'null'">
+            WHERE A.GDS_NUM = #{gds_num}
+        </if>
     </select>
     <update id="updateGoods">
         UPDATE GOODS_TABLE SET
@@ -56,6 +76,9 @@
         GDS_STOCK=#{GDS_STOCK},
         GDS_DESC=#{GDS_DESC},
         GDS_CATEGORY_CODE=#{GDS_CATEGORY_CODE},
+        <if test="GDS_IMG != ''">
+        GDS_IMG=#{GDS_IMG},
+        </if>     
         GDS_DATE=NOW()
         WHERE GDS_NUM = #{GDS_NUM}
         
