@@ -16,67 +16,40 @@
 
         <div class="tab-content">
           <div class="tab-pane active" id="trending">
-            <div class="col-md-3 col-sm-4">
+            <div
+              class="col-md-3 col-sm-4"
+              v-for="(goods, index) in getGoods"
+              :key="index"
+            >
               <div class="single-product">
                 <div class="product-block">
                   <img
-                    src="@/assets/images/product-1.jpg"
+                    :src="getImgSrc(goods.GDS_IMG)"
                     alt=""
+                    @click="showGoods(goods)"
                     class="thumbnail"
                   />
 
                   <div class="product-description text-center">
-                    <p class="title">상품이름</p>
+                    <p class="title">{{ goods.GDS_NAME }}</p>
 
-                    <p class="price">가격</p>
+                    <p class="price">{{ goods.GDS_PRICE }} 원</p>
                   </div>
 
                   <div class="product-hover">
                     <ul>
                       <li>
-                        <a href="single-product.html"
-                          ><i class="fa fa-cart-arrow-down"></i
-                        ></a>
+                        <a href=""><i class="fa fa-cart-arrow-down"></i></a>
                       </li>
 
                       <li>
-                        <a href=""><i class="fa fa-arrows-h"></i></a>
+                        <router-link :to="`/shop/view/${goods.GDS_NUM}`"
+                          ><i class="fas fa-arrows-alt-h"></i
+                        ></router-link>
                       </li>
 
                       <li>
-                        <a href=""><i class="fa fa-heart-o"></i></a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3 col-sm-4">
-              <div class="single-product">
-                <div class="product-block">
-                  <img src="images/product-2.jpg" alt="" class="thumbnail" />
-
-                  <div class="product-description text-center">
-                    <p class="title">상품이름</p>
-
-                    <p class="price">가격</p>
-                  </div>
-
-                  <div class="product-hover">
-                    <ul>
-                      <li>
-                        <a href="single-product.html"
-                          ><i class="fa fa-cart-arrow-down"></i
-                        ></a>
-                      </li>
-
-                      <li>
-                        <a href=""><i class="fa fa-arrows-h"></i></a>
-                      </li>
-
-                      <li>
-                        <a href=""><i class="fa fa-heart-o"></i></a>
+                        <a href=""><i class="far fa-heart"></i></a>
                       </li>
                     </ul>
                   </div>
@@ -87,11 +60,40 @@
         </div>
       </div>
     </div>
+    <Modal v-if="showModal" @closeModal="closeModal" :item="item"> </Modal>
   </div>
 </template>
 
 <script>
-export default {};
+import Modal from '../common/GoodsViewModal.vue';
+export default {
+  data() {
+    return {
+      showModal: false,
+      item: {},
+    };
+  },
+  computed: {
+    getGoods() {
+      return this.$store.state.goods.goods;
+    },
+  },
+  components: {
+    Modal,
+  },
+  methods: {
+    getImgSrc(GDS_IMG) {
+      return require('@/assets/upload/' + GDS_IMG);
+    },
+    closeModal() {
+      this.showModal = !this.showModal;
+    },
+    showGoods(goods) {
+      this.showModal = true;
+      this.item = goods;
+    },
+  },
+};
 </script>
 
 <style></style>

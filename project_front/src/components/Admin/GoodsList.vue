@@ -15,7 +15,7 @@
         <tr v-for="(goods, index) in goodsList" :key="index">
           <td>{{ goods.GDS_NUM }}</td>
           <td>
-            <img :src="getImgSrc(goods.GDS_IMG)" />
+            <img :src="getImgSrc(goods.GDS_IMG)" class="goodsImg" />
           </td>
           <td>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
@@ -56,7 +56,7 @@ export default {
   async created() {
     console.log('목록 진입');
 
-    const response = await getGoodsList();
+    const response = await getGoodsList(null);
     this.goodsList = response.data.results;
     console.log(response);
   },

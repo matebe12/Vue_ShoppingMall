@@ -2,10 +2,11 @@
   <div>
     <header id="header">
       <ToolBar></ToolBar>
-      <ShopHeader></ShopHeader>
-      <Navigator></Navigator>
-      <Banner></Banner>
-      <FeaturedItem></FeaturedItem>
+      <div v-if="this.$store.state.isView">
+        <ShopHeader></ShopHeader>
+        <Banner></Banner>
+        <Navigator></Navigator>
+      </div>
     </header>
     <router-view></router-view>
     <footer id="footer">
@@ -23,22 +24,19 @@ import ToolBar from '@/components/main/ToolBar';
 import ShopHeader from '@/components/main/Header';
 import Navigator from '@/components/main/Navigator';
 import Banner from '@/components/main/Banner';
-import FeaturedItem from '@/components/main/FeaturedItem';
-
 export default {
   components: {
     ToolBar,
     ShopHeader,
     Navigator,
     Banner,
-    FeaturedItem,
   },
-  methods: {
-    logout() {
-      this.$store.commit('logout');
-      this.$router.push('/');
-    },
+  data() {
+    return {
+      isAdminView: false,
+    };
   },
+  methods: {},
 };
 </script>
 

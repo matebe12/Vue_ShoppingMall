@@ -43,6 +43,12 @@ export default {
       return this.$store.state.user.USER_ID;
     },
   },
+  methods: {
+    logout() {
+      this.$store.commit('logout');
+      this.$router.push('/');
+    },
+  },
 };
 </script>
 
