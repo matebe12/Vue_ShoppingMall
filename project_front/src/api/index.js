@@ -9,3 +9,4 @@ function createInstanceWithAuth(url) {
 }
 
 export const goods = createInstanceWithAuth('goods');
+export const reply = createInstanceWithAuth('reply');

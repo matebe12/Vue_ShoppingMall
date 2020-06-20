@@ -108,7 +108,7 @@
         </div>
       </div>
     </div>
-    <Reply></Reply>
+    <Reply :item="item"></Reply>
   </div>
 </template>
 
