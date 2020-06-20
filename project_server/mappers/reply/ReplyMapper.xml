@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="replyMapper">
+    <insert id="insertReply">
+        INSERT INTO GOODS_REPLY_TABLE
+        (
+            GDS_NUM,
+            USER_ID,
+            REPLY_CONTENT
+        )
+        VALUES(
+         #{GDS_NUM},
+         #{USER_ID},
+         #{REPLY_CONTENT}   
+        )
+    </insert>
+
+    <select id="getReplyAll">
+        SELECT GDS_NUM, USER_ID, REPLY_CONTENT, REPLY_NUM
+        FROM GOODS_REPLY_TABLE
+        WHERE GDS_NUM = #{GDS_NUM}
+    </select>
+
+    <update id="updateReply">
+        UPDATE GOODS_REPLY_TABLE SET
+        REPLY_CONTENT = #{REPLY_CONTENT},
+        REPLY_DATE = NOW()
+        WHERE REPLY_NUM = #{REPLY_NUM}
+    </update>
+</mapper>
