@@ -57,7 +57,9 @@
           <div class="details col-md-6">
             <h3 class="product-title">{{ item.GDS_NAME }}</h3>
             <div class="rating">
-              <span class="review-no">41 reviews</span>
+              <span class="review-no"
+                >{{ this.replyCount }}개의 댓글이 있습니다.</span
+              >
             </div>
             <p class="product-description">
               {{ item.GDS_DESC }}
@@ -86,7 +88,11 @@
             </div>
 
             <div class="action">
-              <button class="add-to-cart btn btn-default" type="button">
+              <button
+                class="add-to-cart btn btn-default"
+                type="button"
+                @click="addGoodsCart()"
+              >
                 장바구니에 담기
               </button>
               <button
@@ -108,23 +114,50 @@
         </div>
       </div>
     </div>
-    <Reply :item="item"></Reply>
+    <Reply :item="item" @replyCount="setReplyCount"></Reply>
   </div>
 </template>
 
 <script>
 import Reply from '@/components/Goods/reply';
+import { addGoodsCart } from '@/api/Cart.js';
 export default {
   data() {
     return {
       item: this.$store.state.goods.goods[0],
-      buy_stock: '',
+      buy_stock: 0,
+      replyCount: 0,
     };
   },
   components: {
     Reply,
   },
   methods: {
+    async addGoodsCart() {
+      if (this.$store.state.user.USER_ID == '') {
+        alert('로그인을 해주세요. ');
+        return;
+      }
+      if (this.buy_stock < 1) {
+        alert('수량을 확인해주세요.');
+        return;
+      }
+      try {
+        const reqData = {
+          USER_ID: this.$store.state.user.USER_ID,
+          GDS_NUM: this.item.GDS_NUM,
+          CART_STOCK: this.buy_stock,
+        };
+        const response = await addGoodsCart(reqData);
+        console.log(response);
+        alert(`${this.item.GDS_NAME} 상품 ${this.buy_stock}개가 담겼습니다.`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    setReplyCount(replyCount) {
+      this.replyCount = replyCount;
+    },
     closeModal() {
       this.$emit('closeModal');
     },
@@ -135,10 +168,11 @@ export default {
       this.buy_stock = this.buy_stock.replace(/[^0-9]/g, '');
     },
     plusStock() {
-      if (this.item.GDS_STOCK <= this.buy_stock) {
+      if (this.item.GDS_STOCK > this.buy_stock) {
         ++this.buy_stock;
       } else {
         alert('남은 재고가 없습니다. 관리자에게 문의해주세요.');
+        return;
       }
     },
     minusStock() {

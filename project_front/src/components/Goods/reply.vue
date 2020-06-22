@@ -26,13 +26,20 @@
           <div class="comment-body">
             <div class="comment-heading">
               <h4 class="user">{{ data.USER_ID }}</h4>
-              <h5 class="time">
+              <h5 class="time" v-if="compareUser(data.USER_ID)">
                 <i
                   class="fas fa-edit fa-1x"
                   @click="showUpdateForm(data.REPLY_NUM)"
                 ></i
                 >수정
               </h5>
+              <h2
+                class="time"
+                @click="deleteReply(data.REPLY_NUM)"
+                v-if="compareUser(data.USER_ID)"
+              >
+                <i class="fas fa-trash fa-1x"></i>삭제
+              </h2>
               <h5 class="time">5 minutes ago</h5>
             </div>
             <p :id="`reply_${data.REPLY_NUM}`">{{ data.REPLY_CONTENT }}</p>
@@ -75,7 +82,12 @@
 </template>
 
 <script>
-import { addReply, getReplyAll, updateReply } from '@/api/Reply.js';
+import {
+  addReply,
+  getReplyAll,
+  updateReply,
+  deleteReply,
+} from '@/api/Reply.js';
 export default {
   props: ['item'],
   data() {
@@ -84,11 +96,22 @@ export default {
       reply: [],
     };
   },
-  created() {
-    this.viewReply();
+  async created() {
+    await this.viewReply();
+    console.log('댓글 길이 : ' + this.reply.length);
+
+    this.$emit('replyCount', this.reply.length);
   },
   methods: {
     async insertReply() {
+      if (this.$store.state.user.USER_ID == '') {
+        alert('로그인을 해주세요');
+        return;
+      }
+      if (this.REPLY_CONTENT == '') {
+        alert('댓글을 입력해주세요');
+        return;
+      }
       try {
         const reqData = {
           REPLY_CONTENT: this.REPLY_CONTENT,
@@ -100,6 +123,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    compareUser(USER_ID) {
+      return this.$store.state.user.USER_ID == USER_ID ? true : false;
     },
     async updateReply(REPLY_NUM) {
       try {
@@ -133,6 +159,21 @@ export default {
         const response = await getReplyAll(reqData);
         console.log(response);
         this.reply = response.data.results;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deleteReply(REPLY_NUM) {
+      try {
+        const confirmDelete = confirm('댓글을 삭제 하시겠습니까?');
+        if (confirmDelete) {
+          const reqData = {
+            REPLY_NUM,
+          };
+          const response = await deleteReply(reqData);
+          console.log(response);
+          this.viewReply();
+        }
       } catch (error) {
         console.log(error);
       }

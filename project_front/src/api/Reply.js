@@ -12,4 +12,7 @@ function updateReply(reqData) {
   return reply.post('updateReply', reqData);
 }
 
-export { addReply, getReplyAll, updateReply };
+function deleteReply(reqData) {
+  return reply.post('deleteReply', reqData);
+}
+export { addReply, getReplyAll, updateReply, deleteReply };

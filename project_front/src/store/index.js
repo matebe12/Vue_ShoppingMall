@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import user from './User/User.js';
 import goods from './Goods/Goods.js';
+import cart from './Cart/Cart.js';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -10,5 +12,5 @@ export default new Vuex.Store({
   },
   mutations: {},
   actions: {},
-  modules: { user, goods },
+  modules: { user, goods, cart },
 });

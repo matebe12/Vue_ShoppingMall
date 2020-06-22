@@ -30,7 +30,9 @@
       <div class="col-md-2 col-sm-3">
         <div class="cart">
           <div class="cart-icon">
-            <a href=""><i class="fa fa-shopping-cart"></i></a>
+            <router-link to="/cart/list"
+              ><i class="fa fa-shopping-cart"></i
+            ></router-link>
           </div>
 
           <div class="cart-text">
@@ -38,7 +40,7 @@
 
             <br />
 
-            0 items - $0.00
+            {{ this.$store.state.cart.cart.length }} 개의 상품이 있습니다.
           </div>
         </div>
       </div>
@@ -47,7 +49,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    this.$store.dispatch('getCartList', 'matebe12');
+  },
+};
 </script>
 
 <style></style>

@@ -26,6 +26,16 @@ const routes = [
     },
   },
   {
+    path: '/cart/list',
+    name: 'cart',
+    component: () => import('@/views/shop/Cart.vue'),
+    beforeEnter: (to, from, next) => {
+      //console.log(to.params.user_id);
+      store.dispatch('getCartList', 'matebe12');
+      next();
+    },
+  },
+  {
     path: '/shop/view/:gds_num',
     name: 'ShowDetailView',
     component: () => import('@/views/shop/GoodsView'),
