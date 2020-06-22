@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cartMapper">
+    <insert id="addGoodsCart">
+        INSERT INTO GOODS_CART_TABLE
+        (
+            GDS_NUM,
+            USER_ID,
+            CART_STOCK,
+            CART_ADD_DATE
+        )
+        VALUES(
+         #{GDS_NUM},
+         #{USER_ID},
+         #{CART_STOCK},
+         NOW()   
+        )
+    </insert>
+
+    <select id="getCartList">
+        SELECT 
+        A.CART_NUM,
+        A.USER_ID,
+        A.GDS_NUM,
+        FORMAT(A.CART_STOCK,0) AS CART_STOCK,
+        DATE_FORMAT(A.CART_ADD_DATE, "%Y %c/%e %r") AS CART_ADD_DATE,
+        FORMAT(B.GDS_STOCK,0) AS GDS_STOCK,
+        B.GDS_IMG,
+        B.GDS_NAME,
+        B.GDS_PRICE
+        FROM GOODS_CART_TABLE AS A
+        INNER JOIN GOODS_TABLE AS B
+        ON A.GDS_NUM = B.GDS_NUM
+        WHERE A.USER_ID = #{user_id}
+
+    </select>
+</mapper>

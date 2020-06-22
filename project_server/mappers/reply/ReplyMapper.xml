@@ -27,4 +27,8 @@
         REPLY_DATE = NOW()
         WHERE REPLY_NUM = #{REPLY_NUM}
     </update>
+
+    <delete id="deleteReply">
+        DELETE FROM GOODS_REPLY_TABLE WHERE REPLY_NUM = #{REPLY_NUM}
+    </delete>
 </mapper>

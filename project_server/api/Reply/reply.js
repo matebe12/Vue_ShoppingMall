@@ -50,4 +50,20 @@ router.post('/updateReply', async (req, res) => {
     });
 });
 
+router.post('/deleteReply', async (req, res) => {
+    const reqData = req.body;
+    const query = MybatisMapper.getStatement('replyMapper', 'deleteReply', reqData, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
+    });
+});
+
+
 export default router;

@@ -9,6 +9,7 @@ import vueRouter from './routers/index.js';
 import userApi from './api/user/user_sign.js';
 import goodsApi from './api/Goods/goods.js';
 import replyApi from './api/Reply/reply.js';
+import cartApi from './api/Cart/cart.js';
 
 require('dotenv').config();
 const app = express();
@@ -28,7 +29,7 @@ app.use('/', vueRouter);
 app.use('/api/user', userApi);
 app.use('/api/goods', goodsApi);
 app.use('/api/reply', replyApi);
-
+app.use('/api/cart', cartApi);
 app.listen(port, () => {
     console.log(`Server is running at ${port}`);
 })
