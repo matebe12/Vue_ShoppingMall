@@ -48,13 +48,8 @@ router.post('/InsertGoods', upload.any(), async (req,res) => {
     });
 });
 
-router.get('/getGoodsList/:code', async (req,res) => {
-    let reqData;
-    if (req.params.code != null){
-        reqData = req.params;
-    }else {
-        reqData = req.params.code = null;
-    }
+router.post('/getGoodsList', async (req,res) => {
+    let reqData = req.body;
     console.log('reqData : ',reqData);
     
     const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', reqData, format);
@@ -88,6 +83,21 @@ router.post('/updateGoods', upload.any(), async (req,res) => {
             results
         });
         
+    });
+});
+
+router.post('/getCategoryList', async (req, res) => {
+    const query = MybatisMapper.getStatement('goodsMapper', 'getCategoryList', null, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
+
     });
 })
 

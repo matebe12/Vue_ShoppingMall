@@ -50,6 +50,9 @@
         <if test="code != 'null'">
             WHERE A.GDS_CATEGORY_CODE = #{code}
         </if>
+        <if test="CATEGORY_REF != 'null'">
+            WHERE B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
     </select>
     <select id="getGoodsOne">
         SELECT A.GDS_NUM,
@@ -68,6 +71,14 @@
         <if test="gds_num != 'null'">
             WHERE A.GDS_NUM = #{gds_num}
         </if>
+    </select>
+
+    <select id="getCategoryList">
+        SELECT CATEGORY_NAME,
+        CATEGORY_CODE,
+        CATEGORY_REF,
+        CATEGORY_LEVEL
+        FROM GOODS_CATEGORY_TABLE
     </select>
     <update id="updateGoods">
         UPDATE GOODS_TABLE SET
