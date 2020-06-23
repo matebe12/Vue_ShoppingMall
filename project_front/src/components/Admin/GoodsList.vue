@@ -15,7 +15,10 @@
         <tr v-for="(goods, index) in goodsList" :key="index">
           <td>{{ goods.GDS_NUM }}</td>
           <td>
-            <img :src="getImgSrc(goods.GDS_IMG)" class="goodsImg" />
+            <img
+              :src="require(`@/assets/upload/${goods.GDS_IMG}`)"
+              class="goodsImg"
+            />
           </td>
           <td>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
@@ -70,8 +73,12 @@ export default {
       this.showModal = !this.showModal;
     },
     async refresh() {
-      const reflesh = await getGoodsList();
-      this.goodsList = reflesh.data.results;
+      try {
+        const reflesh = await getGoodsList(null);
+        this.goodsList = reflesh.data.results;
+      } catch (error) {
+        console.log(error);
+      }
     },
     getImgSrc(GDS_IMG) {
       return require('@/assets/upload/' + GDS_IMG);

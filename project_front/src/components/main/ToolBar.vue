@@ -2,7 +2,17 @@
   <div class="top-bar">
     <div class="container">
       <div class="row">
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <div class="action pull-left">
+            <ul>
+              <li>
+                <router-link to="/home">
+                  <i class="fa fa-home"></i>
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         <div class="col-md-6">
           <div class="action pull-right">

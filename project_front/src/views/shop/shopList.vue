@@ -1,16 +1,9 @@
 <template>
-  <div>
-    <FeaturedItem></FeaturedItem>
-  </div>
+  <div></div>
 </template>
 
 <script>
-import FeaturedItem from '@/components/main/FeaturedItem';
-export default {
-  components: {
-    FeaturedItem,
-  },
-};
+export default {};
 </script>
 
 <style></style>

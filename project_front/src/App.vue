@@ -4,18 +4,10 @@
       <ToolBar></ToolBar>
       <div v-if="this.$store.state.isView">
         <ShopHeader></ShopHeader>
-        <Banner></Banner>
         <Navigator></Navigator>
       </div>
     </header>
-    <router-view></router-view>
-    <footer id="footer">
-      <ul>
-        <li>사이트 소개</li>
-        <li>이용약관</li>
-        <li>Lee</li>
-      </ul>
-    </footer>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
@@ -23,13 +15,11 @@
 import ToolBar from '@/components/main/ToolBar';
 import ShopHeader from '@/components/main/Header';
 import Navigator from '@/components/main/Navigator';
-import Banner from '@/components/main/Banner';
 export default {
   components: {
     ToolBar,
     ShopHeader,
     Navigator,
-    Banner,
   },
   data() {
     return {
@@ -41,3 +31,14 @@ export default {
 </script>
 
 <style src="@/assets/css/style.css"></style>
+<style>
+#footer {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 100%;
+
+  height: 70px;
+}
+</style>

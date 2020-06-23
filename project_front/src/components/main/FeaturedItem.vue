@@ -3,14 +3,24 @@
     <div class="container">
       <div class="row">
         <ul class="nav nav-tabs nav-product-tabs">
-          <li class="active">
-            <a href="#trending" data-toggle="tab">Trending Items</a>
+          <li
+            class="active"
+            v-for="(item, index) in this.$store.state.category.category"
+            :key="index"
+          >
+            <a
+              href="javascript:void(0);"
+              data-toggle="tab"
+              @click="changeGoods(item.CATEGORY_CODE)"
+              v-if="parentCode == item.CATEGORY_REF"
+              >{{ item.CATEGORY_NAME }}</a
+            >
           </li>
 
-          <li><a href="#best-seller" data-toggle="tab">Best Seller</a></li>
-
           <li class="pull-right collection-url">
-            <a href="">View All <i class="fa fa-long-arrow-right"></i></a>
+            <a href="javascript:void(0);" @click="changeGoods(null)"
+              >View All <i class="fa fa-long-arrow-right"></i
+            ></a>
           </li>
         </ul>
 
@@ -24,7 +34,8 @@
               <div class="single-product">
                 <div class="product-block">
                   <img
-                    :src="getImgSrc(goods.GDS_IMG)"
+                    v-if="showImg"
+                    :src="require(`@/assets/upload/${goods.GDS_IMG}`)"
                     alt=""
                     @click="showGoods(goods)"
                     class="thumbnail"
@@ -71,7 +82,20 @@ export default {
     return {
       showModal: false,
       item: {},
+      showImg: false,
+      parentCode: '',
     };
+  },
+  created() {
+    this.parentCode = this.$route.query.code;
+    this.changeGoods(null);
+  },
+  props: ['parentCategoryCode'],
+  mounted() {
+    this.showImg = true;
+    console.log(this.$route.query.code);
+
+    this.parentCode = this.$route.query.code;
   },
   computed: {
     getGoods() {
@@ -82,8 +106,19 @@ export default {
     Modal,
   },
   methods: {
-    getImgSrc(GDS_IMG) {
-      return require('@/assets/upload/' + GDS_IMG);
+    changeGoods(code) {
+      let reqData;
+      if (code != null) {
+        reqData = {
+          code: code,
+        };
+      } else {
+        reqData = {
+          CATEGORY_REF: this.$route.query.code,
+        };
+      }
+
+      this.$store.dispatch('getGoodList', reqData);
     },
     closeModal() {
       this.showModal = !this.showModal;
@@ -91,6 +126,9 @@ export default {
     showGoods(goods) {
       this.showModal = true;
       this.item = goods;
+    },
+    getrefCode(CATEGORY_REF) {
+      return CATEGORY_REF == this.$route.query.code ? true : false;
     },
   },
 };

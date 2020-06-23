@@ -22,7 +22,7 @@
           </button>
         </div>
 
-        <div class="shop-category nav navbar-nav navbar-left">
+        <div class="shop-category nav navbar-nav navbar-right">
           <!-- Single button -->
 
           <div class="btn-group">
@@ -38,7 +38,9 @@
 
             <ul class="dropdown-menu">
               <li class="dropdown-submenu">
-                <router-link to="">테스트메뉴1</router-link>
+                <router-link to="/shop/list/category?code=100"
+                  >테스트메뉴1</router-link
+                >
                 <ul class="dropdown-menu">
                   <li>
                     <router-link to="/shop/list/category?code=101">
@@ -57,16 +59,6 @@
                   </li>
                 </ul>
               </li>
-
-              <li><a href="">Women</a></li>
-
-              <li><a href="">Kids</a></li>
-
-              <li role="separator" class="divider"></li>
-
-              <li><a href="">Leather</a></li>
-
-              <li><a href="">Electronics</a></li>
             </ul>
           </div>
         </div>
@@ -74,20 +66,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
 
         <div class="collapse navbar-collapse" id="navbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Home</a></li>
-
-            <li><a href="#">Blog</a></li>
-
-            <li><a href="#">Shortcode</a></li>
-
-            <li><a href="#">Features</a></li>
-
-            <li><a href="#">Media</a></li>
-
-            <li><a href="#">About Us</a></li>
-
-            <li><a href="#">Contact Us</a></li>
+          <ul class="nav navbar-nav navbar-left">
+            <li
+              v-for="(item, index) in this.$store.state.category.category"
+              :key="index"
+            >
+              <router-link
+                v-if="item.CATEGORY_LEVEL == 1"
+                :to="`/shop/list/category?code=${item.CATEGORY_CODE}`"
+                >{{ item.CATEGORY_NAME }}</router-link
+              >
+            </li>
           </ul>
         </div>
         <!-- /.navbar-collapse -->

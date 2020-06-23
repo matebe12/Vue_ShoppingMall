@@ -4,12 +4,16 @@ function getCategory(reqData) {
   return goods.get(`/category/${reqData}`);
 }
 
+function getCategoryList() {
+  return goods.post('/getCategoryList');
+}
+
 function InsertGoods(goodsData) {
   return goods.post('/InsertGoods', goodsData);
 }
 
-function getGoodsList(category) {
-  return goods.get(`/getGoodsList/${category}`);
+function getGoodsList(reqData) {
+  return goods.post('/getGoodsList', reqData);
 }
 
 function updateGoods(reqData) {
@@ -33,4 +37,5 @@ export {
   updateGoods,
   deleteGoods,
   getGoodsOne,
+  getCategoryList,
 };

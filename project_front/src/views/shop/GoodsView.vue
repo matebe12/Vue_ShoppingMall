@@ -10,7 +10,7 @@
         <div class="wrapper row">
           <div class="preview col-md-6">
             <div class="preview-pic tab-content">
-              <div class="tab-pane active" id="pic-1">
+              <div class="tab-pane active" id="pic-1" v-if="showImg">
                 <img :src="getImgSrc(item.GDS_IMG)" />
               </div>
               <div class="tab-pane" id="pic-2">
@@ -127,7 +127,11 @@ export default {
       item: this.$store.state.goods.goods[0],
       buy_stock: 0,
       replyCount: 0,
+      showImg: false,
     };
+  },
+  mounted() {
+    this.showImg = true;
   },
   components: {
     Reply,

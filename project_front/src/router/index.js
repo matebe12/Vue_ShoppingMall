@@ -13,14 +13,22 @@ const routes = [
     path: '/',
     name: 'main',
     component: () => import('@/views/index/main.vue'),
+    beforeEnter: (to, from, next) => {
+      store.dispatch('getCategoryList');
+      next();
+    },
   },
   {
     path: '/shop/list/:category',
     name: 'shopList',
-    component: () => import('@/views/shop/shopList.vue'),
+    component: () => import('@/components/main/FeaturedItem.vue'),
     beforeEnter: (to, from, next) => {
       console.log(to.query.code);
-      store.dispatch('getGoodList', to.query.code);
+      let reqData = {
+        CATEGORY_REF: to.query.code,
+      };
+
+      store.dispatch('getGoodList', reqData);
       //getGoodsList(to.query.code);
       next();
     },
@@ -91,6 +99,7 @@ router.beforeEach(function(to, from, next) {
   } else {
     store.state.isView = true;
   }
+  store.dispatch('getCategoryList');
   next();
 });
 

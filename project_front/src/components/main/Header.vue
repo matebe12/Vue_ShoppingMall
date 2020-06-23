@@ -4,7 +4,11 @@
       <div class="col-md-3 col-sm-4">
         <div class="logo">
           <a href="index.html">
-            <img src="@/assets/images/logo.png" alt="Orani E-shop" />
+            <img
+              src="@/assets/images/logo.jpg"
+              alt="Pengsu-shop"
+              width="280px;"
+            />
           </a>
         </div>
       </div>

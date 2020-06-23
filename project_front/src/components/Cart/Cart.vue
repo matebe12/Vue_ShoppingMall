@@ -18,8 +18,9 @@
                 <div class="media">
                   <a class="pull-left" href="#">
                     <img
+                      v-if="showImg"
                       class="media-object"
-                      :src="getImgSrc(item.GDS_IMG)"
+                      :src="require(`@/assets/upload/${item.GDS_IMG}`)"
                       style="width: 72px; height: 72px;"
                     />
                   </a>
@@ -124,16 +125,15 @@ export default {
       totalPrice: 0,
       coupon: 1000,
       subPrice: 0,
+      showImg: false,
     };
   },
   mounted() {
     this.getSubTotalPrice();
     this.getTotalPrice();
+    this.showImg = true;
   },
   methods: {
-    getImgSrc(GDS_IMG) {
-      return require('@/assets/upload/' + GDS_IMG);
-    },
     getOneItemTotal(CART_STOCK, GDS_PRICE, index) {
       const result = CART_STOCK * GDS_PRICE;
       this.CartItem[index].TOTAL_PRICE = result;
