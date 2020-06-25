@@ -12,9 +12,11 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: () => import('@/views/index/main.vue'),
+    component: () => import('@/components/main/FeaturedItem.vue'),
     beforeEnter: (to, from, next) => {
+      store.state.loading = true;
       store.dispatch('getCategoryList');
+      store.state.loading = false;
       next();
     },
   },
@@ -27,8 +29,9 @@ const routes = [
       let reqData = {
         CATEGORY_REF: to.query.code,
       };
-
+      store.state.loading = true;
       store.dispatch('getGoodList', reqData);
+      store.state.loading = false;
       //getGoodsList(to.query.code);
       next();
     },
@@ -39,7 +42,9 @@ const routes = [
     component: () => import('@/views/shop/Cart.vue'),
     beforeEnter: (to, from, next) => {
       //console.log(to.params.user_id);
-      store.dispatch('getCartList', 'matebe12');
+      store.state.loading = true;
+      store.dispatch('getCartList', store.state.user.USER_ID);
+      store.state.loading = false;
       next();
     },
   },
@@ -47,10 +52,11 @@ const routes = [
     path: '/shop/view/:gds_num',
     name: 'ShowDetailView',
     component: () => import('@/views/shop/GoodsView'),
-    beforeEnter: (to, from, next) => {
+    beforeEnter: async (to, from, next) => {
       console.log(to.params.gds_num);
-
-      store.dispatch('getGoodOne', to.params.gds_num);
+      store.state.loading = true;
+      await store.dispatch('getGoodOne', to.params.gds_num);
+      store.state.loading = false;
       next();
     },
   },

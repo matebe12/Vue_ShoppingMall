@@ -15,10 +15,7 @@
         <tr v-for="(goods, index) in goodsList" :key="index">
           <td>{{ goods.GDS_NUM }}</td>
           <td>
-            <img
-              :src="require(`@/assets/upload/${goods.GDS_IMG}`)"
-              class="goodsImg"
-            />
+            <img :src="getImgSrc(goods.GDS_IMG).GDS_IMG" class="goodsImg" />
           </td>
           <td>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
@@ -81,7 +78,9 @@ export default {
       }
     },
     getImgSrc(GDS_IMG) {
-      return require('@/assets/upload/' + GDS_IMG);
+      return {
+        GDS_IMG: GDS_IMG && require('@/assets/upload/' + GDS_IMG),
+      };
     },
   },
 };

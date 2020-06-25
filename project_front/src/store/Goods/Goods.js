@@ -1,19 +1,6 @@
 import { getGoodsList, getGoodsOne } from '@/api/Goods.js';
 const state = {
-  goods: [
-    {
-      GDS_NUM: Number,
-      GDS_NAME: String,
-      GDS_PRICE: Number,
-      GDS_CATEGORY_NAME: String,
-      CATEGORY_REF: String,
-      GDS_CATEGORY_CODE: String,
-      GDS_STOCK: String,
-      GDS_DESC: String,
-      GDS_IMG: String,
-      GDS_DATE: String,
-    },
-  ],
+  goods: [],
 };
 
 const mutations = {

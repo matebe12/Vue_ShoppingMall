@@ -8,6 +8,7 @@
       </div>
     </header>
     <router-view :key="$route.fullPath"></router-view>
+    <Spinner></Spinner>
   </div>
 </template>
 

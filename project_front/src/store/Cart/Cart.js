@@ -1,18 +1,6 @@
-import { getCartList } from '@/api/Cart';
+import { getCartList, deleteCart } from '@/api/Cart';
 const state = {
-  cart: [
-    {
-      CART_NUM: Number,
-      USER_ID: String,
-      GDS_NUM: Number,
-      CART_STOCK: Number,
-      CART_ADD_DATE: String,
-      GDS_STOCK: Number,
-      GDS_IMG: String,
-      GDS_NAME: String,
-      GDS_PRICE: Number,
-    },
-  ],
+  cart: [],
 };
 
 const mutations = {
@@ -26,6 +14,14 @@ const actions = {
     try {
       const response = await getCartList(data);
       context.commit('getCartList', response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async deleteCart(context, data) {
+    try {
+      const response = await deleteCart(data);
+      return response;
     } catch (error) {
       console.log(error);
     }

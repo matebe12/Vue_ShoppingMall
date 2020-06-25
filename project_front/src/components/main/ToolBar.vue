@@ -6,7 +6,7 @@
           <div class="action pull-left">
             <ul>
               <li>
-                <router-link to="/home">
+                <router-link to="/">
                   <i class="fa fa-home"></i>
                 </router-link>
               </li>

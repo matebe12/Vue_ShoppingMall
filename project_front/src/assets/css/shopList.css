@@ -1,0 +1,22 @@
+ table {
+  width: 900;
+  margin-left: 15%;
+}
+ table th {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid #666;
+}
+ table tr:hover {
+  background: #eee;
+}
+ table td {
+  padding: 10px;
+  text-align: center;
+}
+ table img {
+  width: 150px;
+  height: 150px;
+}

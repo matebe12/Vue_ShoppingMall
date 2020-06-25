@@ -20,7 +20,7 @@
                     <img
                       v-if="showImg"
                       class="media-object"
-                      :src="require(`@/assets/upload/${item.GDS_IMG}`)"
+                      :src="getImgSrc(item.GDS_IMG).GDS_IMG"
                       style="width: 72px; height: 72px;"
                     />
                   </a>
@@ -56,12 +56,16 @@
                 }}</strong>
               </td>
               <td class="col-sm-1 col-md-1">
-                <button type="button" class="btn btn-danger">
-                  <span class="glyphicon glyphicon-remove"></span> Remove
-                </button>
+                <span class="glyphicon glyphicon-remove">
+                  <a
+                    href="javascript:void(0);"
+                    @click="deleteGoods(item.CART_NUM, item.USER_ID)"
+                    >삭제</a
+                  >
+                </span>
               </td>
             </tr>
-            <tr>
+            <tr v-show="CartItem.length > 0">
               <td></td>
               <td></td>
               <td></td>
@@ -72,7 +76,7 @@
                 </h5>
               </td>
             </tr>
-            <tr>
+            <tr v-show="CartItem.length > 0">
               <td></td>
               <td></td>
               <td></td>
@@ -83,7 +87,7 @@
                 </h5>
               </td>
             </tr>
-            <tr>
+            <tr v-show="CartItem.length > 0">
               <td></td>
               <td></td>
               <td></td>
@@ -94,19 +98,35 @@
                 </h5>
               </td>
             </tr>
-            <tr>
+            <tr v-show="CartItem.length > 0">
               <td></td>
               <td></td>
               <td></td>
               <td>
                 <button type="button" class="btn btn-default">
                   <span class="glyphicon glyphicon-shopping-cart"></span>
-                  Continue Shopping
+                  쇼핑 계속하기
                 </button>
               </td>
               <td>
                 <button type="button" class="btn btn-success">
                   Checkout <span class="glyphicon glyphicon-play"></span>
+                </button>
+              </td>
+            </tr>
+            <tr v-show="CartItem.length < 1">
+              <td></td>
+              <td></td>
+              <td></td>
+              <h1>상품이 없습니다.</h1>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  @click="continueShop()"
+                >
+                  <span class="glyphicon glyphicon-shopping-cart"></span>
+                  쇼핑 계속하기
                 </button>
               </td>
             </tr>
@@ -139,6 +159,11 @@ export default {
       this.CartItem[index].TOTAL_PRICE = result;
       return this.addNumComma(result);
     },
+    getImgSrc(GDS_IMG) {
+      return {
+        GDS_IMG: this.CartItem && require('@/assets/upload/' + GDS_IMG),
+      };
+    },
     getSubTotalPrice() {
       let sum = 0;
       for (let i = 0; i < this.CartItem.length; i++) {
@@ -158,6 +183,26 @@ export default {
     },
     addNumComma(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
+    },
+    continueShop() {
+      this.$router.go(-1);
+    },
+    async deleteGoods(ITEM_NUM, USER_ID) {
+      const confirm1 = confirm('상품을 카트에서 삭제 하시겠습니까?');
+      if (confirm1) {
+        const reqData = {
+          CART_NUM: ITEM_NUM,
+          USER_ID,
+        };
+        try {
+          const response = await this.$store.dispatch('deleteCart', reqData);
+          console.log(response);
+          await this.$store.dispatch('getCartList', USER_ID);
+          this.CartItem = this.$store.state.cart.cart;
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
   },
 };

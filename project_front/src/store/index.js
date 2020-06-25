@@ -10,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isView: false,
+    loading: true,
   },
   mutations: {},
   actions: {},

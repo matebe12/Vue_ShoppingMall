@@ -18,7 +18,7 @@ img {
     font-family: 'Open Sans', sans-serif;
 }
 .btn-theme {
-    background: #94d2e6;
+    background: #000000;
     border-radius: 0px;
     color: #fff !important;
     font-size: 10pt;
@@ -29,7 +29,7 @@ img {
     background: #494949;
 }
 .top-bar {
-    background-color: #94d2e6;
+    background-color: #000000;
     min-height: 58px;
 }
 .social,
@@ -80,7 +80,7 @@ form.navbar-form input {
     min-width: 450px;
     border-width: 1px;
     border-radius: 0px;
-    border-color: #94d2e6;
+    border-color: #000000;
     color: #000;
     padding: 20px;
     font-size: 10pt;
@@ -102,7 +102,7 @@ form.navbar-form button {
     width: 100%;
 }
 .cart-icon {
-    background-color: #94d2e6;
+    background-color: #000000;
     color:#fff;
     padding: 10px 15px;
     width: 40px;
@@ -120,7 +120,7 @@ form.navbar-form button {
 }
 
 .navigation {
-    background: #94d2e6;
+    background: #000000;
 }
 .navigation nav {
     border: none;
@@ -148,7 +148,7 @@ form.navbar-form button {
     box-shadow: none !important;
 }
 .shop-category ul.dropdown-menu {
-    background: #94d2e6;
+    background: #000000;
     border-radius: 0px;
     border:0px;
     padding-top: 17px;
@@ -202,7 +202,7 @@ ol.carousel-indicators li {
     border: none;
 }
 ol.carousel-indicators li.active {
-    background: #94d2e6;
+    background: #000000;
 }
 .small-slider .carousel-caption {
     text-align: left;
@@ -252,17 +252,17 @@ ol.carousel-indicators li.active {
 .single-process i.fa {
     color: #fff;
     font-size: 35px;
-    border: 3px solid #94d2e6;
+    border: 3px solid #000000;
     border-radius: 50%;
     padding: 20px;
-    background: #94d2e6;
+    background: #000000;
 }
 .single-process:hover i.fa {
     background: #fff;
-    color:#94d2e6;
+    color:#000000;
 }
 .nav.nav-tabs {
-    background: #94d2e6;
+    background: #000000;
     border: none;
     text-transform: uppercase;  
     margin: 0px 15px 30px;
@@ -270,7 +270,7 @@ ol.carousel-indicators li.active {
     font-family: 'raleway', sans-serif;
 }
 .nav.nav-tabs li.active a {
-    background: #94d2e6;
+    background: #000000;
     border: none;
     border-radius: 0px;
 }
@@ -293,7 +293,7 @@ ol.carousel-indicators li.active {
     padding: 11px;
 }
 .single-product {
-    border:3px solid #94d2e6;
+    border:3px solid #000000;
     margin-bottom: 30px;
     position: relative;
     transition: .2s all ease-in-out;
@@ -315,11 +315,10 @@ ol.carousel-indicators li.active {
     transition: .2s all ease-in-out;
 }
 .product-description {
-    background: #94d2e6;
+    background: #000000;
 }
 .product-description p {
     margin: 0px;
-    color:#fff;
     padding-top:10px;
     font-weight: 600;
 }
@@ -346,19 +345,19 @@ ol.carousel-indicators li.active {
 }
 .product-hover ul li a {
     color: #fff;
-    background: #94d2e6;
+    background: #000000;
     padding: 8px;
     font-size: 15pt;
 }
 .product-hover ul li a:hover {
-    color: #94d2e6;
+    color: #000000;
     background: #fff;
 }
 .blog {
     
 }
 .blog-title {
-    background: #94d2e6;
+    background: #000000;
     height: 45px;
     margin: 0px 15px 30px;
     padding: 2px 15px;
@@ -395,7 +394,7 @@ ol.carousel-indicators li.active {
     position: absolute;
     bottom: 0;
     left: 0;
-    background: #94d2e6;
+    background: #000000;
     padding: 20px 30px;
     text-align: center;
     text-transform: uppercase;
@@ -406,7 +405,7 @@ ol.carousel-indicators li.active {
     position: absolute;
     bottom: 0;
     right: 0;
-    background: #94d2e6;
+    background: #000000;
     padding: 10px 20px;
     text-align: center;
     text-transform: uppercase;
@@ -499,7 +498,7 @@ ol.carousel-indicators li.active {
     border: 3px solid #ebebeb;
 }
 .thumb-image li.active img {
-    border-color: #94d2e6;
+    border-color: #000000;
 }
 .short-description .col-md-6, .short-description .col-md-2, .short-description .col-md-10 {
     padding-left: 0px;
@@ -601,7 +600,7 @@ p.short-info {
     color: #6d6d6d;
 }
 .social-share ul li a:hover {
-    color: #94d2e6;
+    color: #000000;
 }
 .purchase-form button.btn-theme {
     text-transform: uppercase;

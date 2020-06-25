@@ -78,6 +78,7 @@
           id="GDS_DESC"
           name="GDS_DESC"
           v-model="goods.GDS_DESC"
+          :config="editorConfig"
         ></ckeditor>
         <input type="file" ref="files2" name="sampleFile" id="file" />
         <button type="submit" id="register_Btn" class="btn btn-primary">

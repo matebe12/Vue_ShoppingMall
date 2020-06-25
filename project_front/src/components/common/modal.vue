@@ -127,7 +127,6 @@
                 </div>
                 <label for="GDS_DESC">GDS_DESC</label>
                 <ckeditor
-                  :config="editorConfig"
                   :value="item.GDS_DESC"
                   id="GDS_DESC"
                   name="GDS_DESC"
@@ -169,9 +168,6 @@ export default {
       secondCategory: [],
       selected2: '',
       imgPath: 'img',
-      editorConfig: {
-        // The configuration of the editor.
-      },
     };
   },
   components: {

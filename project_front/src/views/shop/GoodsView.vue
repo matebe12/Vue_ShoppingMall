@@ -3,7 +3,7 @@
     <div class="card">
       <i
         class="fas fa-times closeModalBtn"
-        @click="closeModal"
+        @click="$router.go(-1)"
         style="float:right"
       ></i>
       <div class="container-fliud">
@@ -11,45 +11,45 @@
           <div class="preview col-md-6">
             <div class="preview-pic tab-content">
               <div class="tab-pane active" id="pic-1" v-if="showImg">
-                <img :src="getImgSrc(item.GDS_IMG)" />
+                <img :src="getImgSrc.GDS_IMG" />
               </div>
               <div class="tab-pane" id="pic-2">
-                <img :src="getImgSrc(item.GDS_IMG)" />
+                <img :src="getImgSrc.GDS_IMG" />
               </div>
               <div class="tab-pane" id="pic-3">
-                <img :src="getImgSrc(item.GDS_IMG)" />
+                <img :src="getImgSrc.GDS_IMG" />
               </div>
               <div class="tab-pane" id="pic-4">
-                <img :src="getImgSrc(item.GDS_IMG)" />
+                <img :src="getImgSrc.GDS_IMG" />
               </div>
               <div class="tab-pane" id="pic-5">
-                <img :src="getImgSrc(item.GDS_IMG)" />
+                <img :src="getImgSrc.GDS_IMG" />
               </div>
             </div>
             <ul class="preview-thumbnail nav nav-tabs">
               <li class="active">
                 <a data-target="#pic-1" data-toggle="tab"
-                  ><img :src="getImgSrc(item.GDS_IMG)"
+                  ><img :src="getImgSrc.GDS_IMG"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-2" data-toggle="tab"
-                  ><img :src="getImgSrc(item.GDS_IMG)"
+                  ><img :src="getImgSrc.GDS_IMG"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-3" data-toggle="tab"
-                  ><img :src="getImgSrc(item.GDS_IMG)"
+                  ><img :src="getImgSrc.GDS_IMG"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-4" data-toggle="tab"
-                  ><img :src="getImgSrc(item.GDS_IMG)"
+                  ><img :src="getImgSrc.GDS_IMG"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-5" data-toggle="tab"
-                  ><img :src="getImgSrc(item.GDS_IMG)"
+                  ><img :src="getImgSrc.GDS_IMG"
                 /></a>
               </li>
             </ul>
@@ -61,9 +61,7 @@
                 >{{ this.replyCount }}개의 댓글이 있습니다.</span
               >
             </div>
-            <p class="product-description">
-              {{ item.GDS_DESC }}
-            </p>
+            <div class="product-description" v-html="item.GDS_DESC"></div>
             <h4 class="price">
               가격: <span>{{ item.GDS_PRICE }}원</span>
             </h4>
@@ -120,11 +118,13 @@
 
 <script>
 import Reply from '@/components/Goods/reply';
-import { addGoodsCart } from '@/api/Cart.js';
+import { addGoodsCart, getCartList } from '@/api/Cart.js';
+import { getGoodsOne } from '@/api/Goods.js';
+
 export default {
   data() {
     return {
-      item: this.$store.state.goods.goods[0],
+      item: '',
       buy_stock: 0,
       replyCount: 0,
       showImg: false,
@@ -133,8 +133,25 @@ export default {
   mounted() {
     this.showImg = true;
   },
+  async created() {
+    console.log(this.$route.params);
+
+    const response = await getGoodsOne(this.$route.params.gds_num);
+    console.log(response);
+
+    this.item = response.data.results[0];
+  },
   components: {
     Reply,
+  },
+  computed: {
+    getImgSrc() {
+      return {
+        ...this.item,
+        GDS_IMG:
+          this.item.GDS_IMG && require('@/assets/upload/' + this.item.GDS_IMG),
+      };
+    },
   },
   methods: {
     async addGoodsCart() {
@@ -155,6 +172,8 @@ export default {
         const response = await addGoodsCart(reqData);
         console.log(response);
         alert(`${this.item.GDS_NAME} 상품 ${this.buy_stock}개가 담겼습니다.`);
+        const response1 = await getCartList(this.$store.state.user.USER_ID);
+        this.$store.state.cart.cart = response1.data.results;
       } catch (error) {
         console.log(error);
       }
@@ -162,12 +181,7 @@ export default {
     setReplyCount(replyCount) {
       this.replyCount = replyCount;
     },
-    closeModal() {
-      this.$emit('closeModal');
-    },
-    getImgSrc(GDS_IMG) {
-      return require('@/assets/upload/' + GDS_IMG);
-    },
+
     validation() {
       this.buy_stock = this.buy_stock.replace(/[^0-9]/g, '');
     },
