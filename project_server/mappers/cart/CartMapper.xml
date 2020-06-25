@@ -34,4 +34,9 @@
         WHERE A.USER_ID = #{user_id}
 
     </select>
+
+    <delete id="deleteCart">
+        DELETE FROM GOODS_CART_TABLE
+        WHERE USER_ID = #{USER_ID} AND CART_NUM = #{CART_NUM}
+    </delete>
 </mapper>

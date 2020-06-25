@@ -69,7 +69,7 @@ router.post('/login', (req,res) => {
                                 const token = jwt.sign({
                                     USER_ID: result[0],  //페이로드
                                 },jwtObj.secret, {
-                                 expiresIn: '5m' // 토큰 유지 시간 
+                                 expiresIn: '30m' // 토큰 유지 시간 
                                 });
                                 res.cookie('token', token);
                                 res.cookie('verify', results[0].USER_VERIFY);
