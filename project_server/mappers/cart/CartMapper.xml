@@ -17,6 +17,33 @@
         )
     </insert>
 
+    <insert id="orderInfo">
+ INSERT INTO GOODS_ORDER_TABLE(
+     ORDER_ID,
+     USER_ID, 
+     ORDER_RECIEVE, 
+     USER_ADDR1, 
+     USER_ADDR2, 
+     USER_ADDR3, 
+     ORDER_PHONE, 
+     TOTAL_PRICE)
+     VALUES(#{ORDER_ID}, #{USER_ID}, #{ORDER_RECIEVE}, #{USER_ADDR1}, #{USER_ADDR2}, #{USER_ADDR3}, #{ORDER_PHONE}, #{TOTAL_PRICE})
+</insert>
+
+    <insert id="orderInfo_Details">
+        INSERT INTO GOODS_ORDER_DETAIL_TABLE
+    (
+        ORDER_ID, 
+        GDS_NUM, 
+        CART_STOCK
+    )
+      VALUES
+      <foreach collection="reqData" item="item">
+        (#{item.ORDER_ID}, #{item.GDS_NUM}, #{item.CART_STOCK})
+      </foreach>
+      
+</insert>
+
     <select id="getCartList">
         SELECT 
         A.CART_NUM,
