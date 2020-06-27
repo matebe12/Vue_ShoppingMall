@@ -5,6 +5,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
+              <th>선택</th>
               <th>상품</th>
               <th>수량</th>
               <th class="text-center">가격</th>
@@ -14,6 +15,18 @@
           </thead>
           <tbody>
             <tr v-for="(item, index) in CartItem" :key="index">
+              <td class="col-sm-8 col-md-1">
+                <input
+                  type="checkbox"
+                  name="checked_cart"
+                  :value="item"
+                  v-model="checkedItem"
+                  @change="
+                    getSubTotalPrice();
+                    getTotalPrice();
+                  "
+                />
+              </td>
               <td class="col-sm-8 col-md-6">
                 <div class="media">
                   <a class="pull-left" href="#">
@@ -28,7 +41,7 @@
                     <h4 class="media-heading">
                       <router-link to="#"></router-link>
                     </h4>
-                    <span>Status: </span
+                    <span>남은 수량 </span
                     ><span class="text-success"
                       ><strong>{{ item.GDS_STOCK }}</strong></span
                     >
@@ -56,12 +69,10 @@
                 }}</strong>
               </td>
               <td class="col-sm-1 col-md-1">
-                <span class="glyphicon glyphicon-remove">
-                  <a
-                    href="javascript:void(0);"
-                    @click="deleteGoods(item.CART_NUM, item.USER_ID)"
-                    >삭제</a
-                  >
+                <span
+                  class="glyphicon glyphicon-remove"
+                  @click="deleteGoods(item.CART_NUM, item.USER_ID)"
+                >
                 </span>
               </td>
             </tr>
@@ -103,14 +114,22 @@
               <td></td>
               <td></td>
               <td>
-                <button type="button" class="btn btn-default">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  @click="continueShop()"
+                >
                   <span class="glyphicon glyphicon-shopping-cart"></span>
                   쇼핑 계속하기
                 </button>
               </td>
               <td>
-                <button type="button" class="btn btn-success">
-                  Checkout <span class="glyphicon glyphicon-play"></span>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  @click="setOrderInfo()"
+                >
+                  주문하기 <span class="glyphicon glyphicon-play"></span>
                 </button>
               </td>
             </tr>
@@ -132,28 +151,44 @@
             </tr>
           </tbody>
         </table>
+        <OrderInfo
+          v-if="orderInfo"
+          :checkedItem="checkedItem"
+          :totalPrice="totalPrice"
+        ></OrderInfo>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import OrderInfo from './OrderInfo.vue';
 export default {
+  components: {
+    OrderInfo,
+  },
   data() {
     return {
-      CartItem: this.$store.state.cart.cart,
+      CartItem: [],
       totalPrice: 0,
       coupon: 1000,
       subPrice: 0,
       showImg: false,
+      checkedItem: [],
+      orderInfo: false,
     };
   },
   mounted() {
     this.getSubTotalPrice();
     this.getTotalPrice();
     this.showImg = true;
+    this.CartItem = this.$store.state.cart.cart;
   },
   methods: {
+    setOrderInfo() {
+      this.orderInfo = !this.orderInfo;
+    },
+
     getOneItemTotal(CART_STOCK, GDS_PRICE, index) {
       const result = CART_STOCK * GDS_PRICE;
       this.CartItem[index].TOTAL_PRICE = result;
@@ -166,15 +201,17 @@ export default {
     },
     getSubTotalPrice() {
       let sum = 0;
-      for (let i = 0; i < this.CartItem.length; i++) {
-        sum += this.CartItem[i].TOTAL_PRICE;
+      for (let i = 0; i < this.checkedItem.length; i++) {
+        sum += this.checkedItem[i].TOTAL_PRICE;
       }
+      console.log(sum);
+
       this.subPrice = this.addNumComma(sum);
     },
     getTotalPrice() {
       let sum = 0;
-      for (let i = 0; i < this.CartItem.length; i++) {
-        sum += this.CartItem[i].TOTAL_PRICE;
+      for (let i = 0; i < this.checkedItem.length; i++) {
+        sum += this.checkedItem[i].TOTAL_PRICE;
       }
       sum -= this.coupon;
       console.log(sum);
