@@ -11,8 +11,7 @@ function deleteCart(reqData) {
   return cart.post('/deleteCart', reqData);
 }
 function insertOrder(reqData) {
-  cart.post('/insertOrder', reqData);
-  return insertOrderDetail(reqData);
+  return cart.post('/insertOrder', reqData);
 }
 function insertOrderDetail(reqData) {
   return cart.post('/insertOrderDetail', reqData);

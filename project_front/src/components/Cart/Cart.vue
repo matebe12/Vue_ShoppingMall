@@ -105,7 +105,7 @@
               <td><h4>총 금액</h4></td>
               <td class="text-right">
                 <h5>
-                  <strong>{{ totalPrice }}</strong>
+                  <strong>{{ getTotalPriceNum }}</strong>
                 </h5>
               </td>
             </tr>
@@ -184,9 +184,26 @@ export default {
     this.showImg = true;
     this.CartItem = this.$store.state.cart.cart;
   },
+  computed: {
+    getTotalPriceNum() {
+      return this.addNumComma(this.totalPrice);
+    },
+  },
   methods: {
+    // refreshCart() {
+    //   this.CartItem = this.$store.dispatch(
+    //     'getCartList',
+    //     this.$store.state.user.USER_ID,
+    //   );
+    // },
     setOrderInfo() {
-      this.orderInfo = !this.orderInfo;
+      if (this.checkedItem.length > 0) {
+        this.orderInfo = !this.orderInfo;
+      } else {
+        alert('상품을 선택해주세요.');
+        this.orderInfo = !this.orderInfo;
+        return;
+      }
     },
 
     getOneItemTotal(CART_STOCK, GDS_PRICE, index) {
@@ -216,7 +233,7 @@ export default {
       sum -= this.coupon;
       console.log(sum);
 
-      this.totalPrice = this.addNumComma(sum);
+      this.totalPrice = sum;
     },
     addNumComma(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';

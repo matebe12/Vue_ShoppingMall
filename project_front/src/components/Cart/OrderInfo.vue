@@ -4,10 +4,8 @@
       role="form"
       method="post"
       autocomplete="off"
-      @submit.prevent="orderGoods"
+      @submit.prevent="orderGoods()"
     >
-      <input type="hidden" name="TOTAL_PRICE" v-model="TOTAL_PRICE" />
-
       <div class="inputArea">
         <label for="">수령인</label>
         <input
@@ -73,12 +71,13 @@
 
 <script>
 import { insertOrder } from '@/api/Cart.js';
+import moment from 'moment';
 export default {
   props: ['checkedItem', 'totalPrice'],
   methods: {
     async orderGoods() {
       const reqData = {
-        ORDER_ID: new Date() + Math.floor(Math.random() * (10 - 0 + 1)) + 1, // 주문 아이디
+        ORDER_ID: this.getOrderId, // 주문 아이디
         USER_ID: this.$store.state.user.USER_ID,
         ORDER_RECIEVE: this.ORDER_RECIEVE,
         USER_ADDR1: this.USER_ADDR1,
@@ -86,9 +85,15 @@ export default {
         USER_ADDR3: this.USER_ADDR3,
         ORDER_PHONE: this.ORDER_PHONE,
         TOTAL_PRICE: this.totalPrice,
+        ITEM: this.checkedItem,
       };
-      const response = await insertOrder(reqData);
-      console.log(response);
+      try {
+        const response = await insertOrder(reqData);
+        console.log(response);
+        //this.$emit('refreshCart');
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   data() {
@@ -98,11 +103,23 @@ export default {
       USER_ADDR1: '',
       USER_ADDR2: '',
       USER_ADDR3: '',
+      ORDER_ID: '',
     };
   },
   mounted() {
     const ORDER_RECIEVE = document.querySelector('#ORDER_RECIEVE');
     ORDER_RECIEVE.scrollIntoView();
+  },
+  computed: {
+    getOrderId() {
+      const date = new Date();
+      let ORDER_ID =
+        moment(date).format('YYYY MM DD HH:mm:ss') +
+        '_' +
+        Math.floor(Math.random() * (10 - 0 + 1)) +
+        1;
+      return ORDER_ID;
+    },
   },
 };
 </script>
