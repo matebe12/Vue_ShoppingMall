@@ -38,11 +38,18 @@
         CART_STOCK
     )
       VALUES
-      <foreach collection="reqData" item="item">
-        (#{item.ORDER_ID}, #{item.GDS_NUM}, #{item.CART_STOCK})
+      <foreach collection="ITEM" item="item">
+        (#{ORDER_ID}, #{item.GDS_NUM}, #{item.CART_STOCK})
       </foreach>
       
 </insert>
+
+<update id="updateGoodsStock">
+    UPDATE GOODS_TABLE SET
+    <foreach collection="ITEM" item="item">
+    GDS_STOCK = GDS_STOCK - #{item.CART_STOCK} WHERE GDS_NUM = #{item.GDS_NUM} 
+    </foreach>
+</update>
 
     <select id="getCartList">
         SELECT 
@@ -64,6 +71,10 @@
 
     <delete id="deleteCart">
         DELETE FROM GOODS_CART_TABLE
-        WHERE USER_ID = #{USER_ID} AND CART_NUM = #{CART_NUM}
+        WHERE 1 = 1
+    <foreach collection="ITEM" item="item">
+        AND USER_ID = #{USER_ID} AND CART_NUM = #{item.CART_NUM}
+    </foreach>
+        
     </delete>
 </mapper>

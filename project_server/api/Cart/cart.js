@@ -63,6 +63,61 @@ router.post('/deleteCart', async (req, res) => {
     });
 });
 
+router.post('/insertOrder', async (req, res) => {
+    const reqData = req.body;
+    if (req.body == null || req.body.USER_ID == '' || req.body.ORDER_RECIEVE == '') {
+        return res.status(400).send({
+            msg: 'Bad Request Data'
+        });
+    }
+    const query = MybatisMapper.getStatement('cartMapper', 'orderInfo', reqData, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+
+        
+        // return res.status(200).send({
+        //     results
+        // });
+    });
+    //console.log(results);
+    //order detail
+    const query2 = MybatisMapper.getStatement('cartMapper', 'orderInfo_Details', reqData, format);
+    connection.query(query2, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        // return res.status(200).send({
+        //     results
+        // });
+    });
+
+    const query3 = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock', reqData, format);
+    connection.query(query3, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        return res.status(200).send({
+            results
+        });
+    });
+    const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
+    connection.query(query4, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        return res.status(200).send({
+            results
+        });
+    });
+});
+
+
 // function updateGoodsStock(reqData){
 //     const query = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock', reqData, format);
 //     connection.query(query, (error, results, fields) => {
