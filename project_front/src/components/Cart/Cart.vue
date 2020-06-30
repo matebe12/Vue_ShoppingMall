@@ -155,6 +155,7 @@
           v-if="orderInfo"
           :checkedItem="checkedItem"
           :totalPrice="totalPrice"
+          @refreshCart="refreshCart()"
         ></OrderInfo>
       </div>
     </div>
@@ -190,12 +191,18 @@ export default {
     },
   },
   methods: {
-    // refreshCart() {
-    //   this.CartItem = this.$store.dispatch(
-    //     'getCartList',
-    //     this.$store.state.user.USER_ID,
-    //   );
-    // },
+    async refreshCart() {
+      try {
+        await this.$store.dispatch(
+          'getCartList',
+          this.$store.state.user.USER_ID,
+        );
+        this.CartItem = this.$store.state.cart.cart;
+        this.orderInfo = !this.orderInfo;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     setOrderInfo() {
       if (this.checkedItem.length > 0) {
         this.orderInfo = !this.orderInfo;
@@ -251,7 +258,10 @@ export default {
         try {
           const response = await this.$store.dispatch('deleteCart', reqData);
           console.log(response);
-          await this.$store.dispatch('getCartList', USER_ID);
+          await this.$store.dispatch(
+            'getCartList',
+            this.$store.state.user.USER_ID,
+          );
           this.CartItem = this.$store.state.cart.cart;
         } catch (error) {
           console.log(error);

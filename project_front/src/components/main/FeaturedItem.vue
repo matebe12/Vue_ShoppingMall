@@ -8,12 +8,12 @@
             v-for="(item, index) in this.$store.state.category.category"
             :key="index"
           >
-            <a
-              href="javascript:void(0);"
+            <router-link
+              :to="getUrl(item.CATEGORY_CODE)"
               data-toggle="tab"
               @click="changeGoods(item.CATEGORY_CODE)"
               v-if="parentCode == item.CATEGORY_REF && $route.path != '/'"
-              >{{ item.CATEGORY_NAME }}</a
+              >{{ item.CATEGORY_NAME }}</router-link
             >
           </li>
 
@@ -29,17 +29,10 @@
             <div id="#container">
               <table>
                 <thead>
-                  <tr>
-                    <th>번호</th>
-                    <th>상품</th>
-                    <th>이름</th>
-                    <th>카테고리</th>
-                    <th>등록날짜</th>
-                  </tr>
+                  <tr></tr>
                 </thead>
                 <tbody>
                   <tr v-for="(goods, index) in getGoods" :key="index">
-                    <td>{{ goods.GDS_NUM }}</td>
                     <td>
                       <img
                         :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
@@ -52,7 +45,7 @@
                       }}</router-link>
                     </td>
                     <td>{{ goods.GDS_CATEGORY_NAME }}</td>
-                    <td>{{ goods.GDS_DATE }}</td>
+                    <td>{{ goods.GDS_PRICE }} 원</td>
                   </tr>
                 </tbody>
               </table>
@@ -62,12 +55,13 @@
       </div>
     </div>
     <Modal v-if="showModal" @closeModal="closeModal" :item="item"> </Modal>
+    <Pagenation></Pagenation>
   </div>
 </template>
 
 <script>
 import Modal from '../common/GoodsViewModal.vue';
-
+import Pagenation from '../common/pagenation.vue';
 export default {
   data() {
     return {
@@ -84,8 +78,6 @@ export default {
   props: ['parentCategoryCode'],
   mounted() {
     this.showImg = true;
-    console.log(this.$route.query.code);
-
     this.parentCode = this.$route.query.code;
   },
   computed: {
@@ -95,21 +87,35 @@ export default {
   },
   components: {
     Modal,
+    Pagenation,
   },
   methods: {
     changeGoods(code) {
       let reqData;
       if (code != null) {
         reqData = {
-          code: code,
+          CODE: this.$route.query.scode,
+          CATEGORY_REF: this.$route.query.code,
         };
       } else {
         reqData = {
           CATEGORY_REF: this.$route.query.code,
+          CODE: this.$route.query.scode,
         };
+        reqData.PAGE = this.$route.query.page *= 1;
+        reqData.PAGE_START = (reqData.PAGE - 1) * 2; // 보여줄 상품 시작
+        reqData.PER_PAGE_NUM = 2; // 보여줄 상품 수
+        this.$store.dispatch('getGoodListCount', reqData);
       }
 
       this.$store.dispatch('getGoodList', reqData);
+    },
+    getUrl(scode) {
+      let _page = 1;
+      let url = '/shop/list/category?code=' + this.$route.query.code;
+      url += '&scode=' + scode;
+      url += '&page=' + _page;
+      return url;
     },
     closeModal() {
       this.showModal = !this.showModal;

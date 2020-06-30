@@ -90,7 +90,7 @@ export default {
       try {
         const response = await insertOrder(reqData);
         console.log(response);
-        //this.$emit('refreshCart');
+        this.$emit('refreshCart');
       } catch (error) {
         console.log(error);
       }

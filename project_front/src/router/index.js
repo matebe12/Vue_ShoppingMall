@@ -25,13 +25,19 @@ const routes = [
     name: 'shopList',
     component: () => import('@/components/main/FeaturedItem.vue'),
     beforeEnter: (to, from, next) => {
-      console.log(to.query.code);
-      let reqData = {
-        CATEGORY_REF: to.query.code,
-      };
-      store.state.loading = true;
+      let reqData = {};
+      if (to.query.scode == null || to.query.scode == undefined) {
+        reqData.CATEGORY_REF = null;
+        reqData.CODE = to.query.code;
+      } else {
+        reqData.CATEGORY_REF = to.query.code;
+        reqData.CODE = to.query.scode;
+      }
+      reqData.PAGE = to.query.page *= 1; // 페이지 정보
+      reqData.PAGE_START = (reqData.PAGE - 1) * 2; // 보여줄 상품 시작
+      reqData.PER_PAGE_NUM = 2; // 보여줄 상품 수
+      store.dispatch('getGoodListCount', reqData);
       store.dispatch('getGoodList', reqData);
-      store.state.loading = false;
       //getGoodsList(to.query.code);
       next();
     },
@@ -41,7 +47,6 @@ const routes = [
     name: 'cart',
     component: () => import('@/views/shop/Cart.vue'),
     beforeEnter: (to, from, next) => {
-      //console.log(to.params.user_id);
       store.state.loading = true;
       store.dispatch('getCartList', store.state.user.USER_ID);
       store.state.loading = false;
@@ -53,7 +58,6 @@ const routes = [
     name: 'ShowDetailView',
     component: () => import('@/views/shop/GoodsView'),
     beforeEnter: async (to, from, next) => {
-      console.log(to.params.gds_num);
       store.state.loading = true;
       await store.dispatch('getGoodOne', to.params.gds_num);
       store.state.loading = false;
@@ -72,7 +76,6 @@ const routes = [
     component: () => import('@/views/Admin/Admin.vue'),
     beforeEnter: (to, from, next) => {
       // 관리자가 아닐 경우 리다이렉트
-      //console.log(JSON.parse(Cookie.get('user')));
       if (Cookie.get('token') != null || Cookie.get('user') != null) {
         if (Cookie.get('verify') == 9) {
           return next();
@@ -85,9 +88,7 @@ const routes = [
         next('/login');
       }
 
-      console.log('cookie token : ' + Cookie.get('token'));
       // if (store.state.user.USER_VERIFY != 9 || !store.state.user) {
-      //   console.log('cookie token : ' + VueCookie.get('token'));
       //   next('/login');
       // }
     },

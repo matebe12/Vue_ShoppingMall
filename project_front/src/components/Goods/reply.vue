@@ -96,7 +96,7 @@ export default {
       reply: [],
     };
   },
-  async created() {
+  async mounted() {
     await this.viewReply();
     console.log('댓글 길이 : ' + this.reply.length);
 
@@ -120,6 +120,7 @@ export default {
         };
         const response = await addReply(reqData);
         console.log(response);
+        this.viewReply();
       } catch (error) {
         console.log(error);
       }
@@ -154,8 +155,10 @@ export default {
     async viewReply() {
       try {
         const reqData = {
-          GDS_NUM: this.item.GDS_NUM,
+          GDS_NUM: this.$route.params.gds_num,
         };
+        console.log(reqData.GDS_NUM);
+
         const response = await getReplyAll(reqData);
         console.log(response);
         this.reply = response.data.results;
