@@ -101,9 +101,9 @@ router.post('/insertOrder', async (req, res) => {
             console.log(error);
             return res.status(500);
         }
-        return res.status(200).send({
-            results
-        });
+        // return res.status(200).send({
+        //     results
+        // });
     });
     const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
     connection.query(query4, (error, results, fields) => {

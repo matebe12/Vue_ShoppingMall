@@ -48,15 +48,35 @@ router.post('/InsertGoods', upload.any(), async (req,res) => {
     });
 });
 
+router.post('/getGoodsListCount', async(req,res) => {
+    let reqData;
+    if (req.body != null) {
+        reqData = req.body;
+    }
+    console.log('reqData : ', reqData);    
+
+    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsListCount', reqData, format);
+    connection.query(query, (error, results2, fields) => {
+        if (error) {
+            console.log(error);
+            return 500;
+        }
+        console.log(results2);
+        return res.status(200).send({
+            results2
+        });
+    });
+});
+
 router.post('/getGoodsList', async (req,res) => {
     let reqData;
     if(req.body != null){
         reqData = req.body;
     }
-    console.log('reqData : ',reqData);
-    
-    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', reqData, format);
-    connection.query(query, (error, results, fields) => {
+    console.log('reqData : ',reqData);    
+
+    const query2 = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', reqData, format);
+    connection.query(query2, (error, results, fields) => {
         if (error) {
             console.log(error);
             return res.status(500);
@@ -67,6 +87,19 @@ router.post('/getGoodsList', async (req,res) => {
         });
     });
 });
+
+const getGoodsListCount = async(reqData) => {
+    
+    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsListCount', reqData, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return 500;
+        }
+        console.log('count는 : ', results[0].COUNT);
+        return results[0].COUNT;
+    });
+}
 
 router.post('/updateGoods', upload.any(), async (req,res) => {
     const reqData = req.body;

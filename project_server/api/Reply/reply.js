@@ -22,6 +22,8 @@ router.post('/insertReply', async(req,res) => {
 
 router.post('/getReplyAll', async (req, res) => {
     const reqData = req.body;
+    console.log('댓글불러오기 함수');
+    
     const query = MybatisMapper.getStatement('replyMapper', 'getReplyAll', reqData, format);
     connection.query(query, (error, results, fields) => {
         if (error) {

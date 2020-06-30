@@ -47,13 +47,32 @@
         FROM GOODS_TABLE AS A
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
-        <if test="code != 'null'">
-            WHERE A.GDS_CATEGORY_CODE = #{code}
+        WHERE 1=1
+        <if test="CODE != 'null'">
+            AND  A.GDS_CATEGORY_CODE = #{CODE}
         </if>
         <if test="CATEGORY_REF != 'null'">
-            WHERE B.CATEGORY_REF = #{CATEGORY_REF}
+            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
+        <if test="PAGE != 'null'">
+        LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
         </if>
     </select>
+
+    <select id="getGoodsListCount">
+        SELECT COUNT(*) AS COUNT
+        FROM GOODS_TABLE AS A
+        INNER JOIN GOODS_CATEGORY_TABLE AS B
+        ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
+        WHERE 1=1
+        <if test="CODE != 'null'">
+            AND  A.GDS_CATEGORY_CODE = #{CODE}
+        </if>
+        <if test="CATEGORY_REF != 'null'">
+            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
+    </select>
+
     <select id="getGoodsOne">
         SELECT A.GDS_NUM,
         A.GDS_NAME,
