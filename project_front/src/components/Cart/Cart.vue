@@ -208,7 +208,6 @@ export default {
         this.orderInfo = !this.orderInfo;
       } else {
         alert('상품을 선택해주세요.');
-        this.orderInfo = !this.orderInfo;
         return;
       }
     },

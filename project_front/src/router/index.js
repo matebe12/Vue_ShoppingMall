@@ -12,7 +12,6 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    component: () => import('@/components/main/FeaturedItem.vue'),
     beforeEnter: (to, from, next) => {
       store.state.loading = true;
       store.dispatch('getCategoryList');
@@ -26,16 +25,11 @@ const routes = [
     component: () => import('@/components/main/FeaturedItem.vue'),
     beforeEnter: (to, from, next) => {
       let reqData = {};
-      if (to.query.scode == null || to.query.scode == undefined) {
-        reqData.CATEGORY_REF = null;
-        reqData.CODE = to.query.code;
-      } else {
-        reqData.CATEGORY_REF = to.query.code;
-        reqData.CODE = to.query.scode;
-      }
+      reqData.CATEGORY_REF = to.query.fcode;
+      reqData.CODE = to.query.scode;
       reqData.PAGE = to.query.page *= 1; // 페이지 정보
-      reqData.PAGE_START = (reqData.PAGE - 1) * 2; // 보여줄 상품 시작
-      reqData.PER_PAGE_NUM = 2; // 보여줄 상품 수
+      reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
+      reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
       store.dispatch('getGoodListCount', reqData);
       store.dispatch('getGoodList', reqData);
       //getGoodsList(to.query.code);

@@ -1,131 +1,89 @@
 <template>
   <div class="featured-items">
+    <Banner></Banner>
     <div class="container">
       <div class="row">
-        <ul class="nav nav-tabs nav-product-tabs">
-          <li
-            class="active"
-            v-for="(item, index) in this.$store.state.category.category"
-            :key="index"
-          >
-            <router-link
-              :to="getUrl(item.CATEGORY_CODE)"
-              data-toggle="tab"
-              @click="changeGoods(item.CATEGORY_CODE)"
-              v-if="parentCode == item.CATEGORY_REF && $route.path != '/'"
-              >{{ item.CATEGORY_NAME }}</router-link
-            >
-          </li>
-
-          <li class="pull-right collection-url">
-            <a href="javascript:void(0);" @click="changeGoods(null)"
-              >View All <i class="fa fa-long-arrow-right"></i
-            ></a>
-          </li>
-        </ul>
-
-        <div class="tab-content">
-          <div class="tab-pane active" id="trending">
-            <div id="#container">
-              <table>
-                <thead>
-                  <tr></tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(goods, index) in getGoods" :key="index">
-                    <td>
-                      <img
-                        :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
-                        class="goodsImg"
-                      />
-                    </td>
-                    <td>
-                      <router-link :to="`/shop/view/${goods.GDS_NUM}`">{{
-                        goods.GDS_NAME
-                      }}</router-link>
-                    </td>
-                    <td>{{ goods.GDS_CATEGORY_NAME }}</td>
-                    <td>{{ goods.GDS_PRICE }} 원</td>
-                  </tr>
-                </tbody>
-              </table>
+        <SubMenu></SubMenu>
+        <div style="display:flex">
+          <p style="white-space: nowrap;">
+            총 <span style="font-weight:bold;">{{ getGoodsTotal }} </span> 개의
+            상품이 있습니다.
+          </p>
+          <div class="col-sm-4 nav-container" style="margin-left: 50%;">
+            <div class="form-group">
+              <select class="form-control nav">
+                <option value="" selected disabled>신상품순</option>
+                <option value="serie-0">낮은가격순</option>
+                <option value="serie-1">높은가격순</option>
+              </select>
             </div>
           </div>
         </div>
+
+        <GoodsList></GoodsList>
       </div>
     </div>
-    <Modal v-if="showModal" @closeModal="closeModal" :item="item"> </Modal>
-    <Pagenation></Pagenation>
+    <Pagenation @changePage="changePage"></Pagenation>
   </div>
 </template>
 
 <script>
-import Modal from '../common/GoodsViewModal.vue';
 import Pagenation from '../common/pagenation.vue';
+import Banner from './Banner.vue';
+import SubMenu from '../common/SubMenu.vue';
+import GoodsList from '../common/GoodsList.vue';
 export default {
   data() {
     return {
-      showModal: false,
       item: {},
-      showImg: false,
-      parentCode: '',
     };
   },
   created() {
-    this.parentCode = this.$route.query.code;
     this.changeGoods(null);
   },
   props: ['parentCategoryCode'],
-  mounted() {
-    this.showImg = true;
-    this.parentCode = this.$route.query.code;
-  },
   computed: {
     getGoods() {
       return this.$store.state.goods.goods;
     },
+    getGoodsTotal() {
+      return this.$store.state.goods.total;
+    },
   },
   components: {
-    Modal,
     Pagenation,
+    Banner,
+    SubMenu,
+    GoodsList,
   },
   methods: {
-    changeGoods(code) {
+    changePage(page) {
+      this.$router.replace({
+        name: 'shopList',
+        query: {
+          fcode: this.$route.query.fcode,
+          scode: this.$route.query.scode,
+          page: page,
+        },
+      });
+      //this.changeGoods(page);
+    },
+    changeGoods() {
       let reqData;
-      if (code != null) {
-        reqData = {
-          CODE: this.$route.query.scode,
-          CATEGORY_REF: this.$route.query.code,
-        };
-      } else {
-        reqData = {
-          CATEGORY_REF: this.$route.query.code,
-          CODE: this.$route.query.scode,
-        };
-        reqData.PAGE = this.$route.query.page *= 1;
-        reqData.PAGE_START = (reqData.PAGE - 1) * 2; // 보여줄 상품 시작
-        reqData.PER_PAGE_NUM = 2; // 보여줄 상품 수
-        this.$store.dispatch('getGoodListCount', reqData);
-      }
+      reqData = {
+        CODE: this.$route.query.scode,
+        CATEGORY_REF: this.$route.query.fcode,
+      };
+      reqData.PAGE = this.$route.query.page *= 1;
+      reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
+      reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
 
+      this.$store.dispatch('getGoodListCount', reqData);
       this.$store.dispatch('getGoodList', reqData);
-    },
-    getUrl(scode) {
-      let _page = 1;
-      let url = '/shop/list/category?code=' + this.$route.query.code;
-      url += '&scode=' + scode;
-      url += '&page=' + _page;
-      return url;
-    },
-    closeModal() {
-      this.showModal = !this.showModal;
     },
     showGoods(goods) {
       this.showModal = true;
       this.item = goods;
-    },
-    getrefCode(CATEGORY_REF) {
-      return CATEGORY_REF == this.$route.query.code ? true : false;
     },
     getImgSrc(GDS_IMG) {
       return {
@@ -143,5 +101,25 @@ export default {
   z-index: 1031;
   top: calc(50% - (...px / 2)); /* where ... is the element's height */
   right: calc(50% - (...px / 2)); /* where ... is the element's width */
+}
+a {
+  text-decoration: none;
+  color: #000000;
+  font-size: 15px;
+}
+a:hover {
+  color: #5fb8db;
+}
+.goodsDiv {
+  margin-left: 30px;
+}
+.card-block {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.card-img-top {
+  width: 200px;
+  height: 200px;
 }
 </style>

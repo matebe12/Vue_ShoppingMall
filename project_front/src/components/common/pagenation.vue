@@ -14,7 +14,9 @@
       :class="{ active: index + 1 == $route.query.page }"
       :key="index"
     >
-      <router-link :to="getUrl(index + 1)">{{ index + 1 }}</router-link>
+      <a href="javascript:void(0)" @click="changePage(index + 1)">{{
+        index + 1
+      }}</a>
     </li>
     <li>
       <router-link to="">
@@ -28,7 +30,7 @@
 export default {
   computed: {
     getGoods() {
-      let pageData = Math.ceil(this.$store.state.goods.total / 2);
+      let pageData = Math.ceil(this.$store.state.goods.total / 10);
       return pageData;
     },
   },
@@ -43,6 +45,10 @@ export default {
         '&page=' +
         index;
       return currentPath;
+    },
+    changePage(item) {
+      console.log(item);
+      this.$emit('changePage', item);
     },
   },
 };

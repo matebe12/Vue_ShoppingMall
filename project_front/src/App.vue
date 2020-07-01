@@ -2,10 +2,7 @@
   <div>
     <header id="header">
       <ToolBar></ToolBar>
-      <div v-if="this.$store.state.isView">
-        <ShopHeader></ShopHeader>
-        <Navigator></Navigator>
-      </div>
+      <div v-if="this.$store.state.isView"></div>
     </header>
     <router-view :key="$route.fullPath"></router-view>
     <Spinner></Spinner>
@@ -14,13 +11,9 @@
 
 <script>
 import ToolBar from '@/components/main/ToolBar';
-import ShopHeader from '@/components/main/Header';
-import Navigator from '@/components/main/Navigator';
 export default {
   components: {
     ToolBar,
-    ShopHeader,
-    Navigator,
   },
   data() {
     return {
@@ -30,8 +23,6 @@ export default {
   methods: {},
 };
 </script>
-
-<style src="@/assets/css/style.css"></style>
 <style>
 #footer {
   position: absolute;
