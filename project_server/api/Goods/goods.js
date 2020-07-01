@@ -73,7 +73,6 @@ router.post('/getGoodsList', async (req,res) => {
     if(req.body != null){
         reqData = req.body;
     }
-    console.log('reqData : ',reqData);    
 
     const query2 = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', reqData, format);
     connection.query(query2, (error, results, fields) => {
