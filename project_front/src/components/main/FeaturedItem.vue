@@ -1,25 +1,9 @@
 <template>
   <div class="featured-items">
-    <Banner></Banner>
+    <Banner @changeGoods="changeGoods"></Banner>
+
     <div class="container">
       <div class="row">
-        <SubMenu></SubMenu>
-        <div style="display:flex">
-          <p style="white-space: nowrap;">
-            총 <span style="font-weight:bold;">{{ getGoodsTotal }} </span> 개의
-            상품이 있습니다.
-          </p>
-          <div class="col-sm-4 nav-container" style="margin-left: 50%;">
-            <div class="form-group">
-              <select class="form-control nav">
-                <option value="" selected disabled>신상품순</option>
-                <option value="serie-0">낮은가격순</option>
-                <option value="serie-1">높은가격순</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
         <GoodsList></GoodsList>
       </div>
     </div>
@@ -30,7 +14,6 @@
 <script>
 import Pagenation from '../common/pagenation.vue';
 import Banner from './Banner.vue';
-import SubMenu from '../common/SubMenu.vue';
 import GoodsList from '../common/GoodsList.vue';
 export default {
   data() {
@@ -41,19 +24,14 @@ export default {
   created() {
     this.changeGoods(null);
   },
-  props: ['parentCategoryCode'],
   computed: {
     getGoods() {
       return this.$store.state.goods.goods;
-    },
-    getGoodsTotal() {
-      return this.$store.state.goods.total;
     },
   },
   components: {
     Pagenation,
     Banner,
-    SubMenu,
     GoodsList,
   },
   methods: {
@@ -63,12 +41,13 @@ export default {
         query: {
           fcode: this.$route.query.fcode,
           scode: this.$route.query.scode,
+          order: this.selectedOrder,
           page: page,
         },
       });
       //this.changeGoods(page);
     },
-    changeGoods() {
+    changeGoods(selectedOrder) {
       let reqData;
       reqData = {
         CODE: this.$route.query.scode,
@@ -77,7 +56,7 @@ export default {
       reqData.PAGE = this.$route.query.page *= 1;
       reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
-
+      reqData.ORDER = selectedOrder;
       this.$store.dispatch('getGoodListCount', reqData);
       this.$store.dispatch('getGoodList', reqData);
     },
@@ -95,6 +74,11 @@ export default {
 </script>
 <style scoped src="@/assets/css/shopList.css"></style>
 <style scoped>
+.goodsTotal {
+  display: flex;
+  padding-left: 5%;
+  padding-right: 5%;
+}
 .spinner {
   display: block;
   position: fixed;

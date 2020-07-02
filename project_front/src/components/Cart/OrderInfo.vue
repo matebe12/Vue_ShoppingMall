@@ -76,6 +76,11 @@ export default {
   props: ['checkedItem', 'totalPrice'],
   methods: {
     async orderGoods() {
+      const check = this.checkedItem.length;
+      for (let i = 0; i < check; i++) {
+        this.checkedItem[i].CART_STOCK *= 1;
+        this.checkedItem[i].GDS_STOCK *= 1;
+      }
       const reqData = {
         ORDER_ID: this.getOrderId, // 주문 아이디
         USER_ID: this.$store.state.user.USER_ID,

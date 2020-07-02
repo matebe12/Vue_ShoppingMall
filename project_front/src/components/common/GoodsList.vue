@@ -15,24 +15,27 @@
           <!-- team-img -->
           <div class="team-block">
             <div class="team-img">
-              <img
-                :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
-                alt=""
-                class="imgDiv"
-              />
+              <router-link :to="`/shop/view/${goods.GDS_NUM}`">
+                <img
+                  :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
+                  alt=""
+                  class="imgDiv"
+                />
+              </router-link>
               <div class="overlay">
                 <div class="text"></div>
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" @click="addGoodsCart(goods)">
                   <i class="fa fa-shopping-cart fa-2x"></i
                 ></a>
               </div>
             </div>
             <p class="mb30 team-meta">
-              <router-link :to="`/shop/view/${goods.GDS_NUM}`">{{
-                goods.GDS_NAME
-              }}</router-link>
+              <router-link :to="`/shop/view/${goods.GDS_NUM}`">
+                <span class="new-item" v-if="goods.IS_NEW < 3">new!</span>
+                {{ goods.GDS_NAME }}
+              </router-link>
             </p>
-            <p style="font-weight:bold">{{ goods.GDS_PRICE }} 원</p>
+            <span class="price">{{ goods.GDS_PRICE }} 원</span>
           </div>
         </div>
       </div>
@@ -41,6 +44,7 @@
 </template>
 
 <script>
+import { addGoodsCart, getCartList } from '@/api/Cart.js';
 export default {
   computed: {
     getGoods() {
@@ -52,6 +56,30 @@ export default {
       return {
         GDS_IMG: GDS_IMG && require('@/assets/upload/' + GDS_IMG),
       };
+    },
+    async addGoodsCart(goods) {
+      if (this.$store.state.user.USER_ID == '') {
+        alert('로그인을 해주세요. ');
+        return;
+      }
+      if (goods.GDS_STOCK < 1) {
+        alert('상품의 수량이 없습니다.');
+        return;
+      }
+      try {
+        const reqData = {
+          USER_ID: this.$store.state.user.USER_ID,
+          GDS_NUM: goods.GDS_NUM,
+          CART_STOCK: 1,
+        };
+        const response = await addGoodsCart(reqData);
+        console.log(response);
+        alert(`${goods.GDS_NAME} 상품 1개가 담겼습니다.`);
+        const response1 = await getCartList(this.$store.state.user.USER_ID);
+        this.$store.state.cart.cart = response1.data.results;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -133,17 +161,16 @@ a:hover {
 }
 .team-block {
   margin-bottom: 20px;
-  width: 200px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  text-align: center;
 }
 .team-content {
   position: absolute;
   background-color: rgba(17, 24, 31, 0.8);
   bottom: 0px;
   display: inline-block;
-  width: 200px;
   color: #fff;
   padding: 30px;
 }
@@ -167,7 +194,6 @@ a:hover {
   left: 0;
   right: 0;
   height: 20%;
-  width: 200px;
   opacity: 0;
   transition: 1s ease;
   background-color: #000000;
@@ -194,5 +220,11 @@ a:hover {
   color: white;
   float: unset;
   padding: 5px;
+}
+.new-item {
+  color: crimson;
+}
+.price {
+  font-weight: bold;
 }
 </style>

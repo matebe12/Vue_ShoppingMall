@@ -16,6 +16,9 @@ function insertOrder(reqData) {
 function insertOrderDetail(reqData) {
   return cart.post('/insertOrderDetail', reqData);
 }
+function getOrderList(reqData) {
+  return cart.get(`/getOrderList/${reqData}`);
+}
 
 export {
   addGoodsCart,
@@ -23,4 +26,5 @@ export {
   deleteCart,
   insertOrder,
   insertOrderDetail,
+  getOrderList,
 };

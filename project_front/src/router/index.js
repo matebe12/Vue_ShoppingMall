@@ -30,6 +30,7 @@ const routes = [
       reqData.PAGE = to.query.page *= 1; // 페이지 정보
       reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
+      reqData.ORDER = 'newItem';
       store.dispatch('getGoodListCount', reqData);
       store.dispatch('getGoodList', reqData);
       //getGoodsList(to.query.code);
@@ -41,8 +42,19 @@ const routes = [
     name: 'cart',
     component: () => import('@/views/shop/Cart.vue'),
     beforeEnter: (to, from, next) => {
-      store.state.loading = true;
       store.dispatch('getCartList', store.state.user.USER_ID);
+      next();
+    },
+  },
+  {
+    path: '/order/list',
+    name: 'order',
+    component: () => import('@/components/Cart/OrderList.vue'),
+    beforeEnter: (to, from, next) => {
+      store.state.loading = true;
+      console.log(store.state.user.USER_ID);
+
+      store.dispatch('getOrderList', store.state.user.USER_ID);
       store.state.loading = false;
       next();
     },

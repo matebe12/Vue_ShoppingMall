@@ -1,5 +1,5 @@
 /* Extra small devices (phones, less than 768px) */
-@media (max-width: 768px) { 
+@media (max-width: 50%) { 
     .navbar-header {
         float: right;
     }
@@ -141,7 +141,7 @@
     }
 }
 /* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) and (max-width: 992px) { 
+@media (min-width: 50%)  { 
     .navbar-header {
         float: right;
     }
