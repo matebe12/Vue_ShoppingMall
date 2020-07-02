@@ -43,7 +43,8 @@
         A.GDS_STOCK,
         A.GDS_DESC,
         A.GDS_IMG,
-       DATE_FORMAT(A.GDS_DATE, "%Y %c/%e %r") AS GDS_DATE
+       DATE_FORMAT(A.GDS_DATE, "%Y %c/%e %r") AS GDS_DATE,
+       (SELECT DATEDIFF(NOW(),A.GDS_DATE)) AS IS_NEW
         FROM GOODS_TABLE AS A
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
@@ -54,9 +55,19 @@
         <if test="CATEGORY_REF != 'null'">
             AND  B.CATEGORY_REF = #{CATEGORY_REF}
         </if>
+        <if test="ORDER != 'null' && ORDER == 'newItem'">
+            ORDER BY A.GDS_NUM DESC
+        </if>
+        <if test="ORDER != 'null' && ORDER == 'rowPrice'">
+            ORDER BY A.GDS_PRICE ASC
+        </if>
+        <if test="ORDER != 'null' && ORDER == 'highPrice'">
+            ORDER BY A.GDS_PRICE DESC
+        </if>
         <if test="PAGE != 'null'">
         LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
         </if>
+        
     </select>
 
     <select id="getGoodsListCount">

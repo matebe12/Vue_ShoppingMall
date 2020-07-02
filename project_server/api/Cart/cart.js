@@ -70,6 +70,8 @@ router.post('/insertOrder', async (req, res) => {
             msg: 'Bad Request Data'
         });
     }
+    console.log(reqData);
+    
     const query = MybatisMapper.getStatement('cartMapper', 'orderInfo', reqData, format);
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -95,22 +97,47 @@ router.post('/insertOrder', async (req, res) => {
         // });
     });
 
-    const query3 = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock', reqData, format);
-    connection.query(query3, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        // return res.status(200).send({
-        //     results
-        // });
-    });
+    for (let i = 0; i < reqData.ITEM.length; i++) {
+        let data = reqData.ITEM[i];
+        const query3 = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock', data, format);
+        connection.query(query3, (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                return res.status(500);
+            }
+            // return res.status(200).send({
+            //     results
+            // });
+        });
+     }
+    
     const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
     connection.query(query4, (error, results, fields) => {
         if (error) {
             console.log(error);
             return res.status(500);
         }
+        return res.status(200).send({
+            results
+        });
+    });
+});
+
+router.get('/getOrderList/:USER_ID', async (req, res) => {
+    if (req == null || req.params == '') {
+        return res.status(400).send({
+            msg: 'Bad Request Data'
+        });
+    }
+    const reqData = req.params;    
+    const query = MybatisMapper.getStatement('cartMapper', 'getOrderList', reqData, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+
+        console.log(results);
         return res.status(200).send({
             results
         });

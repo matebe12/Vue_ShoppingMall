@@ -30,25 +30,23 @@
      VALUES(#{ORDER_ID}, #{USER_ID}, #{ORDER_RECIEVE}, #{USER_ADDR1}, #{USER_ADDR2}, #{USER_ADDR3}, #{ORDER_PHONE}, #{TOTAL_PRICE})
 </insert>
 
-    <insert id="orderInfo_Details">
+<insert id="orderInfo_Details">
         INSERT INTO GOODS_ORDER_DETAIL_TABLE
     (
         ORDER_ID, 
         GDS_NUM, 
-        CART_STOCK
+        CART_STOCK,
+        USER_ID
     )
       VALUES
-      <foreach collection="ITEM" item="item">
-        (#{ORDER_ID}, #{item.GDS_NUM}, #{item.CART_STOCK})
+      <foreach collection="ITEM" item="item" separator=",">
+        (#{ORDER_ID}, ${item.GDS_NUM}, ${item.CART_STOCK}, #{USER_ID})
       </foreach>
       
 </insert>
 
 <update id="updateGoodsStock">
-    UPDATE GOODS_TABLE SET
-    <foreach collection="ITEM" item="item">
-    GDS_STOCK = GDS_STOCK - #{item.CART_STOCK} WHERE GDS_NUM = #{item.GDS_NUM} 
-    </foreach>
+    UPDATE GOODS_TABLE SET GDS_STOCK = GDS_STOCK - ${CART_STOCK} WHERE GDS_NUM = ${GDS_NUM}
 </update>
 
     <select id="getCartList">
@@ -69,12 +67,36 @@
 
     </select>
 
+    <select id="getOrderList">
+        SELECT
+        A.ORDER_ID,
+        A.USER_ID,
+        FORMAT(A.TOTAL_PRICE,0) AS TOTAL_PRICE,
+        B.GDS_NUM,
+        B.CART_STOCK,
+        B.STATUS,
+        C.GDS_NAME,
+        DATE_FORMAT(A.ORDER_DATE, "%Y %c/%e %r") AS ORDER_DATE        
+        FROM
+        GOODS_ORDER_TABLE AS A
+        INNER JOIN GOODS_ORDER_DETAIL_TABLE AS B
+        ON A.ORDER_ID = B.ORDER_ID
+        AND A.USER_ID = B.USER_ID
+        INNER JOIN GOODS_TABLE AS C
+        ON B.GDS_NUM = C.GDS_NUM
+        WHERE A.USER_ID = #{USER_ID}
+    </select>
+
     <delete id="deleteCart">
         DELETE FROM GOODS_CART_TABLE
         WHERE 1 = 1
-    <foreach collection="ITEM" item="item">
-        AND USER_ID = #{USER_ID} AND CART_NUM = #{item.CART_NUM}
-    </foreach>
-        
+            <if test="CART_NUM != 'null'">
+                AND USER_ID = #{USER_ID} AND CART_NUM = #{CART_NUM}
+            </if>
+        <if test="CART_NUM == 'undefined'">
+                <foreach collection="ITEM" item="item">
+                    AND USER_ID = #{USER_ID} AND CART_NUM = #{item.CART_NUM}
+                </foreach>
+            </if>
     </delete>
 </mapper>
