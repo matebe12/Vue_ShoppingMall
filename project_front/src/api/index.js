@@ -11,3 +11,4 @@ function createInstanceWithAuth(url) {
 export const goods = createInstanceWithAuth('goods');
 export const reply = createInstanceWithAuth('reply');
 export const cart = createInstanceWithAuth('cart');
+export const user = createInstanceWithAuth('user');

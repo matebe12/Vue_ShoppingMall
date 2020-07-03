@@ -8,6 +8,7 @@
         ></Aside_Admin>
         <GoodsRegister v-if="GoodsRegist"></GoodsRegister>
         <GoodsList v-if="GoodsList"></GoodsList>
+        <UserList v-if="UserList"></UserList>
       </div>
     </section>
   </div>
@@ -17,16 +18,19 @@
 import Aside_Admin from './Aside.vue';
 import GoodsRegister from './GoodsRegister';
 import GoodsList from './GoodsList.vue';
+import UserList from './UserList.vue';
 export default {
   components: {
     Aside_Admin,
     GoodsRegister,
     GoodsList,
+    UserList,
   },
   data() {
     return {
       GoodsRegist: false,
       GoodsList: false,
+      UserList: false,
     };
   },
   methods: {
@@ -34,9 +38,15 @@ export default {
       if (num == 1) {
         this.GoodsRegist = true;
         this.GoodsList = false;
+        this.UserList = false;
       } else if (num == 2) {
         this.GoodsRegist = false;
         this.GoodsList = true;
+        this.UserList = false;
+      } else if (num == 3) {
+        this.GoodsRegist = false;
+        this.GoodsList = false;
+        this.UserList = true;
       }
     },
   },

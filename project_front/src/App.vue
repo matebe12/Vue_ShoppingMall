@@ -6,6 +6,9 @@
     </header>
     <router-view :key="$route.fullPath"></router-view>
     <Spinner></Spinner>
+    <a href="#" class="topBtn"
+      ><span><i class="fas fa-arrow-up fa-1x"> Top</i></span></a
+    >
   </div>
 </template>
 
@@ -20,7 +23,11 @@ export default {
       isAdminView: false,
     };
   },
-  methods: {},
+  methods: {
+    goTop() {
+      console.log('toptoptop');
+    },
+  },
 };
 </script>
 <style>
@@ -32,5 +39,17 @@ export default {
   width: 100%;
 
   height: 70px;
+}
+* {
+  box-sizing: border-box;
+}
+.topBtn {
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  color: #333;
+}
+.topBtn:hover {
+  color: coral;
 }
 </style>

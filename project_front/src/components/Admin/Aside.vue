@@ -4,7 +4,8 @@
       <li><a href="javascript:void(0);" @click="changePage(1)">상품등록</a></li>
       <li><a href="javascript:void(0);" @click="changePage(2)">상품목록</a></li>
       <li><a href="javascript:void(0);">상품소감</a></li>
-      <li><a href="javascript:void(0);">유저목록</a></li>
+      <li><a href="javascript:void(0);">주문목록</a></li>
+      <li><a href="javascript:void(0);" @click="changePage(3)">유저목록</a></li>
     </ul>
   </aside>
 </template>
