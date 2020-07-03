@@ -23,4 +23,13 @@
             AND USER_PW = #{USER_PW}
         </if>
     </select>
+
+    <select id="getUserList">
+        SELECT 
+        USER_ID,
+        USER_PHONE,
+        DATE_FORMAT(CREATED_DT, "%Y %c/%e %r") AS CREATED_DT
+        FROM USER_TABLE
+    </select>
+
 </mapper>

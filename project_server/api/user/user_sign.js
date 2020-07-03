@@ -89,4 +89,18 @@ router.post('/login', (req,res) => {
     });
 });
 
+router.get('/getUserList', async(req, res) => {
+    const query = MybatisMapper.getStatement('userMapper', 'getUserList', null, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
+    });
+});
+
 export default router;
