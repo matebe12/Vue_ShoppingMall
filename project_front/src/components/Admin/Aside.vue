@@ -1,32 +1,40 @@
 <template>
-  <aside>
-    <ul>
-      <li><a href="javascript:void(0);" @click="changePage(1)">상품등록</a></li>
-      <li><a href="javascript:void(0);" @click="changePage(2)">상품목록</a></li>
-      <li><a href="javascript:void(0);">상품소감</a></li>
-      <li><a href="javascript:void(0);">주문목록</a></li>
-      <li><a href="javascript:void(0);" @click="changePage(3)">유저목록</a></li>
-    </ul>
-  </aside>
+  <ul>
+    <li>
+      <router-link to="/admin/registGoods">상품등록</router-link>
+    </li>
+    <li>
+      <router-link to="/admin/goodsList">상품목록</router-link>
+    </li>
+    <li><router-link to="">상품소감</router-link></li>
+    <li><router-link to="/admin/orderList">주문목록</router-link></li>
+    <li>
+      <router-link to="/admin/userList">유저목록</router-link>
+    </li>
+  </ul>
 </template>
 
 <script>
 export default {
-  methods: {
-    changePage(num) {
-      this.$emit('changePage', num);
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
-aside ul li a {
-  display: block;
-  width: 100%;
-  padding: 10px 0;
+ul:hover {
+  background-color: whitesmoke;
 }
-aside ul li a:hover {
-  background: #eee;
+ul li {
+  position: relative;
+  float: left;
+  padding: 1%;
+  text-align: center;
+  left: 35%;
+}
+ul li a {
+  color: black;
+}
+ul li a:hover {
+  color: black;
 }
 </style>

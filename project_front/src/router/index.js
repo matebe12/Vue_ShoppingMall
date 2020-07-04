@@ -79,24 +79,33 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
+    children: [
+      {
+        path: 'goodsList',
+        name: 'goodsList',
+        component: () => import('@/components/Admin/GoodsList.vue'),
+      },
+      {
+        path: 'userList',
+        name: 'userList',
+        component: () => import('@/components/Admin/UserList.vue'),
+      },
+      {
+        path: 'registGoods',
+        name: 'registGoods',
+        component: () => import('@/components/Admin/GoodsRegister.vue'),
+      },
+    ],
     component: () => import('@/views/Admin/Admin.vue'),
     beforeEnter: (to, from, next) => {
-      // 관리자가 아닐 경우 리다이렉트
-      if (Cookie.get('token') != null || Cookie.get('user') != null) {
-        if (Cookie.get('verify') == 9) {
-          return next();
-        } else {
-          alert('권한이 없습니다');
-          next('/');
-        }
+      const checkAdmin = isAdmin();
+      if (checkAdmin.isAdmin && checkAdmin.isLogin) {
+        next();
+      } else if (!checkAdmin.isAdmin && checkAdmin.isLogin) {
+        next('/');
       } else {
-        alert('로그인 정보가 없습니다.');
         next('/login');
       }
-
-      // if (store.state.user.USER_VERIFY != 9 || !store.state.user) {
-      //   next('/login');
-      // }
     },
   },
 ];
@@ -105,6 +114,32 @@ const router = new VueRouter({
   mode: 'history',
   routes,
 });
+
+function isAdmin() {
+  // 관리자가 아닐 경우 리다이렉트
+  let check = {};
+  if (Cookie.get('token') != null || Cookie.get('user') != null) {
+    if (Cookie.get('verify') == 9) {
+      check.isAdmin = true;
+      check.isLogin = true;
+      return check;
+    } else {
+      alert('권한이 없습니다');
+      check.isAdmin = false;
+      check.isLogin = true;
+      return false;
+    }
+  } else {
+    alert('로그인 정보가 없습니다.');
+    check.isAdmin = false;
+    check.isLogin = false;
+    return check;
+  }
+
+  // if (store.state.user.USER_VERIFY != 9 || !store.state.user) {
+  //   next('/login');
+  // }
+}
 
 router.beforeEach(function(to, from, next) {
   if (to.name == 'login' || to.name == 'admin' || to.name == 'signup') {
