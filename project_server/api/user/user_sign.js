@@ -89,18 +89,67 @@ router.post('/login', (req,res) => {
     });
 });
 
-router.get('/getUserList', async(req, res) => {
-    const query = MybatisMapper.getStatement('userMapper', 'getUserList', null, format);
-    connection.query(query, (error, results, fields) => {
+router.post('/getUserList', async(req, res) => {
+    const reqData = req.body;
+    const query = MybatisMapper.getStatement('userMapper', 'getUserList', reqData, format);
+    connection.query(query, (error, results1, fields) => {
         if (error) {
             console.log(error);
             return res.status(500);
         }
-        console.log(results);
+        const query = MybatisMapper.getStatement('userMapper', 'getUserListCount', reqData, format);
+    connection.query(query, (error, results2, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        }
         return res.status(200).send({
-            results
+            results2,
+            results1
+        });
+        });       
+    });
+});
+
+router.post('/updateUser', async (req, res) => {
+    let reqData;
+    if (req.body != null) {
+        reqData = req.body;
+    }
+    console.log('reqData : ', reqData);
+
+    const query = MybatisMapper.getStatement('userMapper', 'updateUser', reqData, format);
+    connection.query(query, (error, results2, fields) => {
+        if (error) {
+            console.log(error);
+            return 500;
+        }
+        console.log(results2);
+        return res.status(200).send({
+            results2
         });
     });
+});
+
+router.post('/deleteUser', async (req, res) => {
+    const reqData = req.body.ITEM;
+    let resData = [];
+    
+    for(let i =0; i< reqData.length; i++){    
+        console.log(reqData[i].USER_ID);    
+        const query = MybatisMapper.getStatement('userMapper', 'deleteUser', reqData[i], format);
+        connection.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                return res.status(500);
+            }
+            resData.push(results);
+        });
+    };
+        return res.status(200).send({
+            resData
+        });
+    
 });
 
 export default router;

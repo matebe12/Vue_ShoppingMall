@@ -28,8 +28,55 @@
         SELECT 
         USER_ID,
         USER_PHONE,
+        USER_VERIFY,
+        USER_NAME,
         DATE_FORMAT(CREATED_DT, "%Y %c/%e %r") AS CREATED_DT
         FROM USER_TABLE
+        WHERE 1= 1
+        <if test="USER_ID != 'null' || USER_ID != ''">
+            AND USER_ID LIKE  CONCAT('%',#{USER_ID},'%')
+        </if>
+        <if test="USER_NAME != 'null' || USER_NAME != ''">
+            AND USER_NAME LIKE CONCAT('%',#{USER_NAME},'%')
+        </if>
+        <if test="USER_VERIFY != 'null' && USER_VERIFY != ''">
+            AND USER_VERIFY = ${USER_VERIFY}
+        </if>
+        <if test="PAGE != 'null'">
+        LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
+        </if>
     </select>
+
+    <select id="getUserListCount">
+        SELECT 
+        COUNT(*) AS TOTAL_COUNT
+        FROM USER_TABLE
+        WHERE 1= 1
+        <if test="USER_ID != 'null' || USER_ID != ''">
+            AND USER_ID LIKE  CONCAT('%',#{USER_ID},'%')
+        </if>
+        <if test="USER_NAME != 'null' || USER_NAME != ''">
+            AND USER_NAME LIKE CONCAT('%',#{USER_NAME},'%')
+        </if>
+        <if test="USER_VERIFY != 'null' && USER_VERIFY != ''">
+            AND USER_VERIFY = ${USER_VERIFY}
+        </if>
+        <if test="PAGE != 'null'">
+        LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
+        </if>
+    </select>
+
+    <update id="updateUser">
+        UPDATE USER_TABLE 
+        SET USER_NAME = #{USER_NAME},
+        USER_PHONE = #{USER_PHONE},
+        USER_VERIFY = #{USER_VERIFY}
+        WHERE USER_ID = #{USER_ID}
+    </update>
+
+    <delete id="deleteUser">
+        DELETE FROM USER_TABLE       
+         WHERE USER_ID = #{USER_ID}
+    </delete>
 
 </mapper>
