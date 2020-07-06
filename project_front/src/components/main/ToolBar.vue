@@ -95,7 +95,9 @@
                 <router-link to="/cart/list"
                   ><i class="fa fa-shopping-cart">
                     <span class="badge badge-primary">{{
-                      this.$store.state.cart.cart.length
+                      this.$store.state.cart.cart.length != null
+                        ? this.$store.state.cart.cart.length
+                        : 0
                     }}</span>
                   </i></router-link
                 >

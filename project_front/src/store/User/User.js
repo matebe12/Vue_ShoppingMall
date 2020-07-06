@@ -1,4 +1,5 @@
 import Cookie from 'js-cookie';
+import store from '@/store/index';
 const state = {
   USER_ID:
     Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_ID : '',
@@ -19,6 +20,8 @@ const mutations = {
     Cookie.remove('token');
     Cookie.remove('user');
     Cookie.remove('verify');
+    store.state.cart.cart = null;
+    store.state.order.order = null;
     alert('로그아웃');
   },
   login(state, data) {

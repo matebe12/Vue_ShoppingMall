@@ -8,6 +8,13 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: () => import('@/views/User/SignUp.vue'),
+    beforeEnter: (to, from, next) => {
+      if (Cookie.get('token') == null || Cookie.get('user') == null) {
+        next();
+      } else {
+        next('/');
+      }
+    },
   },
   {
     path: '/',
