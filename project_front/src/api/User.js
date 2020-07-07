@@ -10,4 +10,8 @@ function updateUser(reqData) {
 function deleteUser(reqData) {
   return user.post('/deleteUser', reqData);
 }
-export { getUserList, updateUser, deleteUser };
+
+function signup(reqData) {
+  return user.post('/signup', reqData);
+}
+export { getUserList, updateUser, deleteUser, signup };

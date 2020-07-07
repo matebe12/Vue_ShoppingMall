@@ -1,28 +1,41 @@
 <template>
   <div class="featured-items">
-    <Banner @changeGoods="changeGoods"></Banner>
+    <Banner @changeOrder="changeOrder"></Banner>
 
     <div class="container">
       <div class="row">
         <GoodsList></GoodsList>
       </div>
     </div>
-    <Pagenation @changePage="changePage"></Pagenation>
+    <div id="pagination" class="tui-pagination"></div>
   </div>
 </template>
 
 <script>
-import Pagenation from '../common/pagenation.vue';
+import { createPageNation } from '@/util/tui grid/tuiPagenation';
 import Banner from './Banner.vue';
 import GoodsList from '../common/GoodsList.vue';
+import Validation from '@/util/data/Validation.js';
+var pagination;
 export default {
   data() {
     return {
       item: {},
+      selectedOrder: '',
     };
   },
   created() {
     this.changeGoods(null);
+  },
+  mounted() {
+    pagination = createPageNation('#pagination', 10);
+
+    pagination.on('beforeMove', async function(event) {
+      changeGoods(event);
+    });
+    const changeGoods = event => {
+      this.changeGoods(event);
+    };
   },
   computed: {
     getGoods() {
@@ -30,35 +43,27 @@ export default {
     },
   },
   components: {
-    Pagenation,
     Banner,
     GoodsList,
   },
   methods: {
-    changePage(page) {
-      this.$router.replace({
-        name: 'shopList',
-        query: {
-          fcode: this.$route.query.fcode,
-          scode: this.$route.query.scode,
-          order: this.selectedOrder,
-          page: page,
-        },
-      });
-      //this.changeGoods(page);
+    changeOrder(selectedOrder) {
+      this.selectedOrder = selectedOrder;
     },
-    changeGoods(selectedOrder) {
+    async changeGoods(event) {
       let reqData;
       reqData = {
         CODE: this.$route.query.scode,
         CATEGORY_REF: this.$route.query.fcode,
       };
-      reqData.PAGE = this.$route.query.page *= 1;
+      reqData.PAGE = Validation.isNull(event) ? (event.page *= 1) : 1;
       reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
-      reqData.ORDER = selectedOrder;
-      this.$store.dispatch('getGoodListCount', reqData);
-      this.$store.dispatch('getGoodList', reqData);
+      reqData.ORDER = this.selectedOrder;
+      await this.$store.dispatch('getGoodListCount', reqData);
+      await this.$store.dispatch('getGoodList', reqData);
+      pagination.setTotalItems(this.$store.state.goods.total);
+      pagination._paginate(reqData.PAGE);
     },
     showGoods(goods) {
       this.showModal = true;

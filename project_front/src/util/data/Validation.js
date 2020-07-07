@@ -37,7 +37,7 @@ function isPhone(data) {
 
 function isPw(data) {
   const isPw = data.length;
-  if (isPw < 6) {
+  if (isPw < 6 || isPw > 20) {
     return false;
   } else {
     return true;
@@ -68,6 +68,11 @@ function isStock(data) {
   }
 }
 
+function isCompare(data, data2) {
+  if (data == data2) return true;
+  else return false;
+}
+
 export default {
   isNull,
   isNum,
@@ -77,4 +82,5 @@ export default {
   isPrice,
   isLength,
   isStock,
+  isCompare,
 };

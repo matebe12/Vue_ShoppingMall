@@ -95,7 +95,7 @@
                 <router-link to="/cart/list"
                   ><i class="fa fa-shopping-cart">
                     <span class="badge badge-primary">{{
-                      this.$store.state.cart.cart.length != null
+                      this.$store.state.cart.cart != null
                         ? this.$store.state.cart.cart.length
                         : 0
                     }}</span>
@@ -115,7 +115,7 @@
                   ><i class="fa fa-lock"></i>회원가입</router-link
                 >
               </li>
-              <li class="dropdown">
+              <li class="dropdown" v-if="getUser">
                 <a
                   href="#"
                   class="dropdown-toggle"
@@ -182,7 +182,9 @@ export default {
   methods: {
     logout() {
       this.$store.commit('logout');
-      this.$router.push('/');
+      if (this.$route.path != '/') {
+        this.$router.push('/');
+      }
     },
   },
 };

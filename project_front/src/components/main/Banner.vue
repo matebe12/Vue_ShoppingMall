@@ -14,7 +14,7 @@
               </span>
               <select
                 class="form-control x-6"
-                @change="changeGoods()"
+                @change="changeOrder()"
                 v-model="selectedOrder"
               >
                 <option value="newItem">신상품순</option>
@@ -41,8 +41,8 @@ export default {
     SubMenu,
   },
   methods: {
-    changeGoods() {
-      this.$emit('changeGoods', this.selectedOrder);
+    changeOrder() {
+      this.$emit('changeOrder', this.selectedOrder);
     },
     getImgUrl() {
       const banner = this.$route.query.fcode;
