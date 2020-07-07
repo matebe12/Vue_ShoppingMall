@@ -6,13 +6,19 @@
         (
             USER_ID,
             USER_PW,
-            USER_PHONE
+            USER_PHONE,
+            USER_NAME,
+            USER_BIRTH,
+            USER_GENDER
         )
         VALUES
         (
             #{USER_ID},
             #{USER_PW},
-            #{USER_PHONE}
+            #{USER_PHONE},
+            #{USER_NAME},
+            #{USER_BIRTH},
+            #{USER_GENDER}
         )
     </insert>
     <select id="selectLoginUser">

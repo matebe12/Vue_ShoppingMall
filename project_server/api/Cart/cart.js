@@ -110,17 +110,20 @@ router.post('/insertOrder', async (req, res) => {
             // });
         });
      }
-    
-    const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
+     let resData = [];
+    for (let i = 0; i < reqData.ITEM.length; i++) {
+    const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData.ITEM[i], format);
     connection.query(query4, (error, results, fields) => {
         if (error) {
             console.log(error);
             return res.status(500);
         }
-        return res.status(200).send({
-            results
-        });
+        resData.push(results);
     });
+        return res.status(200).send({
+            resData
+        });
+}
 });
 
 router.get('/getOrderList/:USER_ID', async (req, res) => {

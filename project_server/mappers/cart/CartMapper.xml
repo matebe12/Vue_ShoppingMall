@@ -93,10 +93,5 @@
             <if test="CART_NUM != 'null'">
                 AND USER_ID = #{USER_ID} AND CART_NUM = #{CART_NUM}
             </if>
-        <if test="CART_NUM == 'undefined'">
-                <foreach collection="ITEM" item="item">
-                    AND USER_ID = #{USER_ID} AND CART_NUM = #{item.CART_NUM}
-                </foreach>
-            </if>
     </delete>
 </mapper>
