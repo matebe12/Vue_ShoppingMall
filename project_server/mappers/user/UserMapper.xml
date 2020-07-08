@@ -9,7 +9,9 @@
             USER_PHONE,
             USER_NAME,
             USER_BIRTH,
-            USER_GENDER
+            USER_GENDER,
+            USER_ADDR1,
+            USER_ADDR2
         )
         VALUES
         (
@@ -18,7 +20,9 @@
             #{USER_PHONE},
             #{USER_NAME},
             #{USER_BIRTH},
-            #{USER_GENDER}
+            #{USER_GENDER},
+            #{USER_ADDR1},
+            #{USER_ADDR2}
         )
     </insert>
     <select id="selectLoginUser">
