@@ -50,7 +50,7 @@
                       >
                         <router-link
                           :to="
-                            `/shop/list/category?fcode=${item.CATEGORY_CODE}&page=1`
+                            `/shop/list/category?fcode=${item.CATEGORY_CODE}`
                           "
                         >
                           {{ item.CATEGORY_NAME }}</router-link
@@ -63,7 +63,7 @@
                       >
                         <router-link
                           :to="
-                            `/shop/list/category?fcode=${item.CATEGORY_CODE}&scode=${item2.CATEGORY_CODE}&page=1`
+                            `/shop/list/category?fcode=${item.CATEGORY_CODE}&scode=${item2.CATEGORY_CODE}`
                           "
                           v-if="item.CATEGORY_CODE == item2.CATEGORY_REF"
                           >{{ item2.CATEGORY_NAME }}</router-link

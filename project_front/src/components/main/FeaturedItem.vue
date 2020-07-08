@@ -49,6 +49,7 @@ export default {
   methods: {
     changeOrder(selectedOrder) {
       this.selectedOrder = selectedOrder;
+      this.changeGoods();
     },
     async changeGoods(event) {
       let reqData;

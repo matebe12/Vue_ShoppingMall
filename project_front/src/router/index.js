@@ -31,16 +31,6 @@ const routes = [
     name: 'shopList',
     component: () => import('@/components/main/FeaturedItem.vue'),
     beforeEnter: (to, from, next) => {
-      let reqData = {};
-      reqData.CATEGORY_REF = to.query.fcode;
-      reqData.CODE = to.query.scode;
-      reqData.PAGE = to.query.page *= 1; // 페이지 정보
-      reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
-      reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
-      reqData.ORDER = 'newItem';
-      store.dispatch('getGoodListCount', reqData);
-      store.dispatch('getGoodList', reqData);
-      //getGoodsList(to.query.code);
       next();
     },
   },
@@ -53,6 +43,12 @@ const routes = [
       next();
     },
   },
+  {
+    path: '/popup/findpost',
+    name: 'findpost',
+    component: () => import('vuejs-daum-postcode'),
+  },
+
   {
     path: '/order/list',
     name: 'order',

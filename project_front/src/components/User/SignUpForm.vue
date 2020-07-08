@@ -15,10 +15,10 @@
             <label class="control-label col-sm-3"
               >아이디 <span class="text-danger">*</span></label
             >
-            <div class="col-md-8 col-sm-9">
+            <div class="col-md-5 col-sm-8">
               <div class="input-group">
                 <span class="input-group-addon"
-                  ><i class="glyphicon glyphicon-envelope"></i
+                  ><i class="fas fa-user"></i
                 ></span>
                 <input
                   type="text"
@@ -75,14 +75,19 @@
             <label class="control-label col-sm-3"
               >이름 <span class="text-danger">*</span></label
             >
-            <div class="col-md-8 col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                name="USER_NAME"
-                id="USER_NAME"
-                v-model="USER_NAME"
-              />
+            <div class="col-md-5 col-sm-8">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fas fa-user"></i
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="USER_NAME"
+                  id="USER_NAME"
+                  v-model="USER_NAME"
+                />
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -133,6 +138,44 @@
           </div>
           <div class="form-group">
             <label class="control-label col-sm-3"
+              >주소 <span class="text-danger">*</span></label
+            >
+            <div class="col-md-5 col-sm-8">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fas fa-address-book"></i
+                ></span>
+                <input
+                  type="text"
+                  class="form-control input-width-sm"
+                  name="USER_ADDR1"
+                  id="USER_ADDR1"
+                  v-model="USER_ADDR1"
+                />
+                <button
+                  type="button"
+                  class="findBtn"
+                  @click="isAddressMethod()"
+                >
+                  주소찾기
+                </button>
+                <post
+                  v-if="isAddress"
+                  @close="isAddressMethod()"
+                  @setAddress="setAddress"
+                ></post>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="USER_ADDR2"
+                  id="USER_ADDR2"
+                  v-model="USER_ADDR2"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3"
               >생년월일 <span class="text-danger">*</span></label
             >
             <div class="col-md-8 col-sm-9">
@@ -172,8 +215,12 @@
 import { createDatePicker } from '@/util/tui grid/tuiDatePicker';
 import Validation from '@/util/data/Validation.js';
 import { signup } from '@/api/User.js';
+import post from '@/util/daum/post.vue';
 var datePicker;
 export default {
+  components: {
+    post,
+  },
   data() {
     return {
       USER_ID: '',
@@ -182,7 +229,10 @@ export default {
       USER_GENDER: '',
       USER_NAME: '',
       USER_PW_C: '',
+      USER_ADDR1: '',
+      USER_ADDR2: '',
       checkIdMsg: '',
+      isAddress: false,
     };
   },
   mounted() {
@@ -193,6 +243,13 @@ export default {
     this.date = datePicker.getDate();
   },
   methods: {
+    setAddress(data) {
+      this.USER_ADDR1 = data;
+      this.isAddressMethod();
+    },
+    isAddressMethod() {
+      this.isAddress = !this.isAddress;
+    },
     async signUp() {
       const check = this.checkValidation();
       if (check) {
@@ -202,6 +259,8 @@ export default {
           USER_PHONE: this.USER_PHONE,
           USER_GENDER: this.USER_GENDER,
           USER_NAME: this.USER_NAME,
+          USER_ADDR1: this.USER_ADDR1,
+          USER_ADDR2: this.USER_ADDR2,
           USER_BIRTH: document.querySelector('#tui-date-picker-target').value,
         };
         try {
@@ -255,14 +314,34 @@ export default {
         return false;
       }
 
-      user_phone = Validation.isLength(this.USER_PHONE, 12);
+      user_phone = Validation.isLength(this.USER_PHONE, 20);
       if (!user_phone) {
-        alert('전화번호는 12자 이내로 입력해주세요.');
+        alert('전화번호는 20자 이내로 입력해주세요.');
         return false;
       }
       user_phone = Validation.isPhone(this.USER_PHONE);
       if (!user_phone) {
         alert('전화번호 형식이 맞지 않습니다.');
+        return false;
+      }
+      let user_addr1 = Validation.isNull(this.USER_ADDR1);
+      if (!user_addr1) {
+        alert('1차 주소를 입력 해주세요.');
+        return false;
+      }
+      user_addr1 = Validation.isLength(this.USER_ADDR1, 20);
+      if (!user_addr1) {
+        alert('1차 주소는 20자 이내로 입력해주세요.');
+        return false;
+      }
+      let user_addr2 = Validation.isNull(this.USER_ADDR2);
+      if (!user_addr2) {
+        alert('나머지 주소를 입력 해주세요.');
+        return false;
+      }
+      user_addr1 = Validation.isLength(this.USER_ADDR1, 50);
+      if (!user_addr2) {
+        alert('나머지 주소는 50자 이내로 입력해주세요.');
         return false;
       }
 
@@ -291,6 +370,9 @@ body {
   font-family: 'Roboto', sans-serif;
   color: #333;
   line-height: 22px;
+}
+.input-width-sm {
+  width: 61%;
 }
 h1,
 h2,

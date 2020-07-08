@@ -2,7 +2,7 @@
   <ul class="menu-list ">
     <li>
       <router-link
-        :to="`/shop/list/category?fcode=${$route.query.fcode}&page=1`"
+        :to="`/shop/list/category?fcode=${$route.query.fcode}`"
         :class="{
           active: $route.query.fcode % 100 == 0 && $route.query.scode == null,
         }"
@@ -16,7 +16,7 @@
     >
       <router-link
         :to="
-          `/shop/list/category?fcode=${item2.CATEGORY_REF}&scode=${item2.CATEGORY_CODE}&page=1`
+          `/shop/list/category?fcode=${item2.CATEGORY_REF}&scode=${item2.CATEGORY_CODE}`
         "
         v-if="$route.query.fcode == item2.CATEGORY_REF"
         >{{ item2.CATEGORY_NAME }}</router-link

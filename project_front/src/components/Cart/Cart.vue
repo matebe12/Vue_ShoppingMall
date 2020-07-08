@@ -21,7 +21,9 @@
                   name="checked_cart"
                   :value="item"
                   v-model="checkedItem"
+                  :id="`item_${item.GDS_NUM}`"
                   @change="
+                    isEmpty(`item_${item.GDS_NUM}`, item);
                     getSubTotalPrice();
                     getTotalPrice();
                   "
@@ -191,6 +193,22 @@ export default {
     },
   },
   methods: {
+    async isEmpty(el, item) {
+      for (let i = 0; i < this.checkedItem.length; i++) {
+        if (this.checkedItem[i].GDS_STOCK < 1) {
+          this.checkedItem.splice(
+            this.checkedItem.indexOf(this.checkedItem[i].GDS_STOCK < 0, 1),
+          );
+          document.querySelector(`#${el}`).checked = false;
+          alert('해당 상품은 남은 수량이 없습니다.');
+          try {
+            await this.deleteGoods(item.CART_NUM, item.USER_ID);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    },
     async refreshCart() {
       try {
         await this.$store.dispatch(
