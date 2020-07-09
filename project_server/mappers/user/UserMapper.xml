@@ -40,6 +40,8 @@
         USER_PHONE,
         USER_VERIFY,
         USER_NAME,
+        USER_BIRTH,
+        USER_GENDER,
         DATE_FORMAT(CREATED_DT, "%Y %c/%e %r") AS CREATED_DT
         FROM USER_TABLE
         WHERE 1= 1
@@ -80,7 +82,8 @@
         UPDATE USER_TABLE 
         SET USER_NAME = #{USER_NAME},
         USER_PHONE = #{USER_PHONE},
-        USER_VERIFY = #{USER_VERIFY}
+        USER_VERIFY = #{USER_VERIFY},
+        USER_GENDER = #{USER_GENDER}
         WHERE USER_ID = #{USER_ID}
     </update>
 

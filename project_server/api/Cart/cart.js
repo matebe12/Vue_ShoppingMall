@@ -126,25 +126,36 @@ router.post('/insertOrder', async (req, res) => {
 }
 });
 
-router.get('/getOrderList/:USER_ID', async (req, res) => {
+router.post('/getOrderList', async (req, res) => {
     if (req == null || req.params == '') {
         return res.status(400).send({
             msg: 'Bad Request Data'
         });
     }
-    const reqData = req.params;    
+    const reqData = req.body;
+    
+
+    console.log(reqData);
     const query = MybatisMapper.getStatement('cartMapper', 'getOrderList', reqData, format);
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, (error, results1, fields) => {
         if (error) {
             console.log(error);
             return res.status(500);
         }
-
-        console.log(results);
-        return res.status(200).send({
-            results
+        const query1 = MybatisMapper.getStatement('cartMapper', 'getOrderListCount', reqData, format);
+        connection.query(query1, (error, results2, fields) => {
+            if (error) {
+                console.log(error);
+                return res.status(500);
+            }
+            return res.status(200).send({
+                results1,
+                results2
+            });
         });
     });
+
+    
 });
 
 
