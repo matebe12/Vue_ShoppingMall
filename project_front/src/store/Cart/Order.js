@@ -1,11 +1,13 @@
 import { getOrderList } from '@/api/Cart';
 const state = {
   order: [],
+  total: 0,
 };
 
 const mutations = {
   getOrderList(state, data) {
-    state.order = data.data.results;
+    state.order = data.data.results1;
+    state.total = data.data.results2[0].TOTAL_COUNT;
   },
 };
 

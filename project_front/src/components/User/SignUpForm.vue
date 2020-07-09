@@ -240,7 +240,7 @@ export default {
       '#tui-date-picker-container',
       '#tui-date-picker-target',
     );
-    this.date = datePicker.getDate();
+    datePicker.getDate();
   },
   methods: {
     setAddress(data) {

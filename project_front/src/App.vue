@@ -23,6 +23,11 @@ export default {
       isAdminView: false,
     };
   },
+  computed: {
+    getsrc() {
+      return 'C:/upload/1592222647658Vuex구조.png';
+    },
+  },
   methods: {
     goTop() {
       console.log('toptoptop');

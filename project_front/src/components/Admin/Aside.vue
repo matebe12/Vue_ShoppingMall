@@ -6,7 +6,6 @@
     <li>
       <router-link to="/admin/goodsList">상품목록</router-link>
     </li>
-    <li><router-link to="">상품소감</router-link></li>
     <li><router-link to="/admin/orderList">주문목록</router-link></li>
     <li>
       <router-link to="/admin/userList">유저목록</router-link>

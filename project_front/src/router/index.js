@@ -98,6 +98,11 @@ const routes = [
         name: 'registGoods',
         component: () => import('@/components/Admin/GoodsRegister.vue'),
       },
+      {
+        path: 'orderList',
+        name: 'orderList',
+        component: () => import('@/components/Admin/OrderList.vue'),
+      },
     ],
     component: () => import('@/views/Admin/Admin.vue'),
     beforeEnter: (to, from, next) => {

@@ -21,20 +21,20 @@
                   @keyup.enter="refreshData"
                 />
               </td>
-              <th title="Name">이름</th>
+              <th title="Name">상품이름</th>
               <td>
                 <input
                   type="text"
-                  id="searUserNM"
+                  id="GDS_NAME"
                   v-model="inputData.USER_NAME"
                   @keyup.enter="refreshData"
                 />
               </td>
-              <th title="Name">권한</th>
+              <th title="Name">상태</th>
               <td>
                 <select v-model="inputData.USER_VERIFY" id="selectOption">
                   <option value="" selected>전체</option>
-                  <option v-for="i in 10" :key="i" :value="i - 1">{{
+                  <option v-for="i in 6" :key="i" :value="i - 1">{{
                     i - 1
                   }}</option>
                 </select>
@@ -55,22 +55,17 @@
             <strong><span id="totalCount">0</span></strong>
           </div>
           <div class="btn_gridsearch_fr">
-            <a href="javascript:void(0);" id="delBtn" @click="deleteUser"
-              ><span>삭제 </span></a
+            <a href="javascript:void(0);" id="delBtn"
+              ><span>주문 삭제 </span></a
             >
           </div>
           <div class="btn_gridsearch_fr">
-            <a href="javascript:void(0);" id="updBtn" @click="openModal()"
-              ><span>수정 </span></a
+            <a href="javascript:void(0);" id="updBtn" @click="updateState()"
+              ><span>주문 상태 변경 </span></a
             >
           </div>
           <div class="btn_gridsearch_fr">
-            <a href="javascript:void(0);" id="passwordBtn"
-              ><span>비밀번호 초기화</span></a
-            >
-          </div>
-          <div class="btn_gridsearch_fr">
-            <export-excel :data="userData">
+            <export-excel :data="orderData">
               <a href="javascript:void(0);"> <span> 엑셀 다운로드 </span></a>
             </export-excel>
           </div>
@@ -91,24 +86,22 @@
 </template>
 
 <script>
-import { getUserList, deleteUser } from '@/api/User.js';
 import { createdGrid } from '@/util/tui grid/tuiGrid';
 import { createPageNation } from '@/util/tui grid/tuiPagenation';
 import Validation from '@/util/data/Validation.js';
 import Modal from './modal.vue';
 var pagination;
 var instance;
+
 export default {
   components: {
     Modal,
   },
   data() {
     return {
-      userData: null,
+      orderData: null,
       modalopen: false,
       propsdata: '',
-      instance: {},
-      pagination: {},
       inputData: {
         USER_ID: '',
         USER_NAME: '',
@@ -116,33 +109,50 @@ export default {
       },
       columns: [
         {
-          header: '유저 아이디',
-          name: 'USER_ID',
+          header: '주문 번호',
+          name: 'ORDER_ID',
         },
         {
-          header: '유저 이름',
-          name: 'USER_NAME',
+          header: '상품 이름',
+          name: 'GDS_NAME',
         },
         {
-          header: '전화번호',
-          name: 'USER_PHONE',
+          header: '주문 상태',
+          name: 'STATUS',
+          formatter: value => {
+            let state = value.value;
+            switch (state) {
+              case 0:
+                return '<a href="javascript:void(0)">신규주문</a>';
+              case 1:
+                return '<a href="javascript:void(0)">발송대기</a>';
+              case 2:
+                return '<a href="javascript:void(0)">배송중</a>';
+              case 3:
+                return '<a href="javascript:void(0)">배송완료</a>';
+              case 4:
+                return '<a href="javascript:void(0)">구매확정</a>';
+              case 5:
+                return '<a href="javascript:void(0)">취소요청</a>';
+            }
+            return '<p>(주) 하이</p>';
+          },
         },
         {
-          header: '생년월일',
+          header: '주문 회사',
           name: 'USER_BIRTH',
+          formatter: () => {
+            return '<p>(주) 하이</p>';
+          },
         },
         {
-          header: '성별',
-          name: 'USER_GENDER',
+          header: '주문 수량',
+          name: 'CART_STOCK',
         },
         {
-          header: '유저 권한',
-          name: 'USER_VERIFY',
+          header: '주문 시간',
+          name: 'ORDER_DATE',
           align: 'center',
-        },
-        {
-          header: '가입날짜',
-          name: 'CREATED_DT',
         },
       ],
       options: {
@@ -154,99 +164,65 @@ export default {
     };
   },
   async mounted() {
-    const getUserListData = async event => {
+    const getOrderListData = async event => {
       var selectOption = document.querySelector('#selectOption').value;
       console.log('option : ' + selectOption);
 
       let reqData = {
-        USER_NAME: document.querySelector('#searUserNM').value,
         USER_ID: document.querySelector('#searUserID').value,
-        USER_VERIFY: selectOption,
+        GDS_NAME: document.querySelector('#GDS_NAME').value,
+        STATUS: selectOption,
         PAGE: Validation.isNull(event.page) ? event.page : 1,
       };
       reqData.PAGE_START = (reqData.PAGE - 1) * 10;
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
       console.log(reqData);
-
-      const response = await getUserList(reqData);
-      console.log(response);
-      let userData = response.data.results1;
-      instance.resetData(userData);
+      await this.$store.dispatch('getOrderList', reqData);
+      let orderData = this.$store.state.order.order;
+      instance.resetData(orderData);
       let data = [];
-      for (let i = 0; i < userData.length; i++) {
-        delete userData[i].uniqueKey;
-        delete userData[i]._attributes;
-        delete userData[i]._disabledPriority;
-        delete userData[i].rowSpanMap;
-        delete userData[i]._relationListItemMap;
-        delete userData[i].rowKey;
-        delete userData[i].sortKey;
-        data.push(userData[i]);
+      for (let i = 0; i < orderData.length; i++) {
+        delete orderData[i].uniqueKey;
+        delete orderData[i]._attributes;
+        delete orderData[i]._disabledPriority;
+        delete orderData[i].rowSpanMap;
+        delete orderData[i]._relationListItemMap;
+        delete orderData[i].rowKey;
+        delete orderData[i].sortKey;
+        data.push(orderData[i]);
       }
-      this.userData = data;
-      pagination.setTotalItems(response.data.results2[0].TOTAL_COUNT);
-      document.querySelector('#totalCount').innerHTML =
-        response.data.results2[0].TOTAL_COUNT;
+      this.orderData = data;
+
+      pagination.setTotalItems(this.$store.state.order.total);
+      document.querySelector(
+        '#totalCount',
+      ).innerHTML = this.$store.state.order.total;
       pagination._paginate(reqData.PAGE);
     };
     instance = createdGrid('#userGrid', this.columns, this.options);
 
     pagination = createPageNation('#pagination', 10);
     pagination.on('beforeMove', async function(event) {
-      getUserListData(event);
+      getOrderListData(event);
     });
     document
       .querySelector('#searchBtn')
-      .addEventListener('click', getUserListData);
+      .addEventListener('click', getOrderListData);
   },
   methods: {
-    openModal() {
-      const rows = instance.getCheckedRows();
-      if (rows.length < 1) {
-        alert('유저를 선택해주세요.');
+    updateState() {
+      const checkRow = instance.getCheckedRows();
+      if (checkRow.length < 1) {
+        alert('주문 상품을 선택 해주세요.');
         return;
-      } else if (rows.length > 1) {
-        alert('유저는 한명만 선택해주세요.');
-        return;
-      } else {
-        this.propsdata = rows[0];
-        this.modalopen = true;
-      }
-    },
-    async deleteUser() {
-      const rows = instance.getCheckedRows();
-      if (rows.length < 1) {
-        alert('유저를 선택해주세요.');
+      } else if (checkRow.length > 1) {
+        alert('주문 상품은 한개만 선택해주세요.');
         return;
       } else {
-        try {
-          const result = confirm(
-            `${rows[0].USER_ID} 외 ${rows.length -
-              1}개의 유저를 삭제 하시겠습니까?`,
-          );
-          if (result) {
-            let reqData = {
-              ITEM: rows,
-            };
-            await deleteUser(reqData);
-            alert(
-              `${rows[0].USER_ID} 외 ${rows.length -
-                1}개의 유저를 삭제 했습니다.`,
-            );
-            this.refreshData();
-          } else {
-            return;
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        // let rowItem = checkRow[0].STATUS;
+        // switch (rowItem) {
+        // }
       }
-    },
-    closeModal() {
-      this.modalopen = false;
-    },
-    refreshData() {
-      document.querySelector('#searchBtn').click();
     },
   },
 };
