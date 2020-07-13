@@ -123,10 +123,12 @@ router.post('/insertOrder', async (req, res) => {
         }
         resData.push(results);
     });
-        return res.status(200).send({
-            resData
-        });
+        
 }
+
+    return res.status(200).send({
+        resData
+    });
 });
 
 router.post('/getOrderList', async (req, res) => {
