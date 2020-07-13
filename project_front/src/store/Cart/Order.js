@@ -1,4 +1,4 @@
-import { getOrderList } from '@/api/Cart';
+import { getOrderList, updateOrderList, deleteOrderList } from '@/api/Cart';
 const state = {
   order: [],
   total: 0,
@@ -16,6 +16,20 @@ const actions = {
     try {
       const response = await getOrderList(data);
       context.commit('getOrderList', response);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async updateOrderList(context, data) {
+    try {
+      await updateOrderList(data);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async deleteOrderList(context, data) {
+    try {
+      await deleteOrderList(data);
     } catch (error) {
       console.log(error);
     }

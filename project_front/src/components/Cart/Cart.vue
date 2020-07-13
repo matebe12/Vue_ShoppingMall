@@ -215,11 +215,10 @@ export default {
           'getCartList',
           this.$store.state.user.USER_ID,
         );
-        console.log(this.$store.state.cart.cart);
-
-        this.CartItem = this.$store.state.cart.cart;
         this.orderInfo = !this.orderInfo;
         alert('주문이 완료 되었습니다.');
+
+        this.CartItem = this.$store.state.cart.cart;
       } catch (error) {
         console.log(error);
       }

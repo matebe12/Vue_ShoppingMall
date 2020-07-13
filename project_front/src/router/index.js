@@ -38,8 +38,8 @@ const routes = [
     path: '/cart/list',
     name: 'cart',
     component: () => import('@/views/shop/Cart.vue'),
-    beforeEnter: (to, from, next) => {
-      store.dispatch('getCartList', store.state.user.USER_ID);
+    beforeEnter: async (to, from, next) => {
+      await store.dispatch('getCartList', store.state.user.USER_ID);
       next();
     },
   },

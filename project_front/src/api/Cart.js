@@ -26,6 +26,12 @@ function getOrderList(reqData) {
   }
 }
 
+function updateOrderList(reqData) {
+  return cart.post('/updateOrderList', reqData);
+}
+function deleteOrderList(reqData) {
+  return cart.post('/deleteOrderList', reqData);
+}
 export {
   addGoodsCart,
   getCartList,
@@ -33,4 +39,6 @@ export {
   insertOrder,
   insertOrderDetail,
   getOrderList,
+  updateOrderList,
+  deleteOrderList,
 };

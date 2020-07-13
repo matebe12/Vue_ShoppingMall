@@ -71,7 +71,6 @@
 
 <script>
 import { insertOrder } from '@/api/Cart.js';
-import moment from 'moment';
 export default {
   props: ['checkedItem', 'totalPrice'],
   methods: {
@@ -80,9 +79,9 @@ export default {
       for (let i = 0; i < check; i++) {
         this.checkedItem[i].CART_STOCK *= 1;
         this.checkedItem[i].GDS_STOCK *= 1;
+        this.checkedItem[i].ORDER_ID = this.getOrderId;
       }
       const reqData = {
-        ORDER_ID: this.getOrderId, // 주문 아이디
         USER_ID: this.$store.state.user.USER_ID,
         ORDER_RECIEVE: this.ORDER_RECIEVE,
         USER_ADDR1: this.USER_ADDR1,
@@ -117,13 +116,14 @@ export default {
   },
   computed: {
     getOrderId() {
-      const date = new Date();
-      let ORDER_ID =
-        moment(date).format('YYYY MM DD HH:mm:ss') +
-        '_' +
-        Math.floor(Math.random() * (10 - 0 + 1)) +
-        1;
-      return ORDER_ID;
+      // UUID v4 generator in JavaScript (RFC4122 compliant)
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
+        c,
+      ) {
+        var r = (Math.random() * 16) | 0,
+          v = c == 'x' ? r : (r & 3) | 8;
+        return v.toString(16);
+      });
     },
   },
 };

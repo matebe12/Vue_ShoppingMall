@@ -55,7 +55,7 @@
             <strong><span id="totalCount">0</span></strong>
           </div>
           <div class="btn_gridsearch_fr">
-            <a href="javascript:void(0);" id="delBtn"
+            <a href="javascript:void(0);" id="delBtn" @click="deleteOrder()"
               ><span>주문 삭제 </span></a
             >
           </div>
@@ -119,23 +119,53 @@ export default {
         {
           header: '주문 상태',
           name: 'STATUS',
+          editor: {
+            type: 'select',
+            options: {
+              listItems: [
+                { text: '신규주문', value: '신규주문' },
+                { text: '발송대기', value: '발송대기' },
+                { text: '배송중', value: '배송중' },
+                { text: '배송완료', value: '배송완료' },
+                { text: '구매확정', value: '구매확정' },
+                { text: '취소요청', value: '취소요청' },
+              ],
+            },
+          },
           formatter: value => {
-            let state = value.value;
-            switch (state) {
+            const sel = value.value;
+            switch (sel) {
               case 0:
-                return '<a href="javascript:void(0)">신규주문</a>';
+                return '신규주문';
               case 1:
-                return '<a href="javascript:void(0)">발송대기</a>';
+                return '발송대기';
               case 2:
-                return '<a href="javascript:void(0)">배송중</a>';
+                return '배송중';
               case 3:
-                return '<a href="javascript:void(0)">배송완료</a>';
+                return '배송완료';
               case 4:
-                return '<a href="javascript:void(0)">구매확정</a>';
+                return '구매확정';
               case 5:
-                return '<a href="javascript:void(0)">취소요청</a>';
+                return '취소요청';
+              case '신규주문':
+                return '신규주문';
+              case '발송대기':
+                return '발송대기';
+              case '배송중':
+                return '배송중';
+              case '배송완료':
+                return '배송완료';
+              case '구매확정':
+                return '구매확정';
+              case '취소요청':
+                return '취소요청';
             }
+
             return '<p>(주) 하이</p>';
+          },
+          onAfterChange: ev => {
+            console.log('after change:', ev);
+            instance.check(ev.rowKey);
           },
         },
         {
@@ -210,18 +240,73 @@ export default {
       .addEventListener('click', getOrderListData);
   },
   methods: {
-    updateState() {
+    async updateState() {
       const checkRow = instance.getCheckedRows();
       if (checkRow.length < 1) {
         alert('주문 상품을 선택 해주세요.');
         return;
-      } else if (checkRow.length > 1) {
-        alert('주문 상품은 한개만 선택해주세요.');
+      } else {
+        for (let i = 0; i < checkRow.length; i++) {
+          let rowItem = checkRow[i].STATUS;
+          switch (rowItem) {
+            case '신규주문':
+              checkRow[i].STATUS = 0;
+              break;
+            case '발송대기':
+              checkRow[i].STATUS = 1;
+              break;
+            case '배송중':
+              checkRow[i].STATUS = 2;
+              break;
+            case '배송완료':
+              checkRow[i].STATUS = 3;
+              break;
+            case '구매확정':
+              checkRow[i].STATUS = 4;
+              break;
+            case '취소요청':
+              checkRow[i].STATUS = 5;
+              break;
+          }
+        }
+
+        try {
+          await this.$store.dispatch('updateOrderList', checkRow);
+          alert('주문상태가 변경 되었습니다.');
+          document.querySelector('#searchBtn').click();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    async deleteOrder() {
+      const checkRow = instance.getCheckedRows();
+      if (checkRow.length < 1) {
+        alert('주문 상품을 선택 해주세요.');
         return;
       } else {
-        // let rowItem = checkRow[0].STATUS;
-        // switch (rowItem) {
-        // }
+        for (let i = 0; i < checkRow.length; i++) {
+          let rowItem = checkRow[i].STATUS;
+          switch (rowItem) {
+            case '취소요청':
+              checkRow[i].STATUS = 5;
+              break;
+            case 5:
+              checkRow[i].STATUS = 5;
+              break;
+            default:
+              return alert(
+                '주문 삭제는 취소 요청된 상품만 삭제 할 수 있습니다.',
+              );
+          }
+        }
+        try {
+          await this.$store.dispatch('deleteOrderList', checkRow);
+          alert('주문 상품이 삭제 되었습니다.');
+          document.querySelector('#searchBtn').click();
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
   },
