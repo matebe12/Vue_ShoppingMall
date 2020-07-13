@@ -23,11 +23,14 @@
      USER_ID, 
      ORDER_RECIEVE, 
      USER_ADDR1, 
-     USER_ADDR2, 
-     USER_ADDR3, 
+     USER_ADDR2,
      ORDER_PHONE, 
      TOTAL_PRICE)
-     VALUES(#{ORDER_ID}, #{USER_ID}, #{ORDER_RECIEVE}, #{USER_ADDR1}, #{USER_ADDR2}, #{USER_ADDR3}, #{ORDER_PHONE}, #{TOTAL_PRICE})
+     VALUES
+        <foreach collection="ITEM" item="item" separator=",">
+         (#{item.ORDER_ID}, #{USER_ID}, #{ORDER_RECIEVE}, #{USER_ADDR1}, #{USER_ADDR2}, #{ORDER_PHONE}, #{TOTAL_PRICE})
+         </foreach>
+         
 </insert>
 
 <insert id="orderInfo_Details">
@@ -40,7 +43,7 @@
     )
       VALUES
       <foreach collection="ITEM" item="item" separator=",">
-        (#{ORDER_ID}, ${item.GDS_NUM}, ${item.CART_STOCK}, #{USER_ID})
+        (#{item.ORDER_ID}, ${item.GDS_NUM}, ${item.CART_STOCK}, #{USER_ID})
       </foreach>
       
 </insert>
@@ -69,7 +72,7 @@
 
     <select id="getOrderList">
         SELECT
-        DISTINCT A.ORDER_ID,
+        A.ORDER_ID,
         A.USER_ID,
         FORMAT(A.TOTAL_PRICE,0) AS TOTAL_PRICE,
         B.GDS_NUM,
@@ -94,9 +97,11 @@
         <if test="STATUS != 'null' && STATUS != ''">
             AND B.STATUS = ${STATUS}
         </if>
+        ORDER BY ORDER_DATE ASC
         <if test="PAGE != 'null' || PAGE != ''">
         LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
         </if>
+        
         
     </select>
 
@@ -123,6 +128,14 @@
 
     </select>
 
+    <update id="updateOrderList">
+    UPDATE GOODS_ORDER_DETAIL_TABLE SET STATUS = ${STATUS} WHERE ORDER_ID = #{ORDER_ID} AND GDS_NUM = ${GDS_NUM}
+    </update>
+
+    <delete id="deleteOrderList">
+        DELETE T1, T2 FROM GOODS_ORDER_DETAIL_TABLE AS T1 INNER JOIN GOODS_ORDER_TABLE AS T2
+        WHERE T1.ORDER_ID = #{ORDER_ID} AND T1.GDS_NUM = ${GDS_NUM} AND T2.ORDER_ID = #{ORDER_ID}
+    </delete>
 
     <delete id="deleteCart">
         DELETE FROM GOODS_CART_TABLE

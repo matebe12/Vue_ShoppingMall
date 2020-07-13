@@ -49,18 +49,19 @@ router.post('/deleteCart', async (req, res) => {
             msg : 'Bad Request Data'
         });
     }
-    const query = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-
-        console.log(results);
-        return res.status(200).send({
-            results
+        const query = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
+        connection.query(query, (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                return res.status(500);
+            }
+            console.log(results);
+            return res.status(200).send({
+                msg: 'deleteCart'
+            });
         });
-    });
+
+    
 });
 
 router.post('/insertOrder', async (req, res) => {
@@ -112,6 +113,8 @@ router.post('/insertOrder', async (req, res) => {
      }
      let resData = [];
     for (let i = 0; i < reqData.ITEM.length; i++) {
+        console.log(reqData.ITEM[i]);
+        
     const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData.ITEM[i], format);
     connection.query(query4, (error, results, fields) => {
         if (error) {
@@ -157,6 +160,61 @@ router.post('/getOrderList', async (req, res) => {
 
     
 });
+
+router.post('/updateOrderList', async (req, res) => {
+    if (req == null || req.params == '') {
+        return res.status(400).send({
+            msg: 'Bad Request Data'
+        });
+    }
+    const reqData = req.body;
+
+
+    console.log(reqData);
+    for(let i = 0; i < reqData.length; i++){
+        const query = MybatisMapper.getStatement('cartMapper', 'updateOrderList', reqData[i], format);
+        connection.query(query, (error, results1, fields) => {
+            if (error) {
+                console.log(error);
+                return res.status(500);
+            }
+            
+        });
+    }
+    
+    return res.status(200).send({
+        msg:'업데이트 완료'
+    });
+
+});
+
+router.post('/deleteOrderList', async (req, res) => {
+    if (req == null || req.params == '') {
+        return res.status(400).send({
+            msg: 'Bad Request Data'
+        });
+    }
+    const reqData = req.body;
+
+
+    console.log(reqData);
+    for (let i = 0; i < reqData.length; i++) {
+        const query = MybatisMapper.getStatement('cartMapper', 'deleteOrderList', reqData[i], format);
+        connection.query(query, (error, results1, fields) => {
+            if (error) {
+                console.log(error);
+                return res.status(500);
+            }
+
+        });
+    }
+
+    return res.status(200).send({
+        msg: '삭제 완료'
+    });
+
+});
+
 
 
 // function updateGoodsStock(reqData){
