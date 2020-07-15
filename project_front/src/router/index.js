@@ -43,11 +43,6 @@ const routes = [
       next();
     },
   },
-  {
-    path: '/popup/findpost',
-    name: 'findpost',
-    component: () => import('vuejs-daum-postcode'),
-  },
 
   {
     path: '/order/list',
@@ -149,13 +144,13 @@ function isAdmin() {
   // }
 }
 
-router.beforeEach(function(to, from, next) {
+router.beforeEach(async function(to, from, next) {
   if (to.name == 'login' || to.name == 'admin' || to.name == 'signup') {
     store.state.isView = false;
   } else {
     store.state.isView = true;
   }
-  store.dispatch('getCategoryList');
+  await store.dispatch('getCategoryList');
   next();
 });
 

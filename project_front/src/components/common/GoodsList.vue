@@ -7,36 +7,41 @@
         ></div>
       </div>
       <div class="row">
-        <div
-          class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
-          v-for="(goods, index) in getGoods"
-          :key="index"
-        >
-          <!-- team-img -->
-          <div class="team-block">
-            <div class="team-img">
-              <router-link :to="`/shop/view/${goods.GDS_NUM}`">
-                <img
-                  :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
-                  alt=""
-                  class="imgDiv"
-                />
-              </router-link>
-              <div class="overlay">
-                <div class="text"></div>
-                <a href="javascript:void(0);" @click="addGoodsCart(goods)">
-                  <i class="fa fa-shopping-cart fa-2x"></i
-                ></a>
+        <div v-if="getGoods.length > 0">
+          <div
+            class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+            v-for="(goods, index) in getGoods"
+            :key="index"
+          >
+            <!-- team-img -->
+            <div class="team-block">
+              <div class="team-img">
+                <router-link :to="`/shop/view/${goods.GDS_NUM}`">
+                  <img
+                    :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
+                    alt=""
+                    class="imgDiv"
+                  />
+                </router-link>
+                <div class="overlay">
+                  <div class="text"></div>
+                  <a href="javascript:void(0);" @click="addGoodsCart(goods)">
+                    <i class="fa fa-shopping-cart fa-2x"></i
+                  ></a>
+                </div>
               </div>
+              <p class="mb30 team-meta">
+                <router-link :to="`/shop/view/${goods.GDS_NUM}`">
+                  <span class="new-item" v-if="goods.IS_NEW < 3">new!</span>
+                  {{ goods.GDS_NAME }}
+                </router-link>
+              </p>
+              <span class="price">{{ goods.GDS_PRICE }} 원</span>
             </div>
-            <p class="mb30 team-meta">
-              <router-link :to="`/shop/view/${goods.GDS_NUM}`">
-                <span class="new-item" v-if="goods.IS_NEW < 3">new!</span>
-                {{ goods.GDS_NAME }}
-              </router-link>
-            </p>
-            <span class="price">{{ goods.GDS_PRICE }} 원</span>
           </div>
+        </div>
+        <div v-else>
+          <h1 style="text-align: center;">해당 상품이 없습니다.</h1>
         </div>
       </div>
     </div>

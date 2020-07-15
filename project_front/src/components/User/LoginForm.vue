@@ -41,7 +41,7 @@
 
       <!-- Remind Passowrd -->
       <div id="formFooter">
-        <a class="underlineHover" href="#">회원가입</a>
+        <router-link class="underlineHover" to="/signup">회원가입</router-link>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@ export default {
       };
       this.$http
         .post('/api/user/login', reqData)
-        .then(response => {
+        .then(async response => {
           console.log(response);
           if (
             !response.data.resultData.isMatchedPw ||
@@ -75,6 +75,10 @@ export default {
             alert('로그인 되었습니다.');
             this.$store.commit('login', response.data);
 
+            await this.$store.dispatch(
+              'getCartList',
+              this.$store.state.user.USER_ID,
+            );
             this.$router.go(-1);
           }
         })

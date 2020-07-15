@@ -5,6 +5,7 @@
         <div class="single-banner">
           <div class="banner-caption">
             <img :src="getImgUrl().MENU_IMG" alt="" class="BannerImg" />
+
             <SubMenu></SubMenu>
             <div class="subTotal">
               <span style="white-space: nowrap;">
@@ -26,10 +27,12 @@
         </div>
       </div>
     </div>
+    <SearchForm @searchGoods="searchGoods"></SearchForm>
   </div>
 </template>
 
 <script>
+import SearchForm from '../common/searchForm';
 import SubMenu from '../common/SubMenu.vue';
 export default {
   data() {
@@ -39,32 +42,34 @@ export default {
   },
   components: {
     SubMenu,
+    SearchForm,
   },
   methods: {
     changeOrder() {
       this.$emit('changeOrder', this.selectedOrder);
+    },
+    searchGoods(data) {
+      this.$emit('searchGoods', data);
     },
     getImgUrl() {
       const banner = this.$route.query.fcode;
       let src = '';
       switch (banner) {
         case '100':
-          src = 'doll.png';
-          break;
+          src = 'http://thecodeplayer.com/uploads/media/40Ly3VB.jpg';
+          return { MENU_IMG: src };
         case '200':
-          src = 'dogu.png';
-          break;
+          src = 'http://thecodeplayer.com/uploads/media/00kih8g.jpg';
+          return { MENU_IMG: src };
         case '300':
-          src = 'com.png';
-          break;
+          src = 'http://thecodeplayer.com/uploads/media/2rT2vdx.jpg';
+          return { MENU_IMG: src };
         case '400':
-          src = 'jubang.png';
-          break;
+          src = 'http://thecodeplayer.com/uploads/media/8k3N3EL.jpg';
+          return { MENU_IMG: src };
       }
       console.log(src);
-      return {
-        MENU_IMG: src && require('@/assets/images/' + src),
-      };
+      return { MENU_IMG: src && require('@/assets/images/' + src) };
     },
   },
   computed: {
@@ -76,6 +81,9 @@ export default {
 </script>
 
 <style>
+.form-inline {
+  display: inline-flex;
+}
 .subTotal {
   display: inline-block;
   padding-left: 3.5%;
@@ -85,6 +93,7 @@ export default {
     width: 100%;
   }
   .BannerImg {
+    height: 400px;
     width: 100%;
   }
 }
@@ -93,6 +102,7 @@ export default {
     width: 100%;
   }
   .BannerImg {
+    height: 50%;
     width: 100%;
   }
 }

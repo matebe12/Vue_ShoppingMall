@@ -1,6 +1,6 @@
 <template>
   <div class="featured-items">
-    <Banner @changeOrder="changeOrder"></Banner>
+    <Banner @changeOrder="changeOrder" @searchGoods="searchGoods"></Banner>
 
     <div class="container">
       <div class="row">
@@ -22,6 +22,8 @@ export default {
     return {
       item: {},
       selectedOrder: '',
+      searchData: '',
+      isSearch: 0,
     };
   },
   created() {
@@ -47,24 +49,53 @@ export default {
     GoodsList,
   },
   methods: {
+    searchGoods(data) {
+      this.searchData = data;
+      this.isSearch = 1;
+      this.changeGoods();
+    },
     changeOrder(selectedOrder) {
       this.selectedOrder = selectedOrder;
       this.changeGoods();
     },
     async changeGoods(event) {
+      console.log(this.searchData);
       let reqData;
-      reqData = {
-        CODE: this.$route.query.scode,
-        CATEGORY_REF: this.$route.query.fcode,
-      };
+      reqData = {};
+      reqData.CODE = this.$route.query.scode;
+      reqData.CATEGORY_REF = this.$route.query.fcode;
       reqData.PAGE = Validation.isNull(event) ? (event.page *= 1) : 1;
       reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
       reqData.ORDER = this.selectedOrder;
+      if (this.isSearch == 1) {
+        // 검색모드이면
+        reqData.SEARCHNAME = this.searchData.goodsName;
+        reqData.SEARCH_CATEGORY = this.searchData.selectCategory;
+        reqData.IS_SEARCH = 'Y';
+      } else {
+        reqData.SEARCHNAME = null;
+        reqData.SEARCH_CATEGORY = null;
+        reqData.IS_SEARCH = 'N';
+      }
+
+      console.log(reqData);
       await this.$store.dispatch('getGoodListCount', reqData);
       await this.$store.dispatch('getGoodList', reqData);
       pagination.setTotalItems(this.$store.state.goods.total);
       pagination._paginate(reqData.PAGE);
+      if (
+        this.searchData.selectCategory != '' &&
+        this.searchData.selectCategory != undefined
+      ) {
+        this.$router.replace({
+          path: '/shop/list/category?',
+          query: {
+            fcode: this.$route.query.fcode,
+            scode: this.searchData.selectCategory,
+          },
+        });
+      }
     },
     showGoods(goods) {
       this.showModal = true;

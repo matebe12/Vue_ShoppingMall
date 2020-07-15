@@ -89,7 +89,7 @@
               <button
                 class="add-to-cart btn btn-default"
                 type="button"
-                @click="addGoodsCart()"
+                @click="addGoodsCart(1)"
               >
                 장바구니에 담기
               </button>
@@ -97,6 +97,7 @@
                 class="add-to-cart btn btn-default"
                 type="button"
                 style="margin-left:10px;"
+                @click="addGoodsCart(2)"
               >
                 구매하기
               </button>
@@ -154,7 +155,7 @@ export default {
     },
   },
   methods: {
-    async addGoodsCart() {
+    async addGoodsCart(mode) {
       if (this.$store.state.user.USER_ID == '') {
         alert('로그인을 해주세요. ');
         return;
@@ -174,6 +175,9 @@ export default {
         alert(`${this.item.GDS_NAME} 상품 ${this.buy_stock}개가 담겼습니다.`);
         const response1 = await getCartList(this.$store.state.user.USER_ID);
         this.$store.state.cart.cart = response1.data.results;
+        if (mode === 2) {
+          this.$router.push('/cart/list');
+        }
       } catch (error) {
         console.log(error);
       }

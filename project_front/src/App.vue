@@ -4,6 +4,7 @@
       <ToolBar></ToolBar>
       <div v-if="this.$store.state.isView"></div>
     </header>
+    <Slider></Slider>
     <router-view :key="$route.fullPath"></router-view>
     <Spinner></Spinner>
     <a href="#" class="topBtn"
@@ -14,9 +15,11 @@
 
 <script>
 import ToolBar from '@/components/main/ToolBar';
+import Slider from '@/components/common/slider';
 export default {
   components: {
     ToolBar,
+    Slider,
   },
   data() {
     return {
