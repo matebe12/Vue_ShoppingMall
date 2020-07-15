@@ -153,6 +153,9 @@ router.post('/getOrderList', async (req, res) => {
                 console.log(error);
                 return res.status(500);
             }
+            console.log(query);
+            console.log(query1);
+
             return res.status(200).send({
                 results1,
                 results2
@@ -207,13 +210,23 @@ router.post('/deleteOrderList', async (req, res) => {
                 console.log(error);
                 return res.status(500);
             }
-
+            const query1 = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock2', reqData[i], format);
+            connection.query(query1, (error, results2, fields) => {
+                if (error) {
+                    console.log(error);
+                    return res.status(500);
+                }
+                console.log(query1);
+                return res.status(200).send({
+                    results1,
+                    results2,
+                    msg: '삭제 완료'
+                });
+            })
         });
     }
 
-    return res.status(200).send({
-        msg: '삭제 완료'
-    });
+    
 
 });
 

@@ -25,10 +25,11 @@
      USER_ADDR1, 
      USER_ADDR2,
      ORDER_PHONE, 
-     TOTAL_PRICE)
+     TOTAL_PRICE,
+     GDS_NUM)
      VALUES
         <foreach collection="ITEM" item="item" separator=",">
-         (#{item.ORDER_ID}, #{USER_ID}, #{ORDER_RECIEVE}, #{USER_ADDR1}, #{USER_ADDR2}, #{ORDER_PHONE}, #{TOTAL_PRICE})
+         (#{item.ORDER_ID}, #{USER_ID}, #{ORDER_RECIEVE}, #{USER_ADDR1}, #{USER_ADDR2}, #{ORDER_PHONE}, #{TOTAL_PRICE}, ${item.GDS_NUM})
          </foreach>
          
 </insert>
@@ -51,6 +52,10 @@
 <update id="updateGoodsStock">
     UPDATE GOODS_TABLE SET GDS_STOCK = GDS_STOCK - ${CART_STOCK} WHERE GDS_NUM = ${GDS_NUM}
 </update>
+    <update id="updateGoodsStock2">
+        UPDATE GOODS_TABLE SET GDS_STOCK = GDS_STOCK + ${CART_STOCK} WHERE GDS_NUM = #{GDS_NUM}
+    </update>
+
 
     <select id="getCartList">
         SELECT 
@@ -72,7 +77,7 @@
 
     <select id="getOrderList">
         SELECT
-        A.ORDER_ID,
+         A.ORDER_ID,
         A.USER_ID,
         FORMAT(A.TOTAL_PRICE,0) AS TOTAL_PRICE,
         B.GDS_NUM,
@@ -91,15 +96,27 @@
         <if test="USER_ID != 'null' || USER_ID != ''">
            AND A.USER_ID LIKE CONCAT('%',#{USER_ID},'%')
         </if>
+        <if test="USER_ID2 != 'null' || USER_ID2 != ''">
+           AND A.USER_ID = #{USER_ID2}
+        </if>
         <if test="GDS_NAME != 'null' || GDS_NAME != ''">
             AND C.GDS_NAME LIKE CONCAT('%',#{GDS_NAME},'%')
         </if>
         <if test="STATUS != 'null' && STATUS != ''">
             AND B.STATUS = ${STATUS}
         </if>
+        <if test="status != ''">
+            AND B.STATUS = ${status}
+        </if>
+        <if test="gdsName != ''">
+            AND C.GDS_NAME LIKE CONCAT('%', #{gdsName}, '%')
+        </if>
         ORDER BY ORDER_DATE ASC
         <if test="PAGE != 'null' || PAGE != ''">
         LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
+        </if>
+        <if test="page != ''">
+            LIMIT ${pageStart}, ${perPageNum}
         </if>
         
         
@@ -107,7 +124,7 @@
 
     <select id="getOrderListCount">
         SELECT
-        COUNT(*) AS TOTAL_COUNT       
+        DISTINCT COUNT(*) AS TOTAL_COUNT       
         FROM
         GOODS_ORDER_TABLE AS A
         INNER JOIN GOODS_ORDER_DETAIL_TABLE AS B
@@ -119,12 +136,22 @@
         <if test="USER_ID != 'null' || USER_ID != ''">
            AND A.USER_ID LIKE CONCAT('%',#{USER_ID},'%')
         </if>
+        <if test="USER_ID2 != 'null' || USER_ID2 != ''">
+           AND A.USER_ID = #{USER_ID2}
+        </if>
         <if test="GDS_NAME != 'null' || GDS_NAME != ''">
             AND C.GDS_NAME LIKE CONCAT('%',#{GDS_NAME},'%')
         </if>
         <if test="STATUS != 'null' && STATUS != ''">
             AND B.STATUS = ${STATUS}
         </if>
+        <if test="status != ''">
+            AND B.STATUS = ${status}
+        </if>
+        <if test="gdsName != ''">
+            AND C.GDS_NAME LIKE CONCAT('%', #{gdsName}, '%')
+        </if>
+        ORDER BY ORDER_DATE ASC
 
     </select>
 
@@ -132,9 +159,10 @@
     UPDATE GOODS_ORDER_DETAIL_TABLE SET STATUS = ${STATUS} WHERE ORDER_ID = #{ORDER_ID} AND GDS_NUM = ${GDS_NUM}
     </update>
 
+    
     <delete id="deleteOrderList">
         DELETE T1, T2 FROM GOODS_ORDER_DETAIL_TABLE AS T1 INNER JOIN GOODS_ORDER_TABLE AS T2
-        WHERE T1.ORDER_ID = #{ORDER_ID} AND T1.GDS_NUM = ${GDS_NUM} AND T2.ORDER_ID = #{ORDER_ID}
+        WHERE T1.ORDER_ID = #{ORDER_ID} AND T1.GDS_NUM = ${GDS_NUM} AND T2.ORDER_ID = #{ORDER_ID} AND T2.GDS_NUM = ${GDS_NUM}
     </delete>
 
     <delete id="deleteCart">

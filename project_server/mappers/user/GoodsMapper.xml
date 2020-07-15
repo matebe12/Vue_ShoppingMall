@@ -49,57 +49,46 @@
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
         WHERE 1=1
-        <if test="CODE != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
-            AND  A.GDS_CATEGORY_CODE = #{CODE}
+        <if test="fcode != ''">
+            AND  B.CATEGORY_REF = ${fcode}
         </if>
-        <if test="CODE != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY != ''">
-            AND  A.GDS_CATEGORY_CODE = #{SEARCH_CATEGORY}
+        <if test="scode != ''">
+            AND  A.GDS_CATEGORY_CODE = ${scode}
         </if>
-        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
-            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        <if test="gdsName != ''">
+            AND  A.GDS_NAME LIKE CONCAT('%',#{gdsName},'%')
         </if>
-        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY == ''">
-            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        <if test="order == '' && order == 'newItem'">
+            order BY A.GDS_NUM DESC
         </if>
-        <if test="SEARCHNAME != null">
-            AND  A.GDS_NAME LIKE CONCAT('%',#{SEARCHNAME},'%')
+        <if test="order != '' && order == 'rowPrice'">
+            order BY A.GDS_PRICE ASC
         </if>
-        <if test="ORDER != 'null' && ORDER == 'newItem'">
-            ORDER BY A.GDS_NUM DESC
+        <if test="order != '' && order == 'highPrice'">
+            order BY A.GDS_PRICE DESC
         </if>
-        <if test="ORDER != 'null' && ORDER == 'rowPrice'">
-            ORDER BY A.GDS_PRICE ASC
+        <if test="page != ''">
+        LIMIT ${pageStart}, ${perPageNum}
         </if>
-        <if test="ORDER != 'null' && ORDER == 'highPrice'">
-            ORDER BY A.GDS_PRICE DESC
-        </if>
-        <if test="PAGE != 'null'">
-        LIMIT ${PAGE_START}, ${PER_PAGE_NUM}
-        </if>
-        
+
     </select>
 
     <select id="getGoodsListCount">
-        SELECT COUNT(*) AS COUNT
+        SELECT COUNT(*) AS TOTAL_COUNT 
         FROM GOODS_TABLE AS A
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
         WHERE 1=1
-        <if test="CODE != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
-            AND  A.GDS_CATEGORY_CODE = #{CODE}
+        <if test="fcode != ''">
+            AND  B.CATEGORY_REF = #{fcode}
         </if>
-        <if test="CODE != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY != ''">
-            AND  A.GDS_CATEGORY_CODE = #{SEARCH_CATEGORY}
+        <if test="scode != ''">
+            AND  A.GDS_CATEGORY_CODE = #{scode}
         </if>
-        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
-            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        <if test="gdsName != ''">
+            AND  A.GDS_NAME LIKE CONCAT('%',#{gdsName},'%')
         </if>
-        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY == ''">
-            AND  B.CATEGORY_REF = #{CATEGORY_REF}
-        </if>
-        <if test="SEARCHNAME != null">
-            AND  A.GDS_NAME LIKE CONCAT('%',#{SEARCHNAME},'%')
-        </if>
+
     </select>
 
     <select id="getGoodsOne">
