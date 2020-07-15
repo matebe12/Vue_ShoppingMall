@@ -3,7 +3,7 @@
     <section id="container">
       <div class="container_box"></div>
     </section>
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 

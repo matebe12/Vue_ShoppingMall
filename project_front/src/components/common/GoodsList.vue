@@ -145,9 +145,6 @@ p {
 p:last-child {
   margin: 0px;
 }
-ul,
-ol {
-}
 a {
   text-decoration: none;
   color: #131212;

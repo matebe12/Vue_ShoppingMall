@@ -16,11 +16,23 @@
               <select
                 class="form-control x-6"
                 @change="changeOrder()"
-                v-model="selectedOrder"
+                id="selectedItem"
               >
-                <option value="newItem">신상품순</option>
-                <option value="rowPrice">낮은가격순</option>
-                <option value="highPrice">높은가격순</option>
+                <option
+                  value="newItem"
+                  :selected="$route.query.order == 'newItem'"
+                  >신상품순</option
+                >
+                <option
+                  value="rowPrice"
+                  :selected="$route.query.order == 'rowPrice'"
+                  >낮은가격순</option
+                >
+                <option
+                  value="highPrice"
+                  :selected="$route.query.order == 'highPrice'"
+                  >높은가격순</option
+                >
               </select>
             </div>
           </div>
@@ -46,7 +58,7 @@ export default {
   },
   methods: {
     changeOrder() {
-      this.$emit('changeOrder', this.selectedOrder);
+      this.$emit('changeOrder', document.querySelector('#selectedItem').value);
     },
     searchGoods(data) {
       this.$emit('searchGoods', data);
@@ -56,17 +68,20 @@ export default {
       let src = '';
       switch (banner) {
         case '100':
-          src = 'http://thecodeplayer.com/uploads/media/40Ly3VB.jpg';
-          return { MENU_IMG: src };
+          src = 'doll.jpg';
+          break;
         case '200':
-          src = 'http://thecodeplayer.com/uploads/media/00kih8g.jpg';
-          return { MENU_IMG: src };
+          src = 'moongu.jpg';
+          break;
         case '300':
-          src = 'http://thecodeplayer.com/uploads/media/2rT2vdx.jpg';
-          return { MENU_IMG: src };
+          src = 'com.jpeg';
+          break;
         case '400':
-          src = 'http://thecodeplayer.com/uploads/media/8k3N3EL.jpg';
-          return { MENU_IMG: src };
+          src = 'jubang.jpg';
+          break;
+        default:
+          src = 'all.png';
+          break;
       }
       console.log(src);
       return { MENU_IMG: src && require('@/assets/images/' + src) };

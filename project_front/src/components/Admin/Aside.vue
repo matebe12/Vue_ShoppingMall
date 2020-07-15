@@ -4,7 +4,10 @@
       <router-link to="/admin/registGoods">상품등록</router-link>
     </li>
     <li>
-      <router-link to="/admin/goodsList">상품목록</router-link>
+      <router-link
+        to="/admin/goodsList?fcode=&scode=&page=1&pageStart=0&perPageNum=10&gdsName="
+        >상품목록</router-link
+      >
     </li>
     <li><router-link to="/admin/orderList">주문목록</router-link></li>
     <li>

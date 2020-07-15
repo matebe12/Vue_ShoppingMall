@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { getGoodsList } from '@/api/Goods.js';
 import { createPageNation } from '@/util/tui grid/tuiPagenation';
 import Banner from './Banner.vue';
 import GoodsList from '../common/GoodsList.vue';
@@ -26,8 +27,25 @@ export default {
       isSearch: 0,
     };
   },
-  created() {
-    this.changeGoods(null);
+  async created() {
+    console.log('page :: ' + this.$route.query.page);
+    let query = this.$route.query;
+    if (query.page == undefined) {
+      query.page = 1;
+    }
+    if (query.pageStart == undefined) {
+      query.pageStart = (query.page - 1) * 10;
+    }
+    if (query.perPageNum == undefined) {
+      query.perPageNum = 10;
+    }
+
+    const response = await getGoodsList(query);
+    console.log(response);
+    this.$store.state.goods.goods = response.data.results;
+    this.$store.state.goods.total = response.data.results2[0].TOTAL_COUNT;
+    pagination.setTotalItems(this.$store.state.goods.total);
+    pagination._paginate(query.page * 1);
   },
   mounted() {
     pagination = createPageNation('#pagination', 10);
@@ -48,6 +66,7 @@ export default {
     Banner,
     GoodsList,
   },
+
   methods: {
     searchGoods(data) {
       this.searchData = data;
@@ -59,43 +78,23 @@ export default {
       this.changeGoods();
     },
     async changeGoods(event) {
-      console.log(this.searchData);
-      let reqData;
-      reqData = {};
-      reqData.CODE = this.$route.query.scode;
-      reqData.CATEGORY_REF = this.$route.query.fcode;
-      reqData.PAGE = Validation.isNull(event) ? (event.page *= 1) : 1;
-      reqData.PAGE_START = (reqData.PAGE - 1) * 10; // 보여줄 상품 시작
-      reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
-      reqData.ORDER = this.selectedOrder;
-      if (this.isSearch == 1) {
-        // 검색모드이면
-        reqData.SEARCHNAME = this.searchData.goodsName;
-        reqData.SEARCH_CATEGORY = this.searchData.selectCategory;
-        reqData.IS_SEARCH = 'Y';
-      } else {
-        reqData.SEARCHNAME = null;
-        reqData.SEARCH_CATEGORY = null;
-        reqData.IS_SEARCH = 'N';
-      }
+      let page = Validation.isNull(event) ? (event.page *= 1) : 1;
 
-      console.log(reqData);
-      await this.$store.dispatch('getGoodListCount', reqData);
-      await this.$store.dispatch('getGoodList', reqData);
-      pagination.setTotalItems(this.$store.state.goods.total);
-      pagination._paginate(reqData.PAGE);
-      if (
-        this.searchData.selectCategory != '' &&
-        this.searchData.selectCategory != undefined
-      ) {
-        this.$router.replace({
-          path: '/shop/list/category?',
-          query: {
-            fcode: this.$route.query.fcode,
-            scode: this.searchData.selectCategory,
-          },
-        });
-      }
+      this.$router.replace({
+        query: {
+          fcode: this.$route.query.fcode,
+          scode:
+            this.searchData.selectCategory != '' &&
+            this.searchData.selectCategory != undefined
+              ? this.searchData.selectCategory
+              : '',
+          page: page,
+          pageStart: (page - 1) * 10,
+          perPageNum: 10,
+          gdsName: this.searchData.goodsName,
+          order: this.selectedOrder,
+        },
+      });
     },
     showGoods(goods) {
       this.showModal = true;

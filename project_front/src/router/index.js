@@ -19,12 +19,8 @@ const routes = [
   {
     path: '/',
     name: 'main',
-    beforeEnter: (to, from, next) => {
-      store.state.loading = true;
-      store.dispatch('getCategoryList');
-      store.state.loading = false;
-      next();
-    },
+    redirect:
+      '/shop/list/category?fcode=&scode=&page=1&pageStart=0&perPageNum=10',
   },
   {
     path: '/shop/list/:category',
@@ -48,14 +44,6 @@ const routes = [
     path: '/order/list',
     name: 'order',
     component: () => import('@/components/Cart/OrderList.vue'),
-    beforeEnter: (to, from, next) => {
-      store.state.loading = true;
-      console.log(store.state.user.USER_ID);
-
-      store.dispatch('getOrderList', store.state.user.USER_ID);
-      store.state.loading = false;
-      next();
-    },
   },
   {
     path: '/shop/view/:gds_num',
@@ -82,6 +70,10 @@ const routes = [
         path: 'goodsList',
         name: 'goodsList',
         component: () => import('@/components/Admin/GoodsList.vue'),
+        beforeEnter: async (to, from, next) => {
+          console.log('헤헿헿헤');
+          next();
+        },
       },
       {
         path: 'userList',

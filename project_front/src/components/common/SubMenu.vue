@@ -1,10 +1,23 @@
 <template>
   <ul class="menu-list ">
-    <li>
+    <li v-if="$route.query.fcode != undefined">
       <router-link
-        :to="`/shop/list/category?fcode=${$route.query.fcode}`"
+        :to="
+          `/shop/list/category?fcode=${$route.query.fcode}&scode=&page=1&pageStart=0&perPageNum=10`
+        "
         :class="{
-          active: $route.query.fcode % 100 == 0 && $route.query.scode == null,
+          active: $route.query.fcode % 100 == 0 && $route.query.scode == '',
+        }"
+        >전체</router-link
+      >
+    </li>
+    <li v-if="$route.query.fcode == undefined">
+      <router-link
+        :to="
+          `/shop/list/category?fcode=&scode=&page=1&pageStart=0&perPageNum=10`
+        "
+        :class="{
+          active: $route.query.fcode % 100 == 0 && $route.query.scode == '',
         }"
         >전체</router-link
       >
@@ -16,7 +29,7 @@
     >
       <router-link
         :to="
-          `/shop/list/category?fcode=${item2.CATEGORY_REF}&scode=${item2.CATEGORY_CODE}`
+          `/shop/list/category?fcode=${item2.CATEGORY_REF}&scode=${item2.CATEGORY_CODE}&page=1&pageStart=0&perPageNum=10`
         "
         v-if="$route.query.fcode == item2.CATEGORY_REF"
         >{{ item2.CATEGORY_NAME }}</router-link

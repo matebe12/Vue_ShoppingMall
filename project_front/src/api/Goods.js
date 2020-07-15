@@ -12,14 +12,6 @@ function InsertGoods(goodsData) {
   return goods.post('/InsertGoods', goodsData);
 }
 
-function getGoodsList(reqData) {
-  return goods.post('/getGoodsList', reqData);
-}
-
-function getGoodsListCount(reqData) {
-  return goods.post('/getGoodsListCount', reqData);
-}
-
 function updateGoods(reqData) {
   return goods.post('/updateGoods', reqData);
 }
@@ -32,6 +24,11 @@ function getGoodsOne(reqData) {
   return goods.get(`/getGoodsOne/${reqData}`);
 }
 
+function getGoodsList(reqData) {
+  console.log(reqData);
+  return goods.post(`/getGoodsList`, reqData);
+}
+
 export {
   getCategory,
   InsertGoods,
@@ -40,5 +37,4 @@ export {
   deleteGoods,
   getGoodsOne,
   getCategoryList,
-  getGoodsListCount,
 };

@@ -1,4 +1,4 @@
-import { getGoodsList, getGoodsOne, getGoodsListCount } from '@/api/Goods.js';
+import { getGoodsList, getGoodsOne } from '@/api/Goods.js';
 const state = {
   goods: [],
   total: 0,
@@ -10,9 +10,6 @@ const mutations = {
   },
   getGoodOne(state, data) {
     state.goods = data.data.results;
-  },
-  getGoodListCount(state, data) {
-    state.total = data.data.results2[0].COUNT;
   },
 };
 
@@ -31,16 +28,6 @@ const actions = {
     try {
       const response = await getGoodsOne(data);
       context.commit('getGoodOne', response);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  async getGoodListCount(context, data) {
-    try {
-      const response = await getGoodsListCount(data);
-      console.log(response);
-
-      context.commit('getGoodListCount', response);
     } catch (error) {
       console.log(error);
     }

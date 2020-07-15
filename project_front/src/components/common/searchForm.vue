@@ -12,6 +12,7 @@
           <input
             class="form-control"
             name="x"
+            id="goodName"
             placeholder="상품입력"
             type="text"
             v-model="goodsName"
@@ -29,6 +30,7 @@
                 v-for="(item2, index) in getCategory.smenu"
                 :key="index"
                 :value="item2.CATEGORY_CODE"
+                :selected="item2.CATEGORY_CODE == $route.query.scode"
                 >{{ item2.CATEGORY_NAME }}</option
               >
             </select>
@@ -51,6 +53,9 @@ export default {
       goodsName: '',
       selectCategory: '',
     };
+  },
+  mounted() {
+    document.querySelector('#goodName').scrollIntoView();
   },
   computed: {
     getCategory() {
@@ -75,6 +80,10 @@ export default {
   methods: {
     searchGoods() {
       console.log('검색 클릭');
+      if (this.goodsName == '') {
+        alert('검색어를 입력해주세요.');
+        return;
+      }
       this.$emit('searchGoods', {
         goodsName: this.goodsName,
         selectCategory: this.selectCategory,

@@ -129,7 +129,9 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <router-link v-if="getUser" to="/order/list"
+                    <router-link
+                      v-if="getUser"
+                      to="/order/list?status=0&page=1&pageStart=0&perPageNum=10&gdsName="
                       >주문 현황</router-link
                     >
                   </li>

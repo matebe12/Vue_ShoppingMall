@@ -79,7 +79,7 @@ export default {
       for (let i = 0; i < check; i++) {
         this.checkedItem[i].CART_STOCK *= 1;
         this.checkedItem[i].GDS_STOCK *= 1;
-        this.checkedItem[i].ORDER_ID = this.getOrderId;
+        this.checkedItem[i].ORDER_ID = this.getOrderId();
       }
       const reqData = {
         USER_ID: this.$store.state.user.USER_ID,
@@ -92,12 +92,23 @@ export default {
         ITEM: this.checkedItem,
       };
       try {
+        console.log(reqData);
         const response = await insertOrder(reqData);
         console.log(response);
         this.$emit('refreshCart');
       } catch (error) {
         console.log(error);
       }
+    },
+    getOrderId() {
+      // UUID v4 generator in JavaScript (RFC4122 compliant)
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
+        c,
+      ) {
+        var r = (Math.random() * 16) | 0,
+          v = c == 'x' ? r : (r & 3) | 8;
+        return v.toString(16);
+      });
     },
   },
   data() {
@@ -114,18 +125,7 @@ export default {
     const ORDER_RECIEVE = document.querySelector('#ORDER_RECIEVE');
     ORDER_RECIEVE.scrollIntoView();
   },
-  computed: {
-    getOrderId() {
-      // UUID v4 generator in JavaScript (RFC4122 compliant)
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
-        c,
-      ) {
-        var r = (Math.random() * 16) | 0,
-          v = c == 'x' ? r : (r & 3) | 8;
-        return v.toString(16);
-      });
-    },
-  },
+  computed: {},
 };
 </script>
 
