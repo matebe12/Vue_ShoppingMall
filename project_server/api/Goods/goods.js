@@ -81,6 +81,7 @@ router.post('/getGoodsList', async (req,res) => {
             return res.status(500);
         }
         console.log(results);
+        console.log(query2);
         return res.status(200).send({
             results
         });

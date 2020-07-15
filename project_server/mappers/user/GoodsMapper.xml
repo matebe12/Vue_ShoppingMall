@@ -49,11 +49,20 @@
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
         WHERE 1=1
-        <if test="CODE != 'null'">
+        <if test="CODE != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
             AND  A.GDS_CATEGORY_CODE = #{CODE}
         </if>
-        <if test="CATEGORY_REF != 'null'">
+        <if test="CODE != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY != ''">
+            AND  A.GDS_CATEGORY_CODE = #{SEARCH_CATEGORY}
+        </if>
+        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
             AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
+        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY == ''">
+            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
+        <if test="SEARCHNAME != null">
+            AND  A.GDS_NAME LIKE CONCAT('%',#{SEARCHNAME},'%')
         </if>
         <if test="ORDER != 'null' && ORDER == 'newItem'">
             ORDER BY A.GDS_NUM DESC
@@ -76,11 +85,20 @@
         INNER JOIN GOODS_CATEGORY_TABLE AS B
         ON A.GDS_CATEGORY_CODE = B.CATEGORY_CODE
         WHERE 1=1
-        <if test="CODE != 'null'">
+        <if test="CODE != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
             AND  A.GDS_CATEGORY_CODE = #{CODE}
         </if>
-        <if test="CATEGORY_REF != 'null'">
+        <if test="CODE != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY != ''">
+            AND  A.GDS_CATEGORY_CODE = #{SEARCH_CATEGORY}
+        </if>
+        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY == null && IS_SEARCH == 'N'">
             AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
+        <if test="CATEGORY_REF != 'null' && SEARCH_CATEGORY != null && IS_SEARCH == 'Y' && SEARCH_CATEGORY == ''">
+            AND  B.CATEGORY_REF = #{CATEGORY_REF}
+        </if>
+        <if test="SEARCHNAME != null">
+            AND  A.GDS_NAME LIKE CONCAT('%',#{SEARCHNAME},'%')
         </if>
     </select>
 
