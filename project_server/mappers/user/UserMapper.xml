@@ -25,13 +25,31 @@
             #{USER_ADDR2}
         )
     </insert>
+    <insert id="insertUserKakao">
+        INSERT INTO USER_TABLE
+        (
+            USER_ID,
+            USER_NAME
+        )
+        VALUES
+        (
+            #{USER_ID},
+            #{USER_NAME}
+        )
+    </insert>
     <select id="selectLoginUser">
-        SELECT USER_ID, USER_PW, USER_PHONE,USER_VERIFY
+        SELECT USER_ID, USER_PW, USER_NAME,USER_VERIFY
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
         <if test="USER_CHECK != null">
             AND USER_PW = #{USER_PW}
         </if>
+    </select>
+
+    <select id="selectLoginUserKakao">
+        SELECT USER_ID, USER_NAME,USER_VERIFY
+        FROM USER_TABLE
+        WHERE USER_ID = #{USER_ID}
     </select>
 
     <select id="getUserList">

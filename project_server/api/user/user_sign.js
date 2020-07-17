@@ -89,6 +89,59 @@ router.post('/login', (req,res) => {
     });
 });
 
+router.post('/loginKakao', (req,res) => {
+    var response = {};
+    const query = MybatisMapper.getStatement('userMapper', 'selectLoginUser', req.body, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500);
+        } else {
+            if (results.length < 1) {
+                console.log('유저를 찾을 수 없음');
+                insertUserKakao('userMapper', 'insertUserKakao', req.body, format);
+            } 
+
+            const query1 = MybatisMapper.getStatement('userMapper', 'selectLoginUserKakao', req.body, format);
+            let resData = {};
+            connection.query(query1, (error, results, fields) => {
+                if (error) {
+                    console.log(error);
+                    resData.error = error
+                    res.status(500).send(resData.error);
+                }
+
+                resData.success = results;
+                console.log('resData', resData);
+                console.log('response1', resData);
+                res.cookie('token', req.body.ACCESS_TOKEN);
+                res.cookie('verify', resData.success[0].USER_VERIFY);
+                res.cookie('user', JSON.stringify(resData));
+                return res.status(200).send(resData.success[0]);
+            });
+            
+            
+        }
+    });
+});
+
+const  insertUserKakao = async (mapperId, queryId, reqData, format) => {
+    const query = MybatisMapper.getStatement(mapperId, queryId, reqData, format);
+    let resData = {};
+    connection.query(query, (error, results, fields) => {
+        if(error){
+            console.log(error);
+            resData.error = error
+            return resData;
+        }
+        
+        resData.success = results;
+        console.log('resData', resData);
+        return resData;
+    });
+    return resData;
+}
+
 router.post('/getUserList', async(req, res) => {
     const reqData = req.body;
     const query = MybatisMapper.getStatement('userMapper', 'getUserList', reqData, format);
