@@ -58,7 +58,7 @@
         <if test="gdsName != ''">
             AND  A.GDS_NAME LIKE CONCAT('%',#{gdsName},'%')
         </if>
-        <if test="order == '' && order == 'newItem'">
+        <if test="order == '' || order == 'newItem'">
             order BY A.GDS_NUM DESC
         </if>
         <if test="order != '' && order == 'rowPrice'">
