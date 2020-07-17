@@ -8,7 +8,7 @@ MybatisMapper.createMapper([`${MapperPath}/user/GoodsMapper.xml`]);
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../project_front/src/assets/upload')
+        cb(null, 'C:\\upload')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + file.originalname)
