@@ -66,22 +66,21 @@ export default {
     getImgUrl() {
       const banner = this.$route.query.fcode;
       let src = '';
-      switch (banner) {
-        case '100':
+      switch (banner * 1) {
+        case 100 || '100':
           src = 'doll.jpg';
           break;
-        case '200':
+        case 200 || '200':
           src = 'moongu.jpg';
           break;
-        case '300':
+        case 300 || '300':
           src = 'com.jpeg';
           break;
-        case '400':
+        case 400 || '400':
           src = 'jubang.jpg';
           break;
         default:
           src = 'all.png';
-          break;
       }
       console.log(src);
       return { MENU_IMG: src && require('@/assets/images/' + src) };

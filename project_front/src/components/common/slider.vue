@@ -1,66 +1,49 @@
 <template>
   <div class="accordian">
     <ul>
-      <!-- <li>
-        <div class="image_title">
-          <router-link
-            to="https://www.youtube.com/channel/UCXTfDJ60DBmA932Du6B1ydg"
-            >KungFu Panda</router-link
-          >
-        </div>
-        <router-link to="http://localhost:8080/shop/list/category?fcode=100">
-          <img src="http://thecodeplayer.com/uploads/media/3yiC6Yq.jpg" />
-        </router-link>
-      </li> -->
       <li>
         <div class="image_title">
-          <router-link
-            to="/shop/list/category?fcode=100&scode=&page=1&pageStart=0&perPageNum=10"
+          <router-link to="" @click.native="replaceUrl()">전체</router-link>
+        </div>
+        <router-link to="" @click.native="replaceUrl()">
+          <img :src="require('@/assets/images/all.png')" />
+        </router-link>
+      </li>
+      <li>
+        <div class="image_title">
+          <router-link to="" @click.native="replaceUrl(100)"
             >인형/토이</router-link
           >
         </div>
-        <router-link
-          to="/shop/list/category?fcode=100&scode=&page=1&pageStart=0&perPageNum=10"
-        >
+        <router-link to="" @click.native="replaceUrl(100)">
           <img :src="require(`@/assets/images/doll.jpg`)" />
         </router-link>
       </li>
       <li>
         <div class="image_title">
-          <router-link
-            to="/shop/list/category?fcode=200&scode=&page=1&pageStart=0&perPageNum=10"
-            >문구</router-link
-          >
+          <router-link to="" @click.native="replaceUrl(200)">문구</router-link>
         </div>
-        <router-link
-          to="/shop/list/category?fcode=200&scode=&page=1&pageStart=0&perPageNum=10"
-        >
+        <router-link to="" @click.native="replaceUrl(200)">
           <img :src="require(`@/assets/images/moongu.jpg`)" />
         </router-link>
       </li>
       <li>
         <div class="image_title">
-          <router-link
-            to="/shop/list/category?fcode=300&scode=&page=1&pageStart=0&perPageNum=10"
+          <router-link to="" @click.native="replaceUrl(300)"
             >컴퓨터/모바일</router-link
           >
         </div>
-        <router-link
-          to="/shop/list/category?fcode=300&scode=&page=1&pageStart=0&perPageNum=10"
-        >
+        <router-link to="" @click.native="replaceUrl(300)">
           <img :src="require(`@/assets/images/com.jpeg`)" />
         </router-link>
       </li>
       <li>
         <div class="image_title">
-          <router-link
-            to="/shop/list/category?fcode=400&scode=&page=1&pageStart=0&perPageNum=10"
+          <router-link to="" @click.native="replaceUrl(400)"
             >주방용품</router-link
           >
         </div>
-        <router-link
-          to="/shop/list/category?fcode=400&scode=&page=1&pageStart=0&perPageNum=10"
-        >
+        <router-link to="" @click.native="replaceUrl(400)">
           <img :src="require(`@/assets/images/jubang.jpg`)" />
         </router-link>
       </li>
@@ -69,7 +52,25 @@
 </template>
 
 <script>
-export default {};
+import Validation from '@/util/data/Validation.js';
+export default {
+  methods: {
+    replaceUrl(fcode, scode) {
+      this.$router.replace({
+        path: '/shop/list/category',
+        query: {
+          fcode: !Validation.isNull(fcode) ? '' : fcode,
+          scode: !Validation.isNull(scode) ? '' : scode,
+          page: 1,
+          pageStart: 0,
+          perPageNum: 10,
+          t: new Date().getTime(),
+        },
+      });
+      this.preUrl = this.$route.path;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -88,7 +89,7 @@ default width = 800/5 = 160px;
 */
 
 .accordian {
-  width: 805px;
+  width: 90%;
   height: 320px;
   overflow: hidden;
 
@@ -104,7 +105,7 @@ img {
 }
 /*A small hack to prevent flickering on some browsers*/
 .accordian ul {
-  width: 800px;
+  width: 1300px;
   /*This will give ample space to the last item to move
 	instead of falling down/flickering during hovers.*/
 }
@@ -112,7 +113,7 @@ img {
 .accordian li {
   position: relative;
   display: block;
-  width: 25%;
+  width: 20%;
   float: left;
 
   border-left: 1px solid #888;

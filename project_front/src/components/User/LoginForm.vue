@@ -41,6 +41,12 @@
 
       <!-- Remind Passowrd -->
       <div id="formFooter">
+        <KakaoLogin
+          api-key="e52b116c475a4745986fafc941f4fd41"
+          :on-success="loginKakao"
+          :on-failure="loginKakao"
+        ></KakaoLogin>
+
         <router-link class="underlineHover" to="/signup">회원가입</router-link>
       </div>
     </div>
@@ -48,6 +54,8 @@
 </template>
 
 <script>
+import Validation from '@/util/data/Validation.js';
+import KakaoLogin from 'vue-kakao-login';
 export default {
   data() {
     return {
@@ -55,8 +63,22 @@ export default {
       USER_PW: '',
     };
   },
+  components: {
+    KakaoLogin,
+  },
   methods: {
+    loginKakao(data) {
+      console.log(data);
+    },
     login() {
+      if (!Validation.isNull(this.USER_ID)) {
+        alert('아이디를 입력해주세요.');
+        return;
+      }
+      if (!Validation.isNull(this.USER_PW)) {
+        alert('아이디를 입력해주세요.');
+        return;
+      }
       console.log('로그인');
       const reqData = {
         USER_ID: this.USER_ID,

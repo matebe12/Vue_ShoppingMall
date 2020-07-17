@@ -91,8 +91,15 @@ export default {
           page: page,
           pageStart: (page - 1) * 10,
           perPageNum: 10,
-          gdsName: this.searchData.goodsName,
-          order: this.selectedOrder,
+          gdsName:
+            this.searchData.goodsName == '' ||
+            this.searchData.goodsName == undefined
+              ? this.$route.query.gdsName
+              : this.searchData.goodsName,
+          order:
+            this.selectedOrder == ''
+              ? this.$route.query.order
+              : this.selectedOrder,
         },
       });
     },

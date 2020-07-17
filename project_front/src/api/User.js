@@ -14,4 +14,8 @@ function deleteUser(reqData) {
 function signup(reqData) {
   return user.post('/signup', reqData);
 }
-export { getUserList, updateUser, deleteUser, signup };
+
+function loginKakao() {
+  return user.get('/loginKakao');
+}
+export { getUserList, updateUser, deleteUser, signup, loginKakao };

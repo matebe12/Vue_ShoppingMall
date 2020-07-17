@@ -54,6 +54,7 @@ export default {
       selectCategory: '',
     };
   },
+
   mounted() {
     document.querySelector('#goodName').scrollIntoView();
   },

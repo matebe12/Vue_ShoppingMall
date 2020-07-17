@@ -49,9 +49,8 @@
                         v-if="item.CATEGORY_LEVEL == 1"
                       >
                         <router-link
-                          :to="
-                            `/shop/list/category?fcode=${item.CATEGORY_CODE}`
-                          "
+                          to=""
+                          @click.native="replaceUrl(item.CATEGORY_CODE)"
                         >
                           {{ item.CATEGORY_NAME }}</router-link
                         >
@@ -62,8 +61,9 @@
                         :key="index"
                       >
                         <router-link
-                          :to="
-                            `/shop/list/category?fcode=${item.CATEGORY_CODE}&scode=${item2.CATEGORY_CODE}`
+                          to=""
+                          @click.native="
+                            replaceUrl(item.CATEGORY_CODE, item2.CATEGORY_CODE)
                           "
                           v-if="item.CATEGORY_CODE == item2.CATEGORY_REF"
                           >{{ item2.CATEGORY_NAME }}</router-link
@@ -158,6 +158,7 @@
 </template>
 
 <script>
+import Validation from '@/util/data/Validation.js';
 export default {
   computed: {
     getUser() {
@@ -168,13 +169,15 @@ export default {
       let fmenu = [];
       let smenu = [];
       let returnValue = {};
-      for (let i = 0; i < cate.length; i++) {
-        if (cate[i].CATEGORY_LEVEL == 1) {
-          fmenu.push(cate[i]);
-        } else {
-          smenu.push(cate[i]);
-        }
-      }
+      fmenu = cate.filter(x => x.CATEGORY_LEVEL == 1);
+      smenu = cate.filter(x => x.CATEGORY_LEVEL == 2);
+      // for (let i = 0; i < cate.length; i++) {
+      //   if (cate[i].CATEGORY_LEVEL == 1) {
+      //     fmenu.push(cate[i]);
+      //   } else {
+      //     smenu.push(cate[i]);
+      //   }
+      // }
       returnValue.fmenu = fmenu;
       returnValue.smenu = smenu;
 
@@ -187,6 +190,20 @@ export default {
       if (this.$route.path != '/') {
         this.$router.push('/');
       }
+    },
+    replaceUrl(fcode, scode) {
+      this.$router.replace({
+        path: '/shop/list/category',
+        query: {
+          fcode: !Validation.isNull(fcode) ? '' : fcode,
+          scode: !Validation.isNull(scode) ? '' : scode,
+          page: 1,
+          pageStart: 0,
+          perPageNum: 10,
+          t: new Date().getTime(),
+        },
+      });
+      this.preUrl = this.$route.path;
     },
   },
 };
