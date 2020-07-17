@@ -156,7 +156,6 @@ export default {
   async mounted() {
     const getUserListData = async event => {
       var selectOption = document.querySelector('#selectOption').value;
-      console.log('option : ' + selectOption);
 
       let reqData = {
         USER_NAME: document.querySelector('#searUserNM').value,
@@ -166,10 +165,8 @@ export default {
       };
       reqData.PAGE_START = (reqData.PAGE - 1) * 10;
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
-      console.log(reqData);
 
       const response = await getUserList(reqData);
-      console.log(response);
       let userData = response.data.results1;
       instance.resetData(userData);
       let data = [];
@@ -238,7 +235,7 @@ export default {
             return;
           }
         } catch (error) {
-          console.log(error);
+          alert(error);
         }
       }
     },

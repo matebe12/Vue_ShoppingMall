@@ -56,6 +56,7 @@
 <script>
 import Validation from '@/util/data/Validation.js';
 import KakaoLogin from 'vue-kakao-login';
+import { loginKakao } from '@/api/User';
 export default {
   data() {
     return {
@@ -68,7 +69,31 @@ export default {
   },
   methods: {
     loginKakao(data) {
-      console.log(data);
+      window.Kakao.API.request({
+        url: '/v2/user/me',
+
+        success: res => {
+          let reqData = {
+            USER_ID: res.id,
+            USER_NAME: res.properties.nickname,
+            ACCESS_TOKEN: data.access_token,
+          };
+          this.loginKakaoCallBack(reqData);
+        },
+      });
+    },
+    async loginKakaoCallBack(reqData) {
+      try {
+        const response = await loginKakao(reqData);
+        this.$store.state.user.USER_ID = response.data.USER_ID;
+        this.$store.state.user.USER_NAME = response.data.USER_NAME;
+        this.$store.state.user.USER_VERIFY = response.data.USER_VERIFY;
+
+        alert('로그인 되었습니다.');
+        this.$router.push('/');
+      } catch (error) {
+        alert(error);
+      }
     },
     login() {
       if (!Validation.isNull(this.USER_ID)) {
@@ -79,7 +104,6 @@ export default {
         alert('아이디를 입력해주세요.');
         return;
       }
-      console.log('로그인');
       const reqData = {
         USER_ID: this.USER_ID,
         USER_PW: this.USER_PW,
@@ -87,7 +111,6 @@ export default {
       this.$http
         .post('/api/user/login', reqData)
         .then(async response => {
-          console.log(response);
           if (
             !response.data.resultData.isMatchedPw ||
             !response.data.resultData.searchUser
@@ -105,7 +128,6 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error.response);
           alert(error.response.data);
         });
     },

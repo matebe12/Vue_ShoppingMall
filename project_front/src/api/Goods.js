@@ -25,7 +25,6 @@ function getGoodsOne(reqData) {
 }
 
 function getGoodsList(reqData) {
-  console.log(reqData);
   return goods.post(`/getGoodsList`, reqData);
 }
 

@@ -106,12 +106,6 @@ export default {
     Modal,
   },
   async created() {
-    console.log('목록 진입');
-
-    //const response = await getGoodsList(null);
-    //this.goodsList = response.data.results;
-    //console.log(response);
-    console.log('page :: ' + this.$route.query.page);
     let query = this.$route.query;
     if (query.page == undefined) {
       query.page = 1;
@@ -124,7 +118,6 @@ export default {
     }
 
     const response = await getGoodsList(query);
-    console.log(response);
     this.goodsList = response.data.results;
     this.totalGoods = response.data.results2[0].TOTAL_COUNT;
     pagination.setTotalItems(this.totalGoods);
@@ -156,7 +149,6 @@ export default {
       });
     },
     async openGoods(goods) {
-      console.log('Hello');
       this.showModal = true;
       this.item = goods;
     },
@@ -170,11 +162,6 @@ export default {
       return {
         GDS_IMG: GDS_IMG && require('@/assets/upload/' + GDS_IMG),
       };
-    },
-  },
-  watch: {
-    $route(to, from) {
-      console.log(to, from);
     },
   },
 };

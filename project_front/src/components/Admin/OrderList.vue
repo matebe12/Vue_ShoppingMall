@@ -164,7 +164,6 @@ export default {
             return '<p>(주) 하이</p>';
           },
           onAfterChange: ev => {
-            console.log('after change:', ev);
             instance.check(ev.rowKey);
           },
         },
@@ -196,7 +195,6 @@ export default {
   async mounted() {
     const getOrderListData = async event => {
       var selectOption = document.querySelector('#selectOption').value;
-      console.log('option : ' + selectOption);
 
       let reqData = {
         USER_ID: document.querySelector('#searUserID').value,
@@ -206,7 +204,6 @@ export default {
       };
       reqData.PAGE_START = (reqData.PAGE - 1) * 10;
       reqData.PER_PAGE_NUM = 10; // 보여줄 상품 수
-      console.log(reqData);
       await this.$store.dispatch('getOrderList', reqData);
       let orderData = this.$store.state.order.order;
       instance.resetData(orderData);
@@ -275,7 +272,7 @@ export default {
           alert('주문상태가 변경 되었습니다.');
           document.querySelector('#searchBtn').click();
         } catch (error) {
-          console.log(error);
+          alert(error);
         }
       }
     },
@@ -305,7 +302,7 @@ export default {
           alert('주문 상품이 삭제 되었습니다.');
           document.querySelector('#searchBtn').click();
         } catch (error) {
-          console.log(error);
+          alert(error);
         }
       }
     },

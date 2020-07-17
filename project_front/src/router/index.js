@@ -71,7 +71,6 @@ const routes = [
         name: 'goodsList',
         component: () => import('@/components/Admin/GoodsList.vue'),
         beforeEnter: async (to, from, next) => {
-          console.log('헤헿헿헤');
           next();
         },
       },
@@ -99,7 +98,7 @@ const routes = [
       } else if (!checkAdmin.isAdmin && checkAdmin.isLogin) {
         next('/');
       } else {
-        next('/login');
+        next('/');
       }
     },
   },

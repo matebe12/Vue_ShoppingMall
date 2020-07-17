@@ -96,7 +96,7 @@ export default {
       const response = await getCategory(null);
       this.firstCategory = response.data.results;
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
   data() {
@@ -123,19 +123,15 @@ export default {
       try {
         const select = document.getElementById('firstOption');
         const reqData = select.options[select.selectedIndex].value;
-        console.log(reqData);
         const response = await getCategory(reqData);
-        console.log(response);
         this.secondCategory = response.data.results;
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     async goodsRegist() {
       try {
         const result = this.checkValidation();
-        console.log(`result = ${result}`);
-
         if (result) {
           const form = this.$refs.form;
           const formData = new FormData(form);
@@ -144,19 +140,14 @@ export default {
           } else {
             formData.append('GDS_CATEGORY_CODE', this.goods.CATEGORY_CODE2);
           }
-          console.log(this.goods.GDS_DESC);
-
           formData.append('GDS_DESC', this.goods.GDS_DESC);
-          const response = await InsertGoods(formData);
-          console.log(response);
+          await InsertGoods(formData);
         }
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     checkValidation() {
-      console.log('check중' + this.goods.CATEGORY_CODE1);
-
       const fmenu = Validation.isNull(this.goods.CATEGORY_CODE1);
       if (!fmenu) {
         alert('1차 분류를 선택해주세요.');
@@ -226,7 +217,6 @@ export default {
         return false;
       }
       let image = document.querySelector('#file').value;
-      console.log(image);
 
       const img = Validation.isNull(image);
       if (!img) {

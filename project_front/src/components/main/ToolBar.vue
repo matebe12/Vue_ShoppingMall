@@ -24,7 +24,7 @@
             class="collapse navbar-collapse"
             id="bs-example-navbar-collapse-1"
           >
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown mega-dropdown">
                 <a
                   href="#"
@@ -73,23 +73,8 @@
                   </li>
                 </ul>
               </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-bell">
-                    <span class="badge badge-primary">50</span>
-                  </i>
-                  알림
-                </a>
-              </li>
-
               <li></li>
             </ul>
-            <form class="navbar-form navbar-left">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" />
-              </div>
-              <button type="button" class="btn btn-default">검색</button>
-            </form>
             <ul class="nav navbar-nav navbar-right">
               <li>
                 <router-link to="/cart/list"
@@ -127,17 +112,15 @@
                   <i class="fa fa-user-circle-o"></i>
                   <span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" v-if="getUser">
                   <li>
                     <router-link
-                      v-if="getUser"
                       to="/order/list?status=0&page=1&pageStart=0&perPageNum=10&gdsName="
                       >주문 현황</router-link
                     >
                   </li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
+                  <li><a href="#">내 정보</a></li>
+                  <li><a href="#">회원 탈퇴</a></li>
                   <li>
                     <router-link
                       v-if="this.$store.state.user.USER_VERIFY == 9"

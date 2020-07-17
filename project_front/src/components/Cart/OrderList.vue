@@ -121,7 +121,7 @@ export default {
             this.$store.state.user.USER_ID,
           );
         } catch (error) {
-          console.log(error);
+          alert(error);
         }
       }
     },

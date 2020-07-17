@@ -204,7 +204,7 @@ export default {
           try {
             await this.deleteGoods(item.CART_NUM, item.USER_ID);
           } catch (error) {
-            console.log(error);
+            alert(error);
           }
         }
       }
@@ -220,7 +220,7 @@ export default {
 
         this.CartItem = this.$store.state.cart.cart;
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     setOrderInfo() {
@@ -247,7 +247,6 @@ export default {
       for (let i = 0; i < this.checkedItem.length; i++) {
         sum += this.checkedItem[i].TOTAL_PRICE;
       }
-      console.log(sum);
 
       this.subPrice = this.addNumComma(sum);
     },
@@ -257,7 +256,6 @@ export default {
         sum += this.checkedItem[i].TOTAL_PRICE;
       }
       sum -= this.coupon;
-      console.log(sum);
 
       this.totalPrice = sum;
     },
@@ -275,15 +273,14 @@ export default {
           USER_ID,
         };
         try {
-          const response = await this.$store.dispatch('deleteCart', reqData);
-          console.log(response);
+          await this.$store.dispatch('deleteCart', reqData);
           await this.$store.dispatch(
             'getCartList',
             this.$store.state.user.USER_ID,
           );
           this.CartItem = this.$store.state.cart.cart;
         } catch (error) {
-          console.log(error);
+          alert(error);
         }
       }
     },

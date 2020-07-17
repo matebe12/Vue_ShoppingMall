@@ -135,10 +135,7 @@ export default {
     this.showImg = true;
   },
   async created() {
-    console.log(this.$route.params);
-
     const response = await getGoodsOne(this.$route.params.gds_num);
-    console.log(response);
 
     this.item = response.data.results[0];
   },
@@ -170,8 +167,7 @@ export default {
           GDS_NUM: this.item.GDS_NUM,
           CART_STOCK: this.buy_stock,
         };
-        const response = await addGoodsCart(reqData);
-        console.log(response);
+        await addGoodsCart(reqData);
         alert(`${this.item.GDS_NAME} 상품 ${this.buy_stock}개가 담겼습니다.`);
         const response1 = await getCartList(this.$store.state.user.USER_ID);
         this.$store.state.cart.cart = response1.data.results;
@@ -179,7 +175,7 @@ export default {
           this.$router.push('/cart/list');
         }
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     setReplyCount(replyCount) {

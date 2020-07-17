@@ -17,21 +17,21 @@ const actions = {
       const response = await getOrderList(data);
       context.commit('getOrderList', response);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
   async updateOrderList(context, data) {
     try {
       await updateOrderList(data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
   async deleteOrderList(context, data) {
     try {
       await deleteOrderList(data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
 };

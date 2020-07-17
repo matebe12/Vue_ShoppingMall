@@ -28,7 +28,6 @@ export default {
     };
   },
   async created() {
-    console.log('page :: ' + this.$route.query.page);
     let query = this.$route.query;
     if (query.page == undefined) {
       query.page = 1;
@@ -41,7 +40,6 @@ export default {
     }
 
     const response = await getGoodsList(query);
-    console.log(response);
     this.$store.state.goods.goods = response.data.results;
     this.$store.state.goods.total = response.data.results2[0].TOTAL_COUNT;
     pagination.setTotalItems(this.$store.state.goods.total);

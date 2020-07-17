@@ -31,11 +31,6 @@ export default {
       return 'C:/upload/1592222647658Vuex구조.png';
     },
   },
-  methods: {
-    goTop() {
-      console.log('toptoptop');
-    },
-  },
 };
 </script>
 <style>

@@ -143,7 +143,6 @@ export default {
     },
     async updateUser() {
       try {
-        console.log('djdjd');
         const result = this.checkValidation();
         if (result) {
           let reqData = {
@@ -159,7 +158,7 @@ export default {
           this.closeModal();
         }
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     checkValidation() {

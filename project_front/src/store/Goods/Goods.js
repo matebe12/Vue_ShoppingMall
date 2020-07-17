@@ -17,11 +17,9 @@ const actions = {
   async getGoodList(context, data) {
     try {
       const response = await getGoodsList(data);
-      console.log(response);
-
       context.commit('getGoodList', response);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
   async getGoodOne(context, data) {
@@ -29,7 +27,7 @@ const actions = {
       const response = await getGoodsOne(data);
       context.commit('getGoodOne', response);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
 };

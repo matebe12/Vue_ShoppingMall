@@ -98,7 +98,6 @@ export default {
   },
   async mounted() {
     await this.viewReply();
-    console.log('댓글 길이 : ' + this.reply.length);
 
     this.$emit('replyCount', this.reply.length);
   },
@@ -118,11 +117,10 @@ export default {
           GDS_NUM: this.item.GDS_NUM,
           USER_ID: this.$store.state.user.USER_ID,
         };
-        const response = await addReply(reqData);
-        console.log(response);
+        await addReply(reqData);
         this.viewReply();
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     compareUser(USER_ID) {
@@ -136,12 +134,11 @@ export default {
           REPLY_NUM: REPLY_NUM,
           REPLY_CONTENT: replyInput,
         };
-        const response = await updateReply(reqData);
-        console.log(response);
+        await updateReply(reqData);
         this.showUpdateForm(REPLY_NUM);
         this.viewReply();
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     showUpdateForm(REPLY_NUM) {
@@ -157,13 +154,10 @@ export default {
         const reqData = {
           GDS_NUM: this.$route.params.gds_num,
         };
-        console.log(reqData.GDS_NUM);
-
         const response = await getReplyAll(reqData);
-        console.log(response);
         this.reply = response.data.results;
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     async deleteReply(REPLY_NUM) {
@@ -173,12 +167,11 @@ export default {
           const reqData = {
             REPLY_NUM,
           };
-          const response = await deleteReply(reqData);
-          console.log(response);
+          await deleteReply(reqData);
           this.viewReply();
         }
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
   },

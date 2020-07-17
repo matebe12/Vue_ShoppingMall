@@ -204,13 +204,12 @@ export default {
           formData.append('GDS_CATEGORY_CODE', this.selected2);
         }
         formData.append('GDS_DESC', this.item.GDS_DESC);
-        const response = await updateGoods(formData);
-        console.log(response);
+        await updateGoods(formData);
         alert('상품 수정완료');
         this.closeModal();
         this.$emit('refresh');
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     async deleteGoods() {

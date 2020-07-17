@@ -8,8 +8,6 @@ function isNull(data) {
 
 function isNum(data) {
   const isNumRegex = /^[0-9]*$/;
-  console.log(data);
-
   if (!isNumRegex.test(data)) {
     return false;
   } else {

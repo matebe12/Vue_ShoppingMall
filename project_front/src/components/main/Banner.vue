@@ -82,7 +82,6 @@ export default {
         default:
           src = 'all.png';
       }
-      console.log(src);
       return { MENU_IMG: src && require('@/assets/images/' + src) };
     },
   },

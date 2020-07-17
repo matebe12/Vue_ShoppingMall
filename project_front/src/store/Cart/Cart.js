@@ -15,7 +15,7 @@ const actions = {
       const response = await getCartList(data);
       context.commit('getCartList', response);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
   async deleteCart(context, data) {
@@ -23,7 +23,7 @@ const actions = {
       const response = await deleteCart(data);
       return response;
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
 };

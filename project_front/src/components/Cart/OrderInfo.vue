@@ -92,12 +92,10 @@ export default {
         ITEM: this.checkedItem,
       };
       try {
-        console.log(reqData);
-        const response = await insertOrder(reqData);
-        console.log(response);
+        await insertOrder(reqData);
         this.$emit('refreshCart');
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     getOrderId() {

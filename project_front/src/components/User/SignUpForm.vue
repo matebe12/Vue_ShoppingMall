@@ -267,7 +267,7 @@ export default {
           await signup(reqData);
           this.$router.push('/');
         } catch (error) {
-          console.log(error);
+          alert(error);
         }
       }
     },

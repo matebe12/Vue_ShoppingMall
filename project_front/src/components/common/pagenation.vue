@@ -47,7 +47,6 @@ export default {
       return currentPath;
     },
     changePage(item) {
-      console.log(item);
       this.$emit('changePage', item);
     },
   },

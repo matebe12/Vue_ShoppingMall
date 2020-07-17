@@ -77,13 +77,12 @@ export default {
           GDS_NUM: goods.GDS_NUM,
           CART_STOCK: 1,
         };
-        const response = await addGoodsCart(reqData);
-        console.log(response);
+        await addGoodsCart(reqData);
         alert(`${goods.GDS_NAME} 상품 1개가 담겼습니다.`);
         const response1 = await getCartList(this.$store.state.user.USER_ID);
         this.$store.state.cart.cart = response1.data.results;
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
   },

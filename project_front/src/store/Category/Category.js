@@ -22,7 +22,7 @@ const actions = {
       const response = await getCategoryList(data);
       context.commit('getCategoryList', response);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   },
 };

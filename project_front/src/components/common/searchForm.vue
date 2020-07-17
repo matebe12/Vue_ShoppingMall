@@ -80,7 +80,6 @@ export default {
   },
   methods: {
     searchGoods() {
-      console.log('검색 클릭');
       if (this.goodsName == '') {
         alert('검색어를 입력해주세요.');
         return;
