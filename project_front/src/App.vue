@@ -4,6 +4,7 @@
       <ToolBar></ToolBar>
       <div v-if="this.$store.state.isView"></div>
     </header>
+    <!-- <img src="" alt="잘되는지 테스트" ref="img" /> -->
     <Slider v-if="this.$store.state.isView"></Slider>
     <router-view :key="$route.fullPath"></router-view>
     <Spinner></Spinner>
@@ -26,11 +27,15 @@ export default {
       isAdminView: false,
     };
   },
-  computed: {
-    getsrc() {
-      return 'C:/upload/1592222647658Vuex구조.png';
-    },
-  },
+  // created() {
+  //   this.$http
+  //     .post('/api/test')
+  //     .then(response => {
+  //       console.log(response);
+  //       this.$refs.img.src = response.data;
+  //     })
+  //     .catch(error => alert(error));
+  // },
 };
 </script>
 <style>

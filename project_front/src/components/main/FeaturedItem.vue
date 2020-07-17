@@ -78,7 +78,7 @@ export default {
     async changeGoods(event) {
       let page = Validation.isNull(event) ? (event.page *= 1) : 1;
 
-      this.$router.replace({
+      this.$router.push({
         query: {
           fcode: this.$route.query.fcode,
           scode:
@@ -98,6 +98,7 @@ export default {
             this.selectedOrder == ''
               ? this.$route.query.order
               : this.selectedOrder,
+          t: new Date().getTime(),
         },
       });
     },
@@ -105,27 +106,14 @@ export default {
       this.showModal = true;
       this.item = goods;
     },
-    getImgSrc(GDS_IMG) {
-      return {
-        GDS_IMG: GDS_IMG && require('@/assets/upload/' + GDS_IMG),
-      };
-    },
   },
 };
 </script>
-<style scoped src="@/assets/css/shopList.css"></style>
 <style scoped>
 .goodsTotal {
   display: flex;
   padding-left: 5%;
   padding-right: 5%;
-}
-.spinner {
-  display: block;
-  position: fixed;
-  z-index: 1031;
-  top: calc(50% - (...px / 2)); /* where ... is the element's height */
-  right: calc(50% - (...px / 2)); /* where ... is the element's width */
 }
 a {
   text-decoration: none;

@@ -35,7 +35,7 @@
                     <img
                       v-if="showImg"
                       class="media-object"
-                      :src="getImgSrc(item.GDS_IMG).GDS_IMG"
+                      :src="`http://localhost:3000/${item.GDS_IMG}`"
                       style="width: 72px; height: 72px;"
                     />
                   </a>
@@ -236,11 +236,6 @@ export default {
       const result = CART_STOCK * GDS_PRICE;
       this.CartItem[index].TOTAL_PRICE = result;
       return this.addNumComma(result);
-    },
-    getImgSrc(GDS_IMG) {
-      return {
-        GDS_IMG: this.CartItem && require('@/assets/upload/' + GDS_IMG),
-      };
     },
     getSubTotalPrice() {
       let sum = 0;

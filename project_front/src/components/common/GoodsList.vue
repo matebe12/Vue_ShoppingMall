@@ -18,7 +18,7 @@
               <div class="team-img">
                 <router-link :to="`/shop/view/${goods.GDS_NUM}`">
                   <img
-                    :src="getImgSrc(goods.GDS_IMG).GDS_IMG"
+                    :src="`http://localhost:3000/${goods.GDS_IMG}`"
                     alt=""
                     class="imgDiv"
                   />
@@ -57,11 +57,6 @@ export default {
     },
   },
   methods: {
-    getImgSrc(GDS_IMG) {
-      return {
-        GDS_IMG: GDS_IMG && require('@/assets/upload/' + GDS_IMG),
-      };
-    },
     async addGoodsCart(goods) {
       if (this.$store.state.user.USER_ID == '') {
         alert('로그인을 해주세요. ');

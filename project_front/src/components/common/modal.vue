@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-xs-3 img_scope">
                   <img
-                    :src="getImgSrc()"
+                    :src="`http://localhost:3000/${item.GDS_IMG}`"
                     ref="image"
                     width="130px;"
                     height="80px;"
@@ -219,36 +219,29 @@ export default {
           const reqData = {
             GDS_NUM: this.item.GDS_NUM,
           };
-          const response = await deleteGoods(reqData);
-          console.log(response);
+          await deleteGoods(reqData);
           alert('상품이 삭제 되었습니다.');
           this.closeModal();
           this.$emit('refresh');
         }
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     async SelectSecond() {
       try {
         const select = document.getElementById('firstOption');
         const reqData = select.options[select.selectedIndex].value;
-        console.log(reqData);
         const response = await getCategory(reqData);
-        console.log(response);
         this.secondCategory = response.data.results;
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     closeModal() {
       this.$emit('closeModal');
     },
-    getImgSrc() {
-      return require('@/assets/upload/' + this.item.GDS_IMG);
-    },
     previewImg(e) {
-      console.log(e.target.files);
       const file = e.target.files[0]; // Get first index in files
       this.$refs.image.src = URL.createObjectURL(file); // Create File URL
     },

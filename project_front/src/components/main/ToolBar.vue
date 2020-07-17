@@ -77,7 +77,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <router-link to="/cart/list"
+                <router-link to="/cart/list" @click.native="replace"
                   ><i class="fa fa-shopping-cart">
                     <span class="badge badge-primary">{{
                       this.$store.state.cart.cart != null
@@ -116,6 +116,7 @@
                   <li>
                     <router-link
                       to="/order/list?status=0&page=1&pageStart=0&perPageNum=10&gdsName="
+                      @click.native="replaceOrder()"
                       >주문 현황</router-link
                     >
                   </li>
@@ -174,6 +175,26 @@ export default {
         this.$router.push('/');
       }
     },
+    replace() {
+      this.$router.replace({
+        path: '/cart/list',
+        query: {
+          t: new Date().getTime(),
+        },
+      });
+    },
+    replaceOrder(status) {
+      this.$router.replace({
+        path: '/order/list',
+        query: {
+          status: !Validation.isNull(status) ? '' : status,
+          page: 1,
+          pageStart: 0,
+          perPageNum: 10,
+          t: new Date().getTime(),
+        },
+      });
+    },
     replaceUrl(fcode, scode) {
       this.$router.replace({
         path: '/shop/list/category',
@@ -186,7 +207,6 @@ export default {
           t: new Date().getTime(),
         },
       });
-      this.preUrl = this.$route.path;
     },
   },
 };

@@ -17,10 +17,16 @@ const routes = [
     },
   },
   {
+    path: '*',
+    name: 'error',
+    component: () => import('@/components/common/error.vue'),
+  },
+  {
     path: '/',
     name: 'main',
-    redirect:
-      '/shop/list/category?fcode=&scode=&page=1&pageStart=0&perPageNum=10',
+    beforeEnter: (to, from, next) => {
+      next('/shop/list/:category?scode=&page=1&pageStart=0&perPageNum=10');
+    },
   },
   {
     path: '/shop/list/:category',
@@ -34,10 +40,6 @@ const routes = [
     path: '/cart/list',
     name: 'cart',
     component: () => import('@/views/shop/Cart.vue'),
-    beforeEnter: async (to, from, next) => {
-      await store.dispatch('getCartList', store.state.user.USER_ID);
-      next();
-    },
   },
 
   {
@@ -62,6 +64,7 @@ const routes = [
     name: 'login',
     component: () => import('@/views/User/Login.vue'),
   },
+
   {
     path: '/admin',
     name: 'admin',
@@ -142,6 +145,7 @@ router.beforeEach(async function(to, from, next) {
     store.state.isView = true;
   }
   await store.dispatch('getCategoryList');
+  await store.dispatch('getCartList', store.state.user.USER_ID);
   next();
 });
 

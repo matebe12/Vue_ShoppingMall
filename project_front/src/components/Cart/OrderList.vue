@@ -101,6 +101,7 @@ export default {
           pageStart: (page - 1) * 10,
           perPageNum: 10,
           gdsName: this.goodsName,
+          t: new Date().getTime(),
         },
       });
     },
