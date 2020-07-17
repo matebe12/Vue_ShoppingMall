@@ -145,7 +145,10 @@ router.beforeEach(async function(to, from, next) {
     store.state.isView = true;
   }
   await store.dispatch('getCategoryList');
-  await store.dispatch('getCartList', store.state.user.USER_ID);
+  if (store.state.user.USER_ID != '') {
+    await store.dispatch('getCartList', store.state.user.USER_ID);
+  }
+
   next();
 });
 
