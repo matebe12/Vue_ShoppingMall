@@ -29,16 +29,18 @@
         INSERT INTO USER_TABLE
         (
             USER_ID,
-            USER_NAME
+            USER_NAME,
+            ISSNS
         )
         VALUES
         (
             #{USER_ID},
-            #{USER_NAME}
+            #{USER_NAME},
+            #{ISSNS}
         )
     </insert>
     <select id="selectLoginUser">
-        SELECT USER_ID, USER_PW, USER_NAME,USER_VERIFY
+        SELECT USER_ID, USER_PW, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
         <if test="USER_CHECK != null">
@@ -47,7 +49,7 @@
     </select>
 
     <select id="selectLoginUserKakao">
-        SELECT USER_ID, USER_NAME,USER_VERIFY
+        SELECT USER_ID, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
     </select>
@@ -96,12 +98,28 @@
         </if>
     </select>
 
+    <select id="getUserDetail">
+        SELECT USER_ADDR1, USER_ADDR2, USER_ID, USER_NAME, USER_PHONE
+        FROM USER_TABLE
+        WHERE USER_ID = #{USER_ID}
+    </select>
+
     <update id="updateUser">
         UPDATE USER_TABLE 
         SET USER_NAME = #{USER_NAME},
         USER_PHONE = #{USER_PHONE},
-        USER_VERIFY = #{USER_VERIFY},
-        USER_GENDER = #{USER_GENDER}
+        <if test="USER_VERIFY != null">
+            USER_VERIFY = #{USER_VERIFY},
+        </if>
+        <if test="USER_GENDER != null">
+            USER_GENDER = #{USER_GENDER},
+        </if>
+        <if test="USER_ADDR1 != null">
+            USER_ADDR1 = #{USER_ADDR1},
+        </if>
+        <if test="USER_ADDR2 != null">
+            USER_ADDR2 = #{USER_ADDR2}
+        </if>
         WHERE USER_ID = #{USER_ID}
     </update>
 

@@ -1,6 +1,9 @@
 import { Router } from 'express';
 const router = Router();
-import {getInfo} from '../mysql/mysql.js';
+import { MybatisMapper, connection, MapperPath, format } from '../mysql/mysql.js';
+
+MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
+
 
 router.post('/', (req, res) => {
     const baseurl = 'http://localhost:3000/다운로드.jpg';

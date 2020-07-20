@@ -99,6 +99,7 @@ router.post('/loginKakao', (req,res) => {
         } else {
             if (results.length < 1) {
                 console.log('유저를 찾을 수 없음');
+                req.body.ISSNS = 'kakao';
                 insertUserKakao('userMapper', 'insertUserKakao', req.body, format);
             } 
 
@@ -164,15 +165,34 @@ router.post('/getUserList', async(req, res) => {
     });
 });
 
-router.post('/updateUser', async (req, res) => {
+router.post('/getUserDetail', async (req, res) => {
     let reqData;
     if (req.body != null) {
         reqData = req.body;
     }
     console.log('reqData : ', reqData);
 
+    const query = MybatisMapper.getStatement('userMapper', 'getUserDetail', reqData, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return 500;
+        }
+        console.log(results);
+        return res.status(200).send({
+            results
+        });
+    });
+});
+
+router.post('/updateUser', async (req, res) => {
+    let reqData = req.body;
+    
+    console.log('reqData : ', req);
+
     const query = MybatisMapper.getStatement('userMapper', 'updateUser', reqData, format);
     connection.query(query, (error, results2, fields) => {
+        console.log(query);
         if (error) {
             console.log(error);
             return 500;
