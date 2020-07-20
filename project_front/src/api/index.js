@@ -3,7 +3,7 @@ import { setInterceptors } from './common/interceptor';
 
 function createInstanceWithAuth(url) {
   const instance = axios.create({
-    baseURL: `/api/${url}`,
+    baseURL: `${process.env.VUE_APP_API_URL}api/${url}`,
   });
   return setInterceptors(instance);
 }

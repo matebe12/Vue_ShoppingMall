@@ -18,7 +18,7 @@
               <div class="team-img">
                 <router-link :to="`/shop/view/${goods.GDS_NUM}`">
                   <img
-                    :src="`http://localhost:3000/${goods.GDS_IMG}`"
+                    :src="`${getUrl}${goods.GDS_IMG}`"
                     alt=""
                     class="imgDiv"
                   />
@@ -54,6 +54,9 @@ export default {
   computed: {
     getGoods() {
       return this.$store.state.goods.goods;
+    },
+    getUrl() {
+      return this.$store.state.url;
     },
   },
   methods: {

@@ -40,10 +40,7 @@
         <tr v-for="(goods, index) in goodsList" :key="index">
           <td>{{ goods.GDS_NUM }}</td>
           <td>
-            <img
-              :src="`http://localhost:3000/${goods.GDS_IMG}`"
-              class="goodsImg"
-            />
+            <img :src="`${getUrl}${goods.GDS_IMG}`" class="goodsImg" />
           </td>
           <td>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
@@ -104,6 +101,9 @@ export default {
 
       return returnValue;
     },
+    getUrl() {
+      return this.$store.state.url;
+    },
   },
   components: {
     Modal,
@@ -160,9 +160,6 @@ export default {
     },
     async refresh() {
       this.searchGoods();
-    },
-    getImgSrc(GDS_IMG) {
-      return 'http://localhost:3000/' + GDS_IMG;
     },
   },
 };

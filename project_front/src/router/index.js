@@ -63,6 +63,14 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/User/Login.vue'),
+    beforeEnter: async (to, from, next) => {
+      if (store.state.user.USER_ID == '') {
+        next();
+      } else {
+        alert('이미 로그인 정보가 있습니다.');
+        next('/');
+      }
+    },
   },
 
   {

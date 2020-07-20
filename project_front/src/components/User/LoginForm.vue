@@ -57,6 +57,7 @@
 import Validation from '@/util/data/Validation.js';
 import KakaoLogin from 'vue-kakao-login';
 import { loginKakao } from '@/api/User';
+import Cookie from 'js-cookie';
 export default {
   data() {
     return {
@@ -67,6 +68,11 @@ export default {
   components: {
     KakaoLogin,
   },
+  computed: {
+    getUrl() {
+      return this.$store.state.url;
+    },
+  },
   methods: {
     loginKakao(data) {
       window.Kakao.API.request({
@@ -76,6 +82,7 @@ export default {
           let reqData = {
             USER_ID: res.id,
             USER_NAME: res.properties.nickname,
+            USER_THUMNAIL: res.properties.thumnail,
             ACCESS_TOKEN: data.access_token,
           };
           this.loginKakaoCallBack(reqData);
@@ -88,8 +95,14 @@ export default {
         this.$store.state.user.USER_ID = response.data.USER_ID;
         this.$store.state.user.USER_NAME = response.data.USER_NAME;
         this.$store.state.user.USER_VERIFY = response.data.USER_VERIFY;
-
+        this.$store.state.user.USER_ADDR1 = response.data.USER_ADDR1;
+        this.$store.state.user.USER_ADDR2 = response.data.USER_ADDR2;
+        this.$store.state.user.ISSNS = response.data.ISSNS;
+        Cookie.set('token', reqData.ACCESS_TOKEN);
+        Cookie.set('user', response.data);
+        Cookie.set('verify', this.$store.state.user.USER_VERIFY);
         alert('로그인 되었습니다.');
+
         this.$router.push('/');
       } catch (error) {
         alert(error);
@@ -109,7 +122,7 @@ export default {
         USER_PW: this.USER_PW,
       };
       this.$http
-        .post('/api/user/login', reqData)
+        .post(this.getUrl + 'api/user/login', reqData)
         .then(async response => {
           if (
             !response.data.resultData.isMatchedPw ||

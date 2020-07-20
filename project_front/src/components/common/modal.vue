@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-xs-3 img_scope">
                   <img
-                    :src="`http://localhost:3000/${item.GDS_IMG}`"
+                    :src="`${getUrl}${item.GDS_IMG}`"
                     ref="image"
                     width="130px;"
                     height="80px;"
@@ -172,6 +172,11 @@ export default {
   },
   components: {
     ckeditor: CKEditor.component,
+  },
+  computed: {
+    getUrl() {
+      return this.$store.state.url;
+    },
   },
   props: ['item'],
   async created() {
@@ -249,7 +254,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;

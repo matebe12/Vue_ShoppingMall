@@ -12,6 +12,8 @@ export default new Vuex.Store({
   state: {
     isView: false,
     loading: true,
+    url: process.env.VUE_APP_API_URL,
+    isModal: false,
   },
   mutations: {},
   actions: {},

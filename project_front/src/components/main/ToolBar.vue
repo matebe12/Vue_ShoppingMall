@@ -120,8 +120,19 @@
                       >주문 현황</router-link
                     >
                   </li>
-                  <li><a href="#">내 정보</a></li>
-                  <li><a href="#">회원 탈퇴</a></li>
+                  <li>
+                    <router-link to="" @click.native="openModal"
+                      >내 정보</router-link
+                    >
+                  </li>
+                  <li>
+                    <router-link
+                      to=""
+                      @click.native="deleteUser"
+                      v-show="$store.state.user.ISSNS != 'kakao'"
+                      >회원 탈퇴</router-link
+                    >
+                  </li>
                   <li>
                     <router-link
                       v-if="this.$store.state.user.USER_VERIFY == 9"
@@ -138,12 +149,23 @@
         <!-- /.container-fluid -->
       </nav>
     </div>
+    <UserInfoModal
+      v-if="$store.state.isModal"
+      @closeModal="openModal"
+      @refresh="refresh"
+    >
+    </UserInfoModal>
   </div>
 </template>
 
 <script>
 import Validation from '@/util/data/Validation.js';
+import UserInfoModal from '@/components/common/UserInfoModal.vue';
+import { deleteUser } from '@/api/User.js';
 export default {
+  components: {
+    UserInfoModal,
+  },
   computed: {
     getUser() {
       return this.$store.state.user.USER_ID;
@@ -167,12 +189,36 @@ export default {
 
       return returnValue;
     },
+    isModal() {
+      return this.isModal;
+    },
   },
   methods: {
     logout() {
       this.$store.commit('logout');
-      if (this.$route.path != '/') {
+      if (this.$route.path != '/login') {
+        this.$router.back(-1);
+      } else {
         this.$router.push('/');
+      }
+    },
+    openModal() {
+      this.$store.state.isModal = !this.$store.state.isModal;
+    },
+    refresh() {
+      this.logout();
+    },
+    async deleteUser() {
+      const result = confirm('회원 탈퇴 하시겠습니까?');
+      if (result) {
+        try {
+          let reqData = { ITEM: [{ USER_ID: this.$store.state.user.USER_ID }] };
+          await deleteUser(reqData);
+          alert('회원 탈퇴 됐습니다.');
+          this.logout();
+        } catch (error) {
+          alert(error);
+        }
       }
     },
     replace() {
@@ -191,6 +237,7 @@ export default {
           page: 1,
           pageStart: 0,
           perPageNum: 10,
+          gdsName: '',
           t: new Date().getTime(),
         },
       });

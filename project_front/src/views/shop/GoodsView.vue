@@ -11,45 +11,45 @@
           <div class="preview col-md-6">
             <div class="preview-pic tab-content">
               <div class="tab-pane active" id="pic-1" v-if="showImg">
-                <img :src="`http://localhost:3000/${item.GDS_IMG}`" />
+                <img :src="`${getUrl}${item.GDS_IMG}`" />
               </div>
               <div class="tab-pane" id="pic-2">
-                <img :src="`http://localhost:3000/${item.GDS_IMG}`" />
+                <img :src="`${getUrl}${item.GDS_IMG}`" />
               </div>
               <div class="tab-pane" id="pic-3">
-                <img :src="`http://localhost:3000/${item.GDS_IMG}`" />
+                <img :src="`${getUrl}${item.GDS_IMG}`" />
               </div>
               <div class="tab-pane" id="pic-4">
-                <img :src="`http://localhost:3000/${item.GDS_IMG}`" />
+                <img :src="`${getUrl}${item.GDS_IMG}`" />
               </div>
               <div class="tab-pane" id="pic-5">
-                <img :src="`http://localhost:3000/${item.GDS_IMG}`" />
+                <img :src="`${getUrl}${item.GDS_IMG}`" />
               </div>
             </div>
             <ul class="preview-thumbnail nav nav-tabs">
               <li class="active">
                 <a data-target="#pic-1" data-toggle="tab"
-                  ><img :src="`http://localhost:3000/${item.GDS_IMG}`"
+                  ><img :src="`${getUrl}${item.GDS_IMG}`"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-2" data-toggle="tab"
-                  ><img :src="`http://localhost:3000/${item.GDS_IMG}`"
+                  ><img :src="`${getUrl}${item.GDS_IMG}`"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-3" data-toggle="tab"
-                  ><img :src="`http://localhost:3000/${item.GDS_IMG}`"
+                  ><img :src="`${getUrl}${item.GDS_IMG}`"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-4" data-toggle="tab"
-                  ><img :src="`http://localhost:3000/${item.GDS_IMG}`"
+                  ><img :src="`${getUrl}${item.GDS_IMG}`"
                 /></a>
               </li>
               <li>
                 <a data-target="#pic-5" data-toggle="tab"
-                  ><img :src="`http://localhost:3000/${item.GDS_IMG}`"
+                  ><img :src="`${getUrl}${item.GDS_IMG}`"
                 /></a>
               </li>
             </ul>
@@ -133,6 +133,11 @@ export default {
   },
   mounted() {
     this.showImg = true;
+  },
+  computed: {
+    getUrl() {
+      return this.$store.state.url;
+    },
   },
   async created() {
     const response = await getGoodsOne(this.$route.params.gds_num);

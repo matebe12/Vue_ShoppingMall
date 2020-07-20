@@ -35,7 +35,7 @@
                     <img
                       v-if="showImg"
                       class="media-object"
-                      :src="`http://localhost:3000/${item.GDS_IMG}`"
+                      :src="`${getUrl}${item.GDS_IMG}`"
                       style="width: 72px; height: 72px;"
                     />
                   </a>
@@ -190,6 +190,9 @@ export default {
   computed: {
     getTotalPriceNum() {
       return this.addNumComma(this.totalPrice);
+    },
+    getUrl() {
+      return this.$store.state.url;
     },
   },
   methods: {
