@@ -1,20 +1,12 @@
 import { Router } from 'express';
-import multer from 'multer';
 const router = Router();
+import {upload} from '../../config/upload.js';
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
 require('dotenv').config();
 
 MybatisMapper.createMapper([`${MapperPath}/user/GoodsMapper.xml`]);
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'C:\\upload')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname)
-    }
-})
-const upload = multer({ storage });
+
 
 router.get('/category/:reqData', async (req, res) => {
     const reqData = req.params;

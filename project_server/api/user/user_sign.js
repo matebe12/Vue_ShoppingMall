@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 require('dotenv').config();
 import jwt from 'jsonwebtoken';
 import { jwtObj } from '../../config/jwt.js';
-
+import { upload } from '../../config/upload.js';
 MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
 
@@ -113,8 +113,7 @@ router.post('/loginKakao', (req,res) => {
                 }
 
                 resData.success = results;
-                console.log('resData', resData);
-                console.log('response1', resData);
+                console.log(req.body);
                 res.cookie('token', req.body.ACCESS_TOKEN);
                 res.cookie('verify', resData.success[0].USER_VERIFY);
                 res.cookie('user', JSON.stringify(resData));
@@ -185,9 +184,11 @@ router.post('/getUserDetail', async (req, res) => {
     });
 });
 
-router.post('/updateUser', async (req, res) => {
+router.post('/updateUser', upload.any(), async (req, res) => {
     let reqData = req.body;
-    
+    console.log(req.files);
+    if (req.hasOwnProperty('files'))
+    reqData.USER_THUMBNAIL = `${req.files[0].filename}`;   
     console.log('reqData : ', req);
 
     const query = MybatisMapper.getStatement('userMapper', 'updateUser', reqData, format);

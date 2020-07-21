@@ -10,6 +10,7 @@ router.post('/insertReply', async(req,res) => {
     const query = MybatisMapper.getStatement('replyMapper', 'insertReply', reqData, format);
     connection.query(query, (error, results, fields) => {
         if (error) {
+            console.log(query);
             console.log(error);
             return res.status(500);
         }
@@ -42,6 +43,7 @@ router.post('/updateReply', async (req, res) => {
     const query = MybatisMapper.getStatement('replyMapper', 'updateReply', reqData, format);
     connection.query(query, (error, results, fields) => {
         if (error) {
+            
             console.log(error);
             return res.status(500);
         }

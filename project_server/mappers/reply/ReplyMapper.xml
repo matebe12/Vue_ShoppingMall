@@ -2,23 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="replyMapper">
     <insert id="insertReply">
+        
         INSERT INTO GOODS_REPLY_TABLE
         (
             GDS_NUM,
             USER_ID,
-            REPLY_CONTENT
+            REPLY_CONTENT,
+            REPLY_DEPTH,
+            REPLY_GROUP,
+            REPLY_PARENT
         )
         VALUES(
          #{GDS_NUM},
          #{USER_ID},
-         #{REPLY_CONTENT}   
+         #{REPLY_CONTENT},
+         #{REPLY_DEPTH},
+        <if test="REPLY_GROUP != null">
+        #{REPLY_GROUP},
+        </if>
+        <if test="REPLY_GROUP == null">
+            (select max(REPLY_NUM) +1 FROM GOODS_REPLY_TABLE a),
+        </if>
+         #{REPLY_PARENT}
         )
     </insert>
 
     <select id="getReplyAll">
-        SELECT GDS_NUM, USER_ID, REPLY_CONTENT, REPLY_NUM
-        FROM GOODS_REPLY_TABLE
-        WHERE GDS_NUM = #{GDS_NUM}
+        SELECT T1.GDS_NUM, T1.USER_ID, T1.REPLY_CONTENT, T1.REPLY_NUM,
+        T2.USER_THUMBNAIL, T2.ISSNS, T1.REPLY_GROUP, T1.REPLY_DEPTH
+        FROM GOODS_REPLY_TABLE AS T1
+        INNER JOIN USER_TABLE AS T2
+        ON T1.USER_ID = T2.USER_ID
+        WHERE T1.GDS_NUM = #{GDS_NUM}
+        ORDER BY T1.REPLY_GROUP, T1.REPLY_DEPTH 
     </select>
 
     <update id="updateReply">

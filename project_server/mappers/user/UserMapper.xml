@@ -30,17 +30,19 @@
         (
             USER_ID,
             USER_NAME,
-            ISSNS
+            ISSNS,
+            USER_THUMNAIL
         )
         VALUES
         (
             #{USER_ID},
             #{USER_NAME},
-            #{ISSNS}
+            #{ISSNS},
+            #{USER_THUMNAIL}
         )
     </insert>
     <select id="selectLoginUser">
-        SELECT USER_ID, USER_PW, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS
+        SELECT USER_ID, USER_PW, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS,USER_THUMBNAIL
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
         <if test="USER_CHECK != null">
@@ -49,7 +51,7 @@
     </select>
 
     <select id="selectLoginUserKakao">
-        SELECT USER_ID, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS
+        SELECT USER_ID, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS,USER_THUMBNAIL
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
     </select>
@@ -118,7 +120,10 @@
             USER_ADDR1 = #{USER_ADDR1},
         </if>
         <if test="USER_ADDR2 != null">
-            USER_ADDR2 = #{USER_ADDR2}
+            USER_ADDR2 = #{USER_ADDR2},
+        </if>
+        <if test="USER_THUMBNAIL != null">
+            USER_THUMBNAIL = #{USER_THUMBNAIL}
         </if>
         WHERE USER_ID = #{USER_ID}
     </update>
