@@ -9,10 +9,17 @@ const state = {
     Cookie.get('user') != null
       ? JSON.parse(Cookie.get('user')).USER_VERIFY
       : '',
-  USER_ADDR1: '',
-  USER_ADDR2: '',
-  USER_PHONE: '',
-  ISSNS: '',
+  USER_ADDR1:
+    Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_ADDR1 : '',
+  USER_ADDR2:
+    Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_ADDR2 : '',
+  USER_PHONE:
+    Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_PHONE : '',
+  ISSNS: Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).ISSNS : '',
+  USER_THUMBNAIL:
+    Cookie.get('user') != null
+      ? JSON.parse(Cookie.get('user')).USER_THUMBNAIL
+      : '',
 };
 
 const mutations = {
@@ -24,6 +31,7 @@ const mutations = {
     state.USER_ADDR2 = '';
     state.USER_PHONE = '';
     state.ISSNS = '';
+    state.USER_THUMBNAIL = '';
 
     Cookie.remove('token');
     Cookie.remove('user');
@@ -54,6 +62,7 @@ const mutations = {
     state.USER_ADDR1 = data.results[0].USER_ADDR1;
     state.USER_ADDR2 = data.results[0].USER_ADDR2;
     state.ISSNS = data.results[0].ISSNS;
+    state.USER_THUMBNAIL = data.results[0].USER_THUMBNAIL;
     Cookie.set('token', data.token);
     Cookie.set('verify', data.results[0].USER_VERIFY);
     Cookie.set('user', data.results[0]);

@@ -82,7 +82,7 @@ export default {
           let reqData = {
             USER_ID: res.id,
             USER_NAME: res.properties.nickname,
-            USER_THUMNAIL: res.properties.thumnail,
+            USER_THUMNAIL: res.properties.thumbnail_image_url,
             ACCESS_TOKEN: data.access_token,
           };
           this.loginKakaoCallBack(reqData);

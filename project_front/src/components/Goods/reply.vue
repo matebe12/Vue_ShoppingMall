@@ -7,6 +7,7 @@
           placeholder="Add a comment"
           type="text"
           v-model="REPLY_CONTENT"
+          @keyup.enter="insertReply"
         />
         <span class="input-group-addon">
           <a href="javascript:void(0);" @click="insertReply"
@@ -15,32 +16,49 @@
         </span>
       </div>
       <ul class="comments-list">
-        <li class="comment" v-for="(data, index) in reply" :key="index">
+        <li
+          class="comment"
+          v-for="(data, index) in reply"
+          :key="index"
+          v-bind:style="getStyle(data.REPLY_DEPTH)"
+        >
           <a class="pull-left" href="#">
             <img
               class="avatar"
-              src="http://bootdey.com/img/Content/user_1.jpg"
+              :src="getUrl(data.USER_THUMBNAIL, data.ISSNS)"
               alt="avatar"
             />
           </a>
           <div class="comment-body">
             <div class="comment-heading">
               <h4 class="user">{{ data.USER_ID }}</h4>
-              <h5 class="time" v-if="compareUser(data.USER_ID)">
-                <i
-                  class="fas fa-edit fa-1x"
-                  @click="showUpdateForm(data.REPLY_NUM)"
-                ></i
-                >수정
-              </h5>
-              <h2
-                class="time"
-                @click="deleteReply(data.REPLY_NUM)"
-                v-if="compareUser(data.USER_ID)"
+              <a href="javascript:void(0);">
+                <h5 class="time" v-if="compareUser(data.USER_ID)">
+                  <i
+                    class="fas fa-edit fa-1x"
+                    @click="showUpdateForm(data.REPLY_NUM)"
+                  ></i
+                  >수정
+                </h5></a
               >
-                <i class="fas fa-trash fa-1x"></i>삭제
-              </h2>
-              <h5 class="time">5 minutes ago</h5>
+              <a href="javascript:void(0);">
+                <h2
+                  class="time"
+                  @click="deleteReply(data.REPLY_NUM)"
+                  v-if="compareUser(data.USER_ID)"
+                >
+                  <i class="fas fa-trash fa-1x"></i>삭제
+                </h2>
+              </a>
+              <a
+                href="javascript:void(0);"
+                @click="showRelpyForm(data)"
+                v-if="data.REPLY_DEPTH == 0"
+                ><h5 class="time">
+                  <i class="fas fa-edit fa-1x"></i
+                  ><span>&nbsp;&nbsp;&nbsp;답글 </span>
+                </h5></a
+              >
             </div>
             <p :id="`reply_${data.REPLY_NUM}`">{{ data.REPLY_CONTENT }}</p>
             <div :id="`reply_content${data.REPLY_NUM}`" style="display:none;">
@@ -54,6 +72,19 @@
                 @click="updateReply(data.REPLY_NUM)"
               >
                 수정
+              </button>
+            </div>
+            <div
+              :id="`re_reply_content${data.REPLY_NUM}`"
+              style="display:none;"
+            >
+              <input
+                type="text"
+                :id="`re_reply_input${data.REPLY_NUM}`"
+                @keyup.enter="insertReply(data)"
+              />
+              <button class="btn btn-warning" @click="insertReply(data)">
+                작성
               </button>
             </div>
           </div>
@@ -88,6 +119,7 @@ import {
   updateReply,
   deleteReply,
 } from '@/api/Reply.js';
+import Validation from '@/util/data/Validation.js';
 export default {
   props: ['item'],
   data() {
@@ -102,21 +134,67 @@ export default {
     this.$emit('replyCount', this.reply.length);
   },
   methods: {
-    async insertReply() {
-      if (this.$store.state.user.USER_ID == '') {
-        alert('로그인을 해주세요');
-        return;
+    showRelpyForm(data) {
+      const showInput = document.getElementById(
+        're_reply_content' + data.REPLY_NUM,
+      );
+      if (showInput.style.display == 'none') {
+        showInput.style.display = 'block';
+      } else {
+        showInput.style.display = 'none';
       }
-      if (this.REPLY_CONTENT == '') {
-        alert('댓글을 입력해주세요');
-        return;
+    },
+    getStyle(depth) {
+      let styleReply = {
+        'margin-left': 5 * depth + '%',
+      };
+      return styleReply;
+    },
+    getUrl(USER_THUMBNAIL, ISSNS) {
+      if (Validation.isNull(USER_THUMBNAIL)) {
+        if (Validation.isNull(ISSNS)) {
+          return USER_THUMBNAIL;
+        }
+        return this.$store.state.url + USER_THUMBNAIL;
+      } else {
+        return 'http://bootdey.com/img/Content/user_1.jpg';
       }
+    },
+    async insertReply(data) {
+      if (!Validation.isNull(data.REPLY_NUM)) {
+        if (this.$store.state.user.USER_ID == '') {
+          alert('로그인을 해주세요');
+          return;
+        }
+        if (this.REPLY_CONTENT == '') {
+          alert('댓글을 입력해주세요');
+          return;
+        }
+      }
+
       try {
-        const reqData = {
-          REPLY_CONTENT: this.REPLY_CONTENT,
-          GDS_NUM: this.item.GDS_NUM,
-          USER_ID: this.$store.state.user.USER_ID,
-        };
+        let reqData;
+        if (!Validation.isNull(data.REPLY_NUM)) {
+          reqData = {
+            REPLY_CONTENT: this.REPLY_CONTENT,
+            GDS_NUM: this.item.GDS_NUM,
+            USER_ID: this.$store.state.user.USER_ID,
+            REPLY_DEPTH: 0,
+            REPLY_PARENT: 0,
+            REPLY_GROUP: null,
+          };
+        } else {
+          reqData = {
+            REPLY_CONTENT: document.getElementById(
+              're_reply_input' + data.REPLY_NUM,
+            ).value,
+            GDS_NUM: this.item.GDS_NUM,
+            USER_ID: this.$store.state.user.USER_ID,
+            REPLY_DEPTH: data.REPLY_DEPTH + 1,
+            REPLY_GROUP: data.REPLY_GROUP,
+            REPLY_PARENT: data.REPLY_NUM,
+          };
+        }
         await addReply(reqData);
         this.viewReply();
       } catch (error) {

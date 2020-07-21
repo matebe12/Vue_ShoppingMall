@@ -77,7 +77,13 @@
           name="GDS_DESC"
           v-model="goods.GDS_DESC"
         ></ckeditor>
-        <input type="file" ref="files2" name="sampleFile" id="file" />
+        <input
+          type="file"
+          ref="files2"
+          name="sampleFile"
+          id="file"
+          accept="image/*"
+        />
         <button type="submit" id="register_Btn" class="btn btn-primary">
           등록
         </button>
@@ -142,6 +148,7 @@ export default {
           }
           formData.append('GDS_DESC', this.goods.GDS_DESC);
           await InsertGoods(formData);
+          alert('상품이 등록 되었습니다.');
         }
       } catch (error) {
         alert(error);

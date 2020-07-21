@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Cookie from 'js-cookie';
 import store from '@/store/index.js';
+import Validation from '@/util/data/Validation.js';
 Vue.use(VueRouter);
 const routes = [
   {
@@ -40,23 +41,33 @@ const routes = [
     path: '/cart/list',
     name: 'cart',
     component: () => import('@/views/shop/Cart.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!Validation.isNull(store.state.user.USER_ID)) {
+        alert('로그인을 해주세요.');
+        next('/login');
+      } else {
+        next();
+      }
+    },
   },
 
   {
     path: '/order/list',
     name: 'order',
     component: () => import('@/components/Cart/OrderList.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!Validation.isNull(store.state.user.USER_ID)) {
+        alert('로그인을 해주세요.');
+        next('/login');
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/shop/view/:gds_num',
     name: 'ShowDetailView',
     component: () => import('@/views/shop/GoodsView'),
-    beforeEnter: async (to, from, next) => {
-      store.state.loading = true;
-      await store.dispatch('getGoodOne', to.params.gds_num);
-      store.state.loading = false;
-      next();
-    },
   },
 
   {

@@ -28,6 +28,19 @@
                   위해 작성해주세요.
                 </div>
                 <div class="col-xs-7">
+                  <img :src="getUrl()" ref="image" id="image" />
+                  <input
+                    type="file"
+                    id="USER_THUMBNAIL"
+                    ref="file"
+                    name="USER_THUMBNAIL"
+                    v-if="$store.state.user.ISSNS != 'kakao'"
+                    accept="image/*"
+                    @change="previewImg"
+                  />
+                  <button type="button" @click="replacrUrl()">되돌리기</button>
+                </div>
+                <div class="col-xs-7">
                   <label for="USER_ID">아이디</label>
                   <input
                     type="text"
@@ -121,9 +134,23 @@ export default {
     return {
       item: {},
       isAddress: false,
+      uploadImage: '',
     };
   },
   methods: {
+    getUrl() {
+      if (!Validation.isNull(this.$store.state.user.ISSNS == '')) {
+        if (Validation.isNull(this.$store.state.user.USER_THUMBNAIL))
+          return this.$store.state.url + this.$store.state.user.USER_THUMBNAIL;
+        else return 'http://bootdey.com/img/Content/user_1.jpg';
+      } else {
+        return this.$store.state.user.USER_THUMBNAIL;
+      }
+    },
+    replacrUrl() {
+      const imgSrc = this.getUrl();
+      this.$refs.image.src = imgSrc;
+    },
     setAddress(data) {
       this.item.USER_ADDR1 = data;
       this.isAddressMethod();
@@ -140,14 +167,15 @@ export default {
         const formData = new FormData(form);
         const result = this.checkValidation(formData);
         if (result) {
-          const reqData = {
-            USER_ID: formData.get('USER_ID'),
-            USER_NAME: formData.get('USER_NAME'),
-            USER_PHONE: formData.get('USER_PHONE'),
-            USER_ADDR1: formData.get('USER_ADDR1'),
-            USER_ADDR2: formData.get('USER_ADDR2'),
-          };
-          await updateUser(reqData);
+          //   const reqData = {
+          //     USER_ID: formData.get('USER_ID'),
+          //     USER_NAME: formData.get('USER_NAME'),
+          //     USER_PHONE: formData.get('USER_PHONE'),
+          //     USER_ADDR1: formData.get('USER_ADDR1'),
+          //     USER_ADDR2: formData.get('USER_ADDR2'),
+          //     USER_THUMBNAIL: formData.get('USER_ADDR2'),
+          //   };
+          await updateUser(formData);
           alert('수정이 완료 되었습니다. 다시 로그인 해주세요.');
           this.$store.state.isModal = !this.$store.state.isModal;
           this.$emit('refresh');
@@ -225,7 +253,12 @@ export default {
         alert(error);
       }
     },
+    previewImg(e) {
+      const file = e.target.files[0]; // Get first index in files
+      this.$refs.image.src = URL.createObjectURL(file); // Create File URL
+    },
   },
+
   async created() {
     //사용자 정보 불러오기
     this.getUserDetail();
@@ -249,7 +282,10 @@ export default {
   display: table;
   transition: opacity 0.3s ease;
 }
-
+#image {
+  width: 110px;
+  height: 110px;
+}
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
@@ -257,7 +293,7 @@ export default {
 
 .modal-container {
   width: 700px;
-  height: 500px;
+  height: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

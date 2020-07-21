@@ -123,6 +123,7 @@
                     name="sampleFile"
                     id="file"
                     @change="previewImg"
+                    accept="image/*"
                   />
                 </div>
                 <label for="GDS_DESC">GDS_DESC</label>

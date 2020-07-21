@@ -24,7 +24,13 @@
         >{{ item.CATEGORY_NAME }}</option
       >
     </select>
-    <input type="text" name="" id="" v-model="goodsname" />
+    <input
+      type="text"
+      name=""
+      id=""
+      v-model="goodsname"
+      @keyup.enter="searchGoods()"
+    />
     <button @click="searchGoods()">검색</button>
     <table>
       <thead>

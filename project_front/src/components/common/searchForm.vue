@@ -16,6 +16,7 @@
             placeholder="상품입력"
             type="text"
             v-model="goodsName"
+            @keyup.enter="searchGoods"
           />
           <div class="input-group-btn search-panel">
             <select

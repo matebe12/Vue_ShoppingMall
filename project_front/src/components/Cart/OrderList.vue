@@ -13,7 +13,13 @@
       <option value="4">구매확정</option>
       <option value="5">취소요청</option>
     </select>
-    <input type="text" placeholder="상품이름" id="" v-model="goodsName" />
+    <input
+      type="text"
+      placeholder="상품이름"
+      id=""
+      v-model="goodsName"
+      @keyup.enter="searchOrder()"
+    />
     <button @click="searchOrder()">검색</button>
     <table class="table table-bordered track_tbl">
       <thead>
@@ -81,6 +87,9 @@ export default {
     pagination.setTotalItems(this.$store.state.order.total);
     pagination._paginate(this.$route.query.page * 1);
   },
+  beforeUpdate() {
+    this.totalOrder = this.$store.state.order.total;
+  },
   async mounted() {
     pagination = createPageNation('#pagination', 10);
 
@@ -93,7 +102,10 @@ export default {
   },
   methods: {
     async searchOrder(event) {
-      let page = Validation.isNull(event) ? (event.page *= 1) : 1;
+      let page =
+        Validation.isNull(event) && isNaN(this.$router.query.page)
+          ? (event.page *= 1)
+          : 1;
       this.$router.replace({
         query: {
           status: this.firstOption,
