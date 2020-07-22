@@ -75,6 +75,7 @@
 <script>
 import { insertOrder } from '@/api/Cart.js';
 import post from '@/util/daum/post.vue';
+import Validation from '@/util/data/Validation.js';
 export default {
   props: ['checkedItem', 'totalPrice'],
   methods: {
@@ -85,6 +86,7 @@ export default {
         this.checkedItem[i].GDS_STOCK *= 1;
         this.checkedItem[i].ORDER_ID = this.getOrderId();
       }
+
       const reqData = {
         USER_ID: this.$store.state.user.USER_ID,
         ORDER_RECIEVE: this.ORDER_RECIEVE,
@@ -94,6 +96,11 @@ export default {
         TOTAL_PRICE: this.totalPrice,
         ITEM: this.checkedItem,
       };
+      let checkITEM = Validation.isNull(this.checkedItem);
+      if (!checkITEM || !Validation.isLength(this.checkedItem, 0)) {
+        alert('주문할 상품을 선택해주세요.');
+        return;
+      }
       try {
         await insertOrder(reqData);
         this.$emit('refreshCart');
