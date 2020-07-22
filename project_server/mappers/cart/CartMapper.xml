@@ -96,7 +96,7 @@
         <if test="USER_ID != 'null' || USER_ID != ''">
            AND A.USER_ID LIKE CONCAT('%',#{USER_ID},'%')
         </if>
-        <if test="USER_ID2 != 'null' || USER_ID2 != ''">
+        <if test="USER_ID2 != ''">
            AND A.USER_ID = #{USER_ID2}
         </if>
         <if test="GDS_NAME != 'null' || GDS_NAME != ''">
@@ -136,7 +136,7 @@
         <if test="USER_ID != 'null' || USER_ID != ''">
            AND A.USER_ID LIKE CONCAT('%',#{USER_ID},'%')
         </if>
-        <if test="USER_ID2 != 'null' || USER_ID2 != ''">
+        <if test="USER_ID2 != ''">
            AND A.USER_ID = #{USER_ID2}
         </if>
         <if test="GDS_NAME != 'null' || GDS_NAME != ''">

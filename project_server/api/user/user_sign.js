@@ -6,37 +6,31 @@ require('dotenv').config();
 import jwt from 'jsonwebtoken';
 import { jwtObj } from '../../config/jwt.js';
 import { upload } from '../../config/upload.js';
+import { Method } from '../httpMethod.js';
 MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
+var mapperId = 'userMapper';
 
 
-
-router.post('/signup', (req, res) => {
-    let reqData = req.body;
-    if(req.body == null){
-        res.status(400);
-    }
-    bcrypt.hash(reqData.USER_PW, 10, (error, hashedPassword) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('else 맨');
-            reqData.USER_PW = hashedPassword;
-            console.log(reqData.USER_PW);
-
-            const query = MybatisMapper.getStatement('userMapper', 'insertUser', reqData, format);
-
-            connection.query(query, (error, results, fields) => {
-                if (error) {
-                    console.log(error);
-                    res.status(500);
-                }
-                console.log(results);
-                 res.send(results);
-                 res.status(200);
-            });
+router.post('/signup', async (req, res) => {
+    try {
+        let reqData = req.body;
+        if (req.body == null) {
+            res.status(400);
         }
-    });
+        bcrypt.hash(reqData.USER_PW, 10, async (error, hashedPassword) => {
+            if (error) {
+                console.log(error);
+            } else {
+                reqData.USER_PW = hashedPassword;
+                let result = await Method(mapperId, 'insertUser', reqData, format);
+                return res.status(200).send(result);
+            }
+    })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
 });
 
 router.post('/login', (req,res) => {

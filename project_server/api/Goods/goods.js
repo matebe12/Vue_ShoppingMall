@@ -2,42 +2,35 @@ import { Router } from 'express';
 const router = Router();
 import {upload} from '../../config/upload.js';
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
+import {Method} from '../httpMethod.js';
 require('dotenv').config();
 
 MybatisMapper.createMapper([`${MapperPath}/user/GoodsMapper.xml`]);
 
+var mapperId = 'goodsMapper';
 
 
 router.get('/category/:reqData', async (req, res) => {
-    const reqData = req.params;
-    
-    const query = MybatisMapper.getStatement('goodsMapper', 'getCategory', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-    });
+    try {
+        const reqData = req.params;
+        let result = await Method(mapperId, 'getCategory', reqData, format);
+        res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 });
 
 router.post('/InsertGoods', upload.any(), async (req,res) => {
     const reqData = req.body;
-    reqData.GDS_IMG = `${req.files[0].filename}`;    
-    const query = MybatisMapper.getStatement('goodsMapper', 'insertGoods', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-    });
+    reqData.GDS_IMG = `${req.files[0].filename}`;
+    try {
+        let result = await Method(mapperId, 'insertGoods', reqData, format);
+        res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 });
 
 router.post('/getGoodsList', async (req, res) => {
@@ -46,27 +39,14 @@ router.post('/getGoodsList', async (req, res) => {
         reqData = req.body;
     }
     console.log(reqData);
-    const query2 = MybatisMapper.getStatement('goodsMapper', 'getGoodsList', reqData, format);
-    connection.query(query2, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        const query3 = MybatisMapper.getStatement('goodsMapper', 'getGoodsListCount', reqData, format);
-        connection.query(query3, (error, results2, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(500);
-            }
-
-        console.log(results);
-        console.log(query2);
-        return res.status(200).send({
-            results,
-            results2
-        });
-    });
-});
+    try {
+       let result = await Method(mapperId, 'getGoodsList', reqData, format);
+        let result1 = await Method(mapperId, 'getGoodsListCount', reqData, format);
+        res.status(200).send({result, result1});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 });
 router.post('/updateGoods', upload.any(), async (req,res) => {
     const reqData = req.body;
@@ -74,52 +54,38 @@ router.post('/updateGoods', upload.any(), async (req,res) => {
     if(req.files.length > 0){
         reqData.GDS_IMG = `${req.files[0].filename}`;    
     }
-    reqData.GDS_IMG = '';     
-    const query = MybatisMapper.getStatement('goodsMapper', 'updateGoods', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if(error){
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-        
-    });
+    reqData.GDS_IMG = '';
+    try {
+        const result = await Method(mapperId, 'updateGoods', reqData, format); 
+        res.status(200).send(result);  
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 });
 
 router.post('/getCategoryList', async (req, res) => {
-    const query = MybatisMapper.getStatement('goodsMapper', 'getCategoryList', null, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-
-    });
+    try {
+        let result = await Method(mapperId, 'getCategoryList', null, format);
+        res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 })
 
 router.post('/deleteGoods', async (req, res) => {
-    const query = MybatisMapper.getStatement('goodsMapper', 'deleteGoods', req.body, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-
-    });
+    try {
+        const result = await Method(mapperId, 'deleteReply', req.body, format);
+        const result1 = await Method(mapperId, 'deleteGoods', req.body, format);
+        res.status(200).send({result,result1});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 });
 
-router.get('/getGoodsOne/:gds_num', (req,res) => {
+router.get('/getGoodsOne/:gds_num', async (req,res) => {
     let reqData;
     console.log(req.params);
     
@@ -128,19 +94,13 @@ router.get('/getGoodsOne/:gds_num', (req,res) => {
     } else {
         reqData = req.params.gds_num = null;
     }
-    console.log('reqData : ', reqData);
-
-    const query = MybatisMapper.getStatement('goodsMapper', 'getGoodsOne', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-    });
+    try {
+        let result = await Method(mapperId,'getGoodsOne', reqData, format);
+        res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 });
 
 router.post('/upload', upload.any(), async(req, res) => {

@@ -135,4 +135,7 @@
     <delete id="deleteGoods">
         DELETE FROM GOODS_TABLE WHERE GDS_NUM = #{GDS_NUM}
     </delete>
+    <delete id="deleteReply">
+        DELETE FROM GOODS_REPLY_TABLE WHERE GDS_NUM = #{GDS_NUM}
+    </delete>
 </mapper>

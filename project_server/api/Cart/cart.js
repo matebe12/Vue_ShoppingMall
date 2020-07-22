@@ -1,23 +1,20 @@
 import { Router } from 'express';
 const router = Router();
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
+import { Method } from '../httpMethod.js';
 require('dotenv').config();
 
+var mapperId = 'cartMapper';
 MybatisMapper.createMapper([`${MapperPath}/cart/CartMapper.xml`]);
 router.post('/addGoodsCart', async (req, res) => {
-    const reqData = req.body;
-    const query = MybatisMapper.getStatement('cartMapper', 'addGoodsCart', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-    });
+    try {
+        const reqData = req.body;
+        let result = await Method(mapperId, 'addGoodsCart', reqData, format);
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
 });
 
 router.get('/getCartList/:user_id', async (req, res) => {
@@ -27,19 +24,13 @@ router.get('/getCartList/:user_id', async (req, res) => {
     } else {
         reqData = req.params.user_id = null;
     }
-    console.log('reqData : ', reqData);
-
-    const query = MybatisMapper.getStatement('cartMapper', 'getCartList', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        console.log(results);
-        return res.status(200).send({
-            results
-        });
-    });
+    try {
+        let result = await Method(mapperId, 'getCartList', reqData, format);
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
 });
 
 router.post('/deleteCart', async (req, res) => {
@@ -49,19 +40,13 @@ router.post('/deleteCart', async (req, res) => {
             msg : 'Bad Request Data'
         });
     }
-        const query = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData, format);
-        connection.query(query, (error, results, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(500);
-            }
-            console.log(results);
-            return res.status(200).send({
-                msg: 'deleteCart'
-            });
-        });
-
-    
+    try {
+        let result = await Method(mapperId, 'deleteCart', reqData, format);
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }    
 });
 
 router.post('/insertOrder', async (req, res) => {
@@ -71,64 +56,22 @@ router.post('/insertOrder', async (req, res) => {
             msg: 'Bad Request Data'
         });
     }
-    console.log(reqData);
-    
-    const query = MybatisMapper.getStatement('cartMapper', 'orderInfo', reqData, format);
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
+    try {
+        let result1 = await Method(mapperId, 'orderInfo', reqData, format);
+        let result2 = await Method(mapperId, 'orderInfo_Details', reqData, format);
+        let result3 = [];
+        let result4 = [];
+        for (let i = 0; i < reqData.ITEM.length; i++) {
+            result3.push(await Method(mapperId, 'updateGoodsStock', reqData.ITEM[i], format));
         }
-
-        
-        // return res.status(200).send({
-        //     results
-        // });
-    });
-    //console.log(results);
-    //order detail
-    const query2 = MybatisMapper.getStatement('cartMapper', 'orderInfo_Details', reqData, format);
-    connection.query(query2, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
+        for (let i = 0; i < reqData.ITEM.length; i++) {
+            result4.push(await Method(mapperId, 'deleteCart', reqData.ITEM[i], format));
         }
-        // return res.status(200).send({
-        //     results
-        // });
-    });
-
-    for (let i = 0; i < reqData.ITEM.length; i++) {
-        let data = reqData.ITEM[i];
-        const query3 = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock', data, format);
-        connection.query(query3, (error, results, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(500);
-            }
-            // return res.status(200).send({
-            //     results
-            // });
-        });
-     }
-     let resData = [];
-    for (let i = 0; i < reqData.ITEM.length; i++) {
-        console.log(reqData.ITEM[i]);
-        
-    const query4 = MybatisMapper.getStatement('cartMapper', 'deleteCart', reqData.ITEM[i], format);
-    connection.query(query4, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        resData.push(results);
-    });
-        
-}
-
-    return res.status(200).send({
-        resData
-    });
+        return res.status(200).send({ result1, result2, result3, result4});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
 });
 
 router.post('/getOrderList', async (req, res) => {
@@ -138,32 +81,14 @@ router.post('/getOrderList', async (req, res) => {
         });
     }
     const reqData = req.body;
-    
-
-    console.log(reqData);
-    const query = MybatisMapper.getStatement('cartMapper', 'getOrderList', reqData, format);
-    connection.query(query, (error, results1, fields) => {
-        if (error) {
-            console.log(error);
-            return res.status(500);
-        }
-        const query1 = MybatisMapper.getStatement('cartMapper', 'getOrderListCount', reqData, format);
-        connection.query(query1, (error, results2, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(500);
-            }
-            console.log(query);
-            console.log(query1);
-
-            return res.status(200).send({
-                results1,
-                results2
-            });
-        });
-    });
-
-    
+    try {
+        let result = await Method(mapperId, 'getOrderList', reqData, format);
+        let result1 = await Method(mapperId, 'getOrderListCount', reqData, format);
+        return res.status(200).send({result,result1});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }    
 });
 
 router.post('/updateOrderList', async (req, res) => {
@@ -173,24 +98,16 @@ router.post('/updateOrderList', async (req, res) => {
         });
     }
     const reqData = req.body;
-
-
-    console.log(reqData);
-    for(let i = 0; i < reqData.length; i++){
-        const query = MybatisMapper.getStatement('cartMapper', 'updateOrderList', reqData[i], format);
-        connection.query(query, (error, results1, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(500);
-            }
-            
-        });
+    try {
+        let result =[];
+        for (let i = 0; i < reqData.length; i++) {
+            result.push(await Method(mapperId, 'updateOrderList', reqData[i], format));
+        }
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+       return res.send(500).send(error);
     }
-    
-    return res.status(200).send({
-        msg:'업데이트 완료'
-    });
-
 });
 
 router.post('/deleteOrderList', async (req, res) => {
@@ -200,51 +117,20 @@ router.post('/deleteOrderList', async (req, res) => {
         });
     }
     const reqData = req.body;
-
-
     console.log(reqData);
-    for (let i = 0; i < reqData.length; i++) {
-        const query = MybatisMapper.getStatement('cartMapper', 'deleteOrderList', reqData[i], format);
-        connection.query(query, (error, results1, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(500);
-            }
-            const query1 = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock2', reqData[i], format);
-            connection.query(query1, (error, results2, fields) => {
-                if (error) {
-                    console.log(error);
-                    return res.status(500);
-                }
-                console.log(query1);
-                return res.status(200).send({
-                    results1,
-                    results2,
-                    msg: '삭제 완료'
-                });
-            })
-        });
+    try {
+        let result = [];
+        let result1 = [];
+        for (let i = 0; i < reqData.length; i++) {
+            result.push(await Method(mapperId, 'deleteOrderList', reqData[i], format));
+            result1.push(await Method(mapperId, 'updateGoodsStock2', reqData[i], format));
+        }
+        return res.status(200).send({result1,result})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
     }
-
-    
-
+  
 });
-
-
-
-// function updateGoodsStock(reqData){
-//     const query = MybatisMapper.getStatement('cartMapper', 'updateGoodsStock', reqData, format);
-//     connection.query(query, (error, results, fields) => {
-//         if (error) {
-//             console.log(error);
-//             return res.status(500);
-//         }
-
-//         console.log(results);
-//         return res.status(200).send({
-//             results
-//         });
-//     });
-// }
 
 export default router;

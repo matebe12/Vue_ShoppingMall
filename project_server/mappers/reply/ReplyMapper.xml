@@ -29,7 +29,7 @@
 
     <select id="getReplyAll">
         SELECT T1.GDS_NUM, T1.USER_ID, T1.REPLY_CONTENT, T1.REPLY_NUM,
-        T2.USER_THUMBNAIL, T2.ISSNS, T1.REPLY_GROUP, T1.REPLY_DEPTH
+        T2.USER_THUMBNAIL, T2.ISSNS, T1.REPLY_GROUP, T1.REPLY_DEPTH, T1.IS_DELETE
         FROM GOODS_REPLY_TABLE AS T1
         INNER JOIN USER_TABLE AS T2
         ON T1.USER_ID = T2.USER_ID
@@ -44,7 +44,7 @@
         WHERE REPLY_NUM = #{REPLY_NUM}
     </update>
 
-    <delete id="deleteReply">
-        DELETE FROM GOODS_REPLY_TABLE WHERE REPLY_NUM = #{REPLY_NUM}
-    </delete>
+    <update id="deleteReply">
+        UPDATE  GOODS_REPLY_TABLE SET REPLY_CONTENT = '삭제된 댓글입니다.', IS_DELETE=1 WHERE REPLY_NUM = #{REPLY_NUM}
+    </update>
 </mapper>
