@@ -100,7 +100,7 @@ export default {
   async created() {
     try {
       const response = await getCategory(null);
-      this.firstCategory = response.data.results;
+      this.firstCategory = response.data;
     } catch (error) {
       alert(error);
     }
@@ -130,7 +130,7 @@ export default {
         const select = document.getElementById('firstOption');
         const reqData = select.options[select.selectedIndex].value;
         const response = await getCategory(reqData);
-        this.secondCategory = response.data.results;
+        this.secondCategory = response.data;
       } catch (error) {
         alert(error);
       }

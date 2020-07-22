@@ -127,8 +127,8 @@ export default {
     }
 
     const response = await getGoodsList(query);
-    this.goodsList = response.data.results;
-    this.totalGoods = response.data.results2[0].TOTAL_COUNT;
+    this.goodsList = response.data.result;
+    this.totalGoods = response.data.result1[0].TOTAL_COUNT;
     pagination.setTotalItems(this.totalGoods);
     pagination._paginate(query.page * 1);
   },
@@ -154,6 +154,7 @@ export default {
           pageStart: (page - 1) * 10,
           perPageNum: 10,
           gdsName: this.goodsname,
+          t: new Date().getTime(),
         },
       });
     },

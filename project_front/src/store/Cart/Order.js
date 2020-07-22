@@ -6,8 +6,8 @@ const state = {
 
 const mutations = {
   getOrderList(state, data) {
-    state.order = data.data.results1;
-    state.total = data.data.results2[0].TOTAL_COUNT;
+    state.order = data.data.result;
+    state.total = data.data.result1[0].TOTAL_COUNT;
   },
 };
 

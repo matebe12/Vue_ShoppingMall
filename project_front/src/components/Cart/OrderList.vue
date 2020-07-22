@@ -102,10 +102,7 @@ export default {
   },
   methods: {
     async searchOrder(event) {
-      let page =
-        Validation.isNull(event) && isNaN(this.$router.query.page)
-          ? (event.page *= 1)
-          : 1;
+      let page = Validation.isNull(event) ? (event.page *= 1) : 1;
       this.$router.replace({
         query: {
           status: this.firstOption,
@@ -129,10 +126,9 @@ export default {
           await deleteOrderList(reqArr);
 
           alert(`${item.GDS_NAME} 상품이 주문 취소 되었습니다.`);
-          await this.$store.dispatch(
-            'getOrderList',
-            this.$store.state.user.USER_ID,
-          );
+          await this.$store.dispatch('getOrderList', {
+            USER_ID2: this.$store.state.user.USER_ID,
+          });
         } catch (error) {
           alert(error);
         }

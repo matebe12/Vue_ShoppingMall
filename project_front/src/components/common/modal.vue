@@ -32,7 +32,6 @@
                     id="firstOption"
                     name="category1"
                   >
-                    <option value="">전체</option>
                     <option
                       :value="category.CATEGORY_CODE"
                       v-for="(category, index) in firstCategory"
@@ -47,7 +46,6 @@
                     id="secondOption"
                     name="category2"
                   >
-                    <option value="">전체</option>
                     <option
                       :value="category2.CATEGORY_CODE"
                       v-for="(category2, index) in secondCategory"
@@ -180,25 +178,48 @@ export default {
     },
   },
   props: ['item'],
-  async created() {
-    const responseCate = await getCategory(null);
-    this.firstCategory = responseCate.data.results;
-    this.selected =
-      this.item.CATEGORY_REF == null
-        ? this.item.GDS_CATEGORY_CODE
-        : this.item.CATEGORY_REF;
-    let responseCate2;
-    if (this.item.CATEGORY_REF != null) {
-      responseCate2 = await getCategory(this.item.CATEGORY_REF);
-      this.secondCategory = responseCate2.data.results;
+  async mounted() {
+    // const responseCate = await getCategory(null);
+    // this.firstCategory = responseCate.data.results;
+    // this.selected =
+    //   this.item.CATEGORY_REF == null
+    //     ? this.item.GDS_CATEGORY_CODE
+    //     : this.item.CATEGORY_REF;
+    // let responseCate2;
+    // if (this.item.CATEGORY_REF != null) {
+    //   responseCate2 = await getCategory(this.item.CATEGORY_REF);
+    //   this.secondCategory = responseCate2.data.results;
+    //   this.selected2 = this.item.GDS_CATEGORY_CODE;
+    // } else {
+    //   responseCate2 = await getCategory(this.item.GDS_CATEGORY_CODE);
+    //   this.secondCategory = responseCate2.data.results;
+    // }
+    try {
+      this.firstCategory = this.getCategory().fmenu;
+      this.selected = this.item.CATEGORY_REF;
+      let responseCate2 = await getCategory(this.item.CATEGORY_REF);
+      this.secondCategory = responseCate2.data;
       this.selected2 = this.item.GDS_CATEGORY_CODE;
-    } else {
-      responseCate2 = await getCategory(this.item.GDS_CATEGORY_CODE);
-      this.secondCategory = responseCate2.data.results;
+    } catch (error) {
+      alert(error);
     }
-    //const responseCate2 = await getCategory(this.item.CATEGORY_REF);
   },
   methods: {
+    getCategory() {
+      let cate = this.$store.state.category.category;
+      let returnValue = {};
+      // for (let i = 0; i < cate.length; i++) {
+      //   if (cate[i].CATEGORY_LEVEL == 1) {
+      //     fmenu.push(cate[i]);
+      //   } else {
+      //     if (cate[i].CATEGORY_REF == this.firstCategory) smenu.push(cate[i]);
+      //   }
+      // }
+      returnValue.fmenu = cate.filter(x => x.CATEGORY_LEVEL == 1);
+      returnValue.smenu = cate.filter(x => x.CATEGORY_LEVEL == 2);
+
+      return returnValue;
+    },
     async updateGoods() {
       try {
         // 상품 카테고리도 수정 해야함

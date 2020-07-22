@@ -32,8 +32,11 @@
           <div class="comment-body">
             <div class="comment-heading">
               <h4 class="user">{{ data.USER_ID }}</h4>
-              <a href="javascript:void(0);">
-                <h5 class="time" v-if="compareUser(data.USER_ID)">
+              <a
+                href="javascript:void(0);"
+                v-if="compareUser(data.USER_ID) && data.IS_DELETE == 0"
+              >
+                <h5 class="time">
                   <i
                     class="fas fa-edit fa-1x"
                     @click="showUpdateForm(data.REPLY_NUM)"
@@ -41,14 +44,12 @@
                   >수정
                 </h5></a
               >
-              <a href="javascript:void(0);">
-                <h2
-                  class="time"
-                  @click="deleteReply(data.REPLY_NUM)"
-                  v-if="compareUser(data.USER_ID)"
-                >
-                  <i class="fas fa-trash fa-1x"></i>삭제
-                </h2>
+              <a
+                href="javascript:void(0);"
+                v-if="compareUser(data.USER_ID) && data.IS_DELETE == 0"
+                @click="deleteReply(data.REPLY_NUM)"
+              >
+                <h2 class="time"><i class="fas fa-trash fa-1x"></i>삭제</h2>
               </a>
               <a
                 href="javascript:void(0);"
@@ -170,6 +171,26 @@ export default {
           alert('댓글을 입력해주세요');
           return;
         }
+        if (!Validation.isLength(this.REPLY_CONTENT, 200)) {
+          alert('댓글은 200자 내로 입력해주세요.');
+          return;
+        }
+      } else {
+        let inputValue = document.getElementById(
+          're_reply_input' + data.REPLY_NUM,
+        ).value;
+        if (this.$store.state.user.USER_ID == '') {
+          alert('로그인을 해주세요');
+          return;
+        }
+        if (inputValue == '') {
+          alert('댓글을 입력해주세요');
+          return;
+        }
+        if (!Validation.isLength(inputValue, 200)) {
+          alert('댓글은 200자 내로 입력해주세요.');
+          return;
+        }
       }
 
       try {
@@ -196,6 +217,7 @@ export default {
           };
         }
         await addReply(reqData);
+        if (Validation.isNull(data.REPLY_NUM)) this.showRelpyForm(data);
         this.viewReply();
       } catch (error) {
         alert(error);
@@ -208,6 +230,19 @@ export default {
       try {
         const replyInput = document.getElementById('reply_input' + REPLY_NUM)
           .value;
+        if (this.$store.state.user.USER_ID == '') {
+          alert('로그인을 해주세요');
+          return;
+        }
+        if (replyInput == '') {
+          alert('댓글을 입력해주세요');
+          return;
+        }
+        if (!Validation.isLength(replyInput, 200)) {
+          alert('댓글은 200자 내로 입력해주세요.');
+          return;
+        }
+
         const reqData = {
           REPLY_NUM: REPLY_NUM,
           REPLY_CONTENT: replyInput,
@@ -233,7 +268,7 @@ export default {
           GDS_NUM: this.$route.params.gds_num,
         };
         const response = await getReplyAll(reqData);
-        this.reply = response.data.results;
+        this.reply = response.data;
       } catch (error) {
         alert(error);
       }

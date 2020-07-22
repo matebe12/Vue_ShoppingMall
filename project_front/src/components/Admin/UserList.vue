@@ -65,11 +65,6 @@
             >
           </div>
           <div class="btn_gridsearch_fr">
-            <a href="javascript:void(0);" id="passwordBtn"
-              ><span>비밀번호 초기화</span></a
-            >
-          </div>
-          <div class="btn_gridsearch_fr">
             <export-excel :data="userData">
               <a href="javascript:void(0);"> <span> 엑셀 다운로드 </span></a>
             </export-excel>

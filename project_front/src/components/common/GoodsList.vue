@@ -78,7 +78,7 @@ export default {
         await addGoodsCart(reqData);
         alert(`${goods.GDS_NAME} 상품 1개가 담겼습니다.`);
         const response1 = await getCartList(this.$store.state.user.USER_ID);
-        this.$store.state.cart.cart = response1.data.results;
+        this.$store.state.cart.cart = response1.data;
       } catch (error) {
         alert(error);
       }

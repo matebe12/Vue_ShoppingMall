@@ -12,7 +12,7 @@ const state = {
 
 const mutations = {
   getCategoryList(state, data) {
-    state.category = data.data.results;
+    state.category = data.data;
   },
 };
 

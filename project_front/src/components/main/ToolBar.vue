@@ -129,7 +129,10 @@
                     <router-link
                       to=""
                       @click.native="deleteUser"
-                      v-if="$store.state.user.ISSNS != 'kakao'"
+                      v-if="
+                        $store.state.user.ISSNS != 'kakao' ||
+                          this.$store.state.user.USER_VERIFY != 9
+                      "
                       >회원 탈퇴</router-link
                     >
                   </li>

@@ -1,5 +1,4 @@
 import { cart } from './index';
-import store from '@/store/User/User.js';
 function addGoodsCart(reqData) {
   return cart.post('/addGoodsCart', reqData);
 }
@@ -17,9 +16,7 @@ function insertOrderDetail(reqData) {
   return cart.post('/insertOrderDetail', reqData);
 }
 function getOrderList(reqData) {
-  if (reqData.USER_ID == undefined) {
-    reqData.USER_ID2 = store.state.USER_ID;
-  }
+  console.log(reqData);
   return cart.post('/getOrderList', reqData);
 }
 

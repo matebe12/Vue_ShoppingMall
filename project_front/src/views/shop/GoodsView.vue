@@ -13,46 +13,7 @@
               <div class="tab-pane active" id="pic-1" v-if="showImg">
                 <img :src="`${getUrl}${item.GDS_IMG}`" />
               </div>
-              <div class="tab-pane" id="pic-2">
-                <img :src="`${getUrl}${item.GDS_IMG}`" />
-              </div>
-              <div class="tab-pane" id="pic-3">
-                <img :src="`${getUrl}${item.GDS_IMG}`" />
-              </div>
-              <div class="tab-pane" id="pic-4">
-                <img :src="`${getUrl}${item.GDS_IMG}`" />
-              </div>
-              <div class="tab-pane" id="pic-5">
-                <img :src="`${getUrl}${item.GDS_IMG}`" />
-              </div>
             </div>
-            <ul class="preview-thumbnail nav nav-tabs">
-              <li class="active">
-                <a data-target="#pic-1" data-toggle="tab"
-                  ><img :src="`${getUrl}${item.GDS_IMG}`"
-                /></a>
-              </li>
-              <li>
-                <a data-target="#pic-2" data-toggle="tab"
-                  ><img :src="`${getUrl}${item.GDS_IMG}`"
-                /></a>
-              </li>
-              <li>
-                <a data-target="#pic-3" data-toggle="tab"
-                  ><img :src="`${getUrl}${item.GDS_IMG}`"
-                /></a>
-              </li>
-              <li>
-                <a data-target="#pic-4" data-toggle="tab"
-                  ><img :src="`${getUrl}${item.GDS_IMG}`"
-                /></a>
-              </li>
-              <li>
-                <a data-target="#pic-5" data-toggle="tab"
-                  ><img :src="`${getUrl}${item.GDS_IMG}`"
-                /></a>
-              </li>
-            </ul>
           </div>
           <div class="details col-md-6">
             <h3 class="product-title">{{ item.GDS_NAME }}</h3>
@@ -106,7 +67,7 @@
                 type="button"
                 style="margin-left: 10px;"
               >
-                <span class="fa fa-heart"></span>
+                <!-- <span class="fa fa-heart"></span> -->
               </button>
             </div>
           </div>
@@ -142,7 +103,7 @@ export default {
   async created() {
     const response = await getGoodsOne(this.$route.params.gds_num);
 
-    this.item = response.data.results[0];
+    this.item = response.data[0];
   },
   components: {
     Reply,
@@ -166,7 +127,7 @@ export default {
         await addGoodsCart(reqData);
         alert(`${this.item.GDS_NAME} 상품 ${this.buy_stock}개가 담겼습니다.`);
         const response1 = await getCartList(this.$store.state.user.USER_ID);
-        this.$store.state.cart.cart = response1.data.results;
+        this.$store.state.cart.cart = response1.data;
         if (mode === 2) {
           this.$router.push('/cart/list');
         }

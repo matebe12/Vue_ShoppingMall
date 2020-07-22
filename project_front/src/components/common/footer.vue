@@ -1,20 +1,27 @@
 <template>
-  <div class="container-fluid bg-primary py-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-7">
-          <div class="row py-0">
-            <div class="col-sm-1 hidden-md-down"></div>
-            <div class="col-sm-11 text-white">
-              <div>
-                <h4>상업목적이 아닌 개발 목적의 웹사이트입니다.</h4>
-              </div>
-            </div>
+  <section class="container-full footer">
+    <div class="container grid-xl footer-contents mb-0">
+      <div class="columns text-center">
+        <div class="column col-12">
+          <div class="footer-social my-4">
+            <a href="https://github.com/matebe12" target="_blank"
+              ><i class="fab fa-github"></i
+            ></a>
           </div>
+          <p>
+            © 2020 All rights reserved. 이 사이트는 개발 포트폴리오 용 사이트
+            입니다 상업적인 목적이 아님을 밝힙니다.
+          </p>
+          <a
+            class="text-small"
+            href="https://github.com/matebe12/Vue_ShoppingMall"
+            target="_blank"
+            >Powered by Vue_Project</a
+          >
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -22,97 +29,72 @@ export default {};
 </script>
 
 <style scoped>
-.header-font {
-  font-family: 'Josefin Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #fd1506;
-}
-.fa-facebook {
-  color: #3b5998;
-}
-.fa-linkedin {
-  color: #0077b5;
-}
-.fa-twitter {
-  color: #4099ff;
-}
-.fa-google {
-  color: #d34836;
-}
-.bg-primary {
-  background-color: #94d2e6;
-}
-
-.bg-circle {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  padding: 14px 4px;
-  color: #ececec;
-  text-align: center;
-  border-radius: 50%;
-}
-
-.bg-circle-outline {
-  width: 50px;
-  height: 50px;
-  color: smoke;
-  padding: 8px 2px;
-  border: 2px solid;
-  border-color: smoke;
-  border-radius: 50%;
-}
-
-.bg-circle a,
-a:hover,
-.media a:focus {
-  text-decoration: none !important;
-  outline: none;
-  color: #ececec;
-}
-.bg-circle-outline a,
-a:hover,
-.media a:focus {
-  text-decoration: none !important;
-  outline: none;
-  color: #ececec;
-}
 .footer {
-  background: #edeff1;
-  height: auto;
-  padding-bottom: 30px;
-  width: 100%;
-  border-bottom: 1px solid #cccccc;
-  border-top: 1px solid #dddddd;
-  position: fixed;
+  background: #868796;
 }
-.footer p {
-  margin: 0;
-}
-.footer img {
-  max-width: 100%;
-}
-.footer h3 {
-  border-bottom: 1px solid #bac1c8;
-  color: #54697e;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 27px;
-  padding: 40px 0 10px;
-  text-transform: uppercase;
-}
-.footer ul {
-  font-size: 13px;
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
-  margin-top: 15px;
-  color: #7f8c8d;
-}
-.footer ul li a {
-  padding: 0 0 5px 0;
+#anglesvg {
   display: block;
 }
+svg:not(:root) {
+  overflow: hidden;
+}
+.footer .footer-contents {
+  padding-top: 80px;
+}
+.container.grid-xl {
+  max-width: 1096px;
+}
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  width: 100%;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.my-4 {
+  margin-bottom: 0.8rem !important;
+  margin-top: 0.8rem !important;
+}
+.footer .footer-contents .footer-social a {
+  display: inline-block;
+  font-size: 1.5em;
+}
 .footer a {
-  color: #78828d;
+  color: #fffffe;
+  display: block;
+}
+.footer a:hover {
+  color: #3498db;
+  cursor: pointer;
+}
+.footer .fab:before,
+.footer .far:before {
+  font-style: normal;
+  font-weight: 400;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: 0.2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: 0.2em;
+}
+.footer p {
+  color: #d7d8e1;
+  font-size: 0.8em;
+  margin: 15px 0;
+}
+.text-small {
+  font-size: 0.8em;
+  font-weight: 800;
+}
+.text-small:hover {
+  text-decoration: none;
 }
 </style>

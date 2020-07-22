@@ -11,16 +11,19 @@
     <a href="#" class="topBtn"
       ><span><i class="fas fa-arrow-up fa-1x"> Top</i></span></a
     >
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import ToolBar from '@/components/main/ToolBar';
 import Slider from '@/components/common/slider';
+import Footer from '@/components/common/footer';
 export default {
   components: {
     ToolBar,
     Slider,
+    Footer,
   },
   data() {
     return {

@@ -3,7 +3,9 @@ body {
   overflow-x: hidden; }
 
 img {
-  max-width: 100%; }
+  max-width: 80%;
+  max-height: 20%; 
+}
 
 .preview {
   display: -webkit-box;
@@ -183,6 +185,9 @@ img {
 }
 .modal-footer {
   border-top: none;
+}
+.container {
+  width: 80%;
 }
 
 .modal-container {

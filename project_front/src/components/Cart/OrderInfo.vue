@@ -1,5 +1,12 @@
 <template>
   <div class="orderInfo">
+    <input
+      type="checkbox"
+      v-model="checkAddress"
+      value="Check"
+      @change="getUserInfo"
+    />
+    <span>내 주소</span>
     <form
       role="form"
       method="post"
@@ -37,10 +44,18 @@
           v-model="USER_ADDR1"
           required="required"
         />
+        <button type="button" class="findBtn" @click="isAddressMethod()">
+          주소찾기
+        </button>
+        <post
+          v-if="isAddress"
+          @close="isAddressMethod()"
+          @setAddress="setAddress"
+        ></post>
       </div>
 
       <div class="inputArea">
-        <label for="USER_ADDR2">1차 주소</label>
+        <label for="USER_ADDR2">나머지 주소</label>
         <input
           type="text"
           name="USER_ADDR2"
@@ -49,18 +64,6 @@
           required="required"
         />
       </div>
-
-      <div class="inputArea">
-        <label for="USER_ADDR3">2차 주소</label>
-        <input
-          type="text"
-          name="USER_ADDR3"
-          id="USER_ADDR3"
-          v-model="USER_ADDR3"
-          required="required"
-        />
-      </div>
-
       <div class="inputArea">
         <button type="submit" class="order_btn">주문</button>
         <button type="button" class="cancel_btn">취소</button>
@@ -71,6 +74,7 @@
 
 <script>
 import { insertOrder } from '@/api/Cart.js';
+import post from '@/util/daum/post.vue';
 export default {
   props: ['checkedItem', 'totalPrice'],
   methods: {
@@ -86,7 +90,6 @@ export default {
         ORDER_RECIEVE: this.ORDER_RECIEVE,
         USER_ADDR1: this.USER_ADDR1,
         USER_ADDR2: this.USER_ADDR2,
-        USER_ADDR3: this.USER_ADDR3,
         ORDER_PHONE: this.ORDER_PHONE,
         TOTAL_PRICE: this.totalPrice,
         ITEM: this.checkedItem,
@@ -96,6 +99,21 @@ export default {
         this.$emit('refreshCart');
       } catch (error) {
         alert(error);
+      }
+    },
+    setAddress(data) {
+      this.USER_ADDR1 = data;
+      this.isAddressMethod();
+    },
+    isAddressMethod() {
+      this.isAddress = !this.isAddress;
+    },
+    getUserInfo() {
+      if (this.checkAddress.length > 0) {
+        this.USER_ADDR1 = this.$store.state.user.USER_ADDR1;
+        this.USER_ADDR2 = this.$store.state.user.USER_ADDR2;
+        this.ORDER_PHONE = this.$store.state.user.USER_PHONE;
+        this.ORDER_RECIEVE = this.$store.state.user.USER_NAME;
       }
     },
     getOrderId() {
@@ -115,15 +133,18 @@ export default {
       ORDER_PHONE: '',
       USER_ADDR1: '',
       USER_ADDR2: '',
-      USER_ADDR3: '',
       ORDER_ID: '',
+      checkAddress: [],
+      isAddress: false,
     };
   },
   mounted() {
     const ORDER_RECIEVE = document.querySelector('#ORDER_RECIEVE');
     ORDER_RECIEVE.scrollIntoView();
   },
-  computed: {},
+  components: {
+    post,
+  },
 };
 </script>
 

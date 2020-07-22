@@ -38,12 +38,15 @@ export default {
     if (query.perPageNum == undefined) {
       query.perPageNum = 10;
     }
-
-    const response = await getGoodsList(query);
-    this.$store.state.goods.goods = response.data.results;
-    this.$store.state.goods.total = response.data.results2[0].TOTAL_COUNT;
-    pagination.setTotalItems(this.$store.state.goods.total);
-    pagination._paginate(query.page * 1);
+    try {
+      const response = await getGoodsList(query);
+      this.$store.state.goods.goods = response.data.result;
+      this.$store.state.goods.total = response.data.result1[0].TOTAL_COUNT;
+      pagination.setTotalItems(this.$store.state.goods.total);
+      pagination._paginate(query.page * 1);
+    } catch (error) {
+      alert(error);
+    }
   },
   mounted() {
     pagination = createPageNation('#pagination', 10);

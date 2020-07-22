@@ -5,7 +5,7 @@ const state = {
 
 const mutations = {
   getCartList(state, data) {
-    state.cart = data.data.results;
+    state.cart = data.data;
   },
 };
 
