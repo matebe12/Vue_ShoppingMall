@@ -11,7 +11,8 @@
             USER_BIRTH,
             USER_GENDER,
             USER_ADDR1,
-            USER_ADDR2
+            USER_ADDR2,
+            USER_EMAIL
         )
         VALUES
         (
@@ -22,7 +23,8 @@
             #{USER_BIRTH},
             #{USER_GENDER},
             #{USER_ADDR1},
-            #{USER_ADDR2}
+            #{USER_ADDR2},
+            #{USER_EMAIL}
         )
     </insert>
     <insert id="insertUserKakao">
@@ -54,6 +56,18 @@
         SELECT USER_ID, USER_NAME,USER_VERIFY,USER_ADDR1,USER_ADDR2,USER_PHONE,ISSNS,USER_THUMBNAIL
         FROM USER_TABLE
         WHERE USER_ID = #{USER_ID}
+    </select>
+    <select id="checkId">
+        SELECT COUNT(*) AS TOTAL
+        FROM USER_TABLE
+        WHERE USER_ID = #{USER_ID}
+    </select>
+
+    <select id="checkEmail">
+        SELECT COUNT(*) AS TOTAL
+        FROM USER_TABLE
+        WHERE USER_ID = #{USER_ID}
+        AND USER_EMAIL = #{USER_EMAIL}
     </select>
 
     <select id="getUserList">
@@ -125,6 +139,12 @@
         <if test="USER_THUMBNAIL != null">
             USER_THUMBNAIL = #{USER_THUMBNAIL}
         </if>
+        WHERE USER_ID = #{USER_ID}
+    </update>
+
+    <update id="updateUserPw">
+        UPDATE USER_TABLE 
+        SET USER_PW = #{USER_PW}
         WHERE USER_ID = #{USER_ID}
     </update>
 

@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import { jwtObj } from '../../config/jwt.js';
 import { upload } from '../../config/upload.js';
 import { Method } from '../httpMethod.js';
+import { mailOptions, transpoter } from '../../config/email.js';
 MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
 var mapperId = 'userMapper';
@@ -32,6 +33,32 @@ router.post('/signup', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+
+router.post('/checkId', async(req,res) => {
+    console.log(req.body);
+    const query = MybatisMapper.getStatement('userMapper', 'checkId', req.body, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        } else {
+            return res.status(200).send(results);
+        }
+    });
+});
+
+router.post('/checkEmail', async (req, res) => {
+    const query = MybatisMapper.getStatement('userMapper', 'checkEmail', req.body, format);
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        } else {
+            return res.status(200).send(results);
+        }
+    });
+});
+
 
 router.post('/login', (req,res) => {
     var resultData = {};
@@ -155,6 +182,36 @@ router.post('/getUserList', async(req, res) => {
             results1
         });
         });       
+    });
+});
+
+router.post('/getPw', async (req, res) => {
+    const reqData = req.body;
+    console.log(reqData);
+    mailOptions.to = reqData.USER_EMAIL;
+    mailOptions.subject = '안녕하세요. 쇼핑몰입니다.';
+    mailOptions.text = '안녕하세요. 쇼핑몰입니다. 회원님의 임시 비밀번호는 1234 입니다.';
+
+    const USER_PW = '1234';
+    bcrypt.hash(USER_PW, 10, async (error, hashedPassword) => { 
+        transpoter.sendMail(mailOptions, (error, info) => {
+            if(error){
+                console.log(error);
+                return res.status(500).send(error);
+            }
+            else {
+                reqData.USER_PW = hashedPassword;
+                const query = MybatisMapper.getStatement('userMapper', 'updateUserPw', reqData, format);
+                connection.query(query, (error, results2, fields) => {
+                    if(error){
+                        console.log(error);
+                        return res.status(500).send(error);
+                    }
+                    return res.status(200).send({ result: 1 });
+                });
+                
+            }
+        })
     });
 });
 

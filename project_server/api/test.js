@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import { MybatisMapper, connection, MapperPath, format, getInfo } from '../mysql/mysql.js';
-
+import {mailOptions, transpoter} from '../config/email.js';
 MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
 
@@ -20,6 +20,20 @@ router.post('/data', async(req, res) => {
         res.send(error);
     }
     
+});
+
+router.post('/email', async (req, res) => {
+    mailOptions.to = 'matebe12@gmail.com';
+    transpoter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+        else {
+            console.log('Email sent: ' + info.response)
+        }
+    });
+
 });
 
 async function getData() {
