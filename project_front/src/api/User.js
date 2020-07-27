@@ -23,6 +23,17 @@ function getUserDetail(reqData) {
   return user.post('/getUserDetail', reqData);
 }
 
+function checkId(reqData) {
+  return user.post('/checkId', reqData);
+}
+
+function checkEmail(reqData) {
+  return user.post('/checkEmail', reqData);
+}
+
+function getPw(reqData) {
+  return user.post('/getPw', reqData);
+}
 export {
   getUserList,
   updateUser,
@@ -30,4 +41,7 @@ export {
   signup,
   loginKakao,
   getUserDetail,
+  checkId,
+  checkEmail,
+  getPw,
 };

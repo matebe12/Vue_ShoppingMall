@@ -26,8 +26,29 @@
                   name="USER_ID"
                   id="USER_ID"
                   v-model="USER_ID"
+                  @keyup="checkId()"
                 />
                 <span>{{ checkIdMsg }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-3"
+              >이메일 <span class="text-danger">*</span></label
+            >
+            <div class="col-md-5 col-sm-8">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fas fa-user"></i
+                ></span>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="USER_EMAIL"
+                  id="USER_EMAIL"
+                  v-model="USER_EMAIL"
+                />
               </div>
             </div>
           </div>
@@ -195,15 +216,15 @@
                 style="margin-top: -1px;"
               ></div>
             </div>
-          </div>
-          <div class="col-xs-offset-3 col-xs-10">
-            <input
-              name="Submit"
-              type="submit"
-              value="Sign Up"
-              class="btn btn-default"
-              style="float:right"
-            />
+            <div class="control-label col-sm-3">
+              <input
+                name="Submit"
+                type="submit"
+                value="Sign Up"
+                class="btn btn-default"
+                style="float:right"
+              />
+            </div>
           </div>
         </form>
       </div>
@@ -216,6 +237,7 @@ import { createDatePicker } from '@/util/tui grid/tuiDatePicker';
 import Validation from '@/util/data/Validation.js';
 import { signup } from '@/api/User.js';
 import post from '@/util/daum/post.vue';
+import { checkId } from '@/api/User.js';
 var datePicker;
 export default {
   components: {
@@ -224,6 +246,7 @@ export default {
   data() {
     return {
       USER_ID: '',
+      USER_EMAIL: '',
       USER_PW: '',
       USER_PHONE: '',
       USER_GENDER: '',
@@ -243,6 +266,17 @@ export default {
     datePicker.getDate();
   },
   methods: {
+    async checkId() {
+      const result = await checkId({ USER_ID: this.USER_ID });
+      if (result.data[0].TOTAL == 0) {
+        this.checkIdMsg = '사용 가능한 아이디 입니다.';
+        return true;
+      } else {
+        this.checkIdMsg = '이미 존재하는 아이디 입니다.';
+        return false;
+      }
+    },
+
     setAddress(data) {
       this.USER_ADDR1 = data;
       this.isAddressMethod();
@@ -251,6 +285,11 @@ export default {
       this.isAddress = !this.isAddress;
     },
     async signUp() {
+      const checkId = await this.checkId(this.USER_ID);
+      if (!checkId) {
+        alert('이미 존재하는 아이디 입니다.');
+        return;
+      }
       const check = this.checkValidation();
       if (check) {
         const reqData = {
@@ -262,6 +301,7 @@ export default {
           USER_ADDR1: this.USER_ADDR1,
           USER_ADDR2: this.USER_ADDR2,
           USER_BIRTH: document.querySelector('#tui-date-picker-target').value,
+          USER_EMAIL: this.USER_EMAIL,
         };
         try {
           await signup(reqData);
@@ -329,9 +369,9 @@ export default {
         alert('1차 주소를 입력 해주세요.');
         return false;
       }
-      user_addr1 = Validation.isLength(this.USER_ADDR1, 20);
+      user_addr1 = Validation.isLength(this.USER_ADDR1, 50);
       if (!user_addr1) {
-        alert('1차 주소는 20자 이내로 입력해주세요.');
+        alert('1차 주소는 50자 이내로 입력해주세요.');
         return false;
       }
       let user_addr2 = Validation.isNull(this.USER_ADDR2);

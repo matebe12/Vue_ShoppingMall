@@ -83,6 +83,19 @@ const routes = [
       }
     },
   },
+  {
+    path: '/forgotPw',
+    name: 'forgotPw',
+    component: () => import('@/views/User/forgotPw.vue'),
+    beforeEnter: async (to, from, next) => {
+      if (store.state.user.USER_ID == '') {
+        next();
+      } else {
+        alert('이미 로그인 정보가 있습니다.');
+        next('/');
+      }
+    },
+  },
 
   {
     path: '/admin',
@@ -163,7 +176,11 @@ router.beforeEach(async function(to, from, next) {
   } else {
     store.state.isView = true;
   }
-  await store.dispatch('getCategoryList');
+  if (
+    !Validation.isNull(store.state.category.category) ||
+    Validation.isLength(store.state.category.category, 1)
+  )
+    await store.dispatch('getCategoryList');
   if (store.state.user.USER_ID != '') {
     await store.dispatch('getCartList', store.state.user.USER_ID);
   }

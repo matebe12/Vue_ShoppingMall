@@ -48,6 +48,10 @@
         ></KakaoLogin>
 
         <router-link class="underlineHover" to="/signup">회원가입</router-link>
+        <br />
+        <router-link class="underlineHover" to="/forgotPw">
+          비밀번호 찾기</router-link
+        >
       </div>
     </div>
   </div>
