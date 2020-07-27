@@ -285,5 +285,6 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 
 ## ERD 및 테이블 설명
 
-![erd](./mysql/mysql ERD.PNG)
+![mysql ERD](https://user-images.githubusercontent.com/42566975/88548297-e328f380-d059-11ea-8aab-501f3f855ff9.PNG)
+
 
