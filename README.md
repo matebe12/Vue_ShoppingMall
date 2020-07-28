@@ -282,3 +282,67 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 ![mysql ERD](https://user-images.githubusercontent.com/42566975/88548297-e328f380-d059-11ea-8aab-501f3f855ff9.PNG)
 
 
+### 유저 테이블 (USER_TABLE)
+```
+1) USER_ID -> 아이디
+2) USER_PW -> 비밀번호(bcrypt로 암호화되어 삽입)
+3) USER_EMAIL -> 비밀번호 찾기 용도로 추가 되었음.
+4) USER_THUMBNAIL -> 유저 프로필 사진.
+5) USER_VERIFY -> 유저 권한 0 : 일반 9 : 관리자(회원가입시 default 0)
+6) ISSNS -> 카카오 로그인인지 일반 로그인 구분(default : null kakao : 'kakao')
+```
+### 상품 테이블(GOODS_TABLE)
+```
+1) GDS_NUM -> 상품 고유 아이디 autoIncrease
+2) GDS_CATEGORY_CODE -> 상품 카테고리 코드
+3) GDS_IMG -> 상품 이미지
+```
+### 상품 댓글 테이블(GOODS_REPLY_TABLE)
+```
+1) GDS_NUM -> 해당 상품 아이디(GOODS_TABLE GDS_NUM)
+2) REPLY_NUM -> 댓글 고유 아이디 autoIncrease
+3) REPLY_GROUP -> 답글포함 댓글들 그룹(그룹별로 댓글 리스트 조회)
+4) REPLY_PARENT -> 답글의 부모 댓글
+5) IS_DELETE -> 삭제 여부(답글이 달려있는 경우 '삭제된 댓글입니다'표시
+```
+
+### 상품 주문 테이블(GOODS_ORDER_TABLE)
+```
+1) ORDER_ID -> 주문 아이디 UUID v4 16자리로 구현
+2) ORDER_IDX -> 주문 고유 아이디 autoIncrease
+3) ORDER_RECIEVE -> 수령자
+4) GDS_NUM -> 상품 고유아이디(GOODS_TABLE 과 mapping)
+```
+
+### 상품 주문 상세 테이블(GOODS_ORDER_DETAIL_TABLE)
+```
+1) ORDER_DETAIL_ID -> 상세주문 고유아이디 autoIncrease
+2) ORDER_ID -> 주문 아이디(GOODS_ORDER_TABLE과 mapping)
+3) GDS_NUM -> 상품 고유아이디(GOODS_TABLE 과 mapping)
+4) STATUS -> 주문 상태
+    0 신규 주문 
+    1 발송대기
+    2 배송중
+    3 배송완료
+    4 구매확정
+    5 취소요청
+```
+
+### 상품 카테고리 테이블(GOODS_CATEGORY_TABLE)
+```
+1) CATEGORY_NAME -> 카테고리 이름
+2) CATEGORY_CODE -> 카테고리 코드(100 단위 코드 == 상위 카테고리 코드)
+3) CATEGORY_REF -> 부모 카테고리
+4) CATEGORY_LEVEL -> 카테고리 단계(1 - 부모, 2 - 자식)
+```
+
+### 상품 장바구니 테이블(GOODS_CART_TABLE)
+```
+1) CART_NUM -> 장바구니 고유아이디 autoIncrease
+2) USER_ID -> 유저 아이디(USER_TABLE과 mapping)
+3) GDS_NUM -> 상품 고유아이디(GOODS_TABLE과 mapping)
+```
+
+
+## 주요기능
+
