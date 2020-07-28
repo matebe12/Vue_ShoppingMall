@@ -345,7 +345,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 
 
 ## 주요기능
--- 기능
+#### <span id="gineung">기능</span>
 - <a href="khkjhkj">로그인 프로세스 </a>
 - <a href="khkjhkj">회원가입 프로세스 </a>
 - <a href="khkjhkj">회원탈퇴 프로세스 </a>
@@ -356,7 +356,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 - <a href="ffff">관리자 -> 주문목록 프로세스</a>
 - <a href="fjbkjbd">관리자 -> 유저목록 프로세스 </a>
 
--- Open Api 및 라이브러리 적용
+#### <span id="library">Open Api 및 라이브러리 적용</span>
 
  - <a href="fff">TOAST GRID(그리드 라이브러리)</a>
  - <a href="fff">TOAST DATEPICKER(데이트피커 라이브러리)</a>
@@ -415,4 +415,4 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 - 유저목록(유저 수정, 삭제, 유저 목록 엑셀 다운로드)
 
 ![관리자](https://user-images.githubusercontent.com/42566975/88642345-52a2ef80-d0fb-11ea-9373-32313e6c5aae.gif)
-- <a href="#" style="position:fixed"> TOP</a>
+<a href="#" style="position:fixed"> TOP</a>
