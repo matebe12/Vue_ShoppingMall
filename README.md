@@ -264,18 +264,12 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
   </td>
   </tr>
    <tr>
-  <td>40일</td>
+  <td>40~41일</td>
   <td>
     <ul>
       <li>코드 리팩토링</li>
       <li>주문하기 유효성 추가</li>
       <li>주문시 내 주소 체크박스 추가</li>
-    </ul>
-  </td>
-  </tr>
-  <td>40일</td>
-  <td>
-    <ul>
       <li>이메일로 비밀번호 찾기 및 회원가입 이메일란 추가</li>
       <li>프로젝트 마무리</li>
     </ul>
