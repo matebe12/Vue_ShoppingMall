@@ -31,12 +31,12 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 일반 사용자 페이지와 관리자 페이지로 나뉘어져 있으며 실제 쇼핑몰 사이트 처럼 구현을 했습니다.
 
 ### 바로가기
-<a href="#project">PROJECT 구성</span> <a href="#erd">ERD 및 테이블 설명</span> <a href="#juyo">주요 기능</span> <a href="#screen">스크린샷</span>
+<a href="#projectgu">PROJECT 구성</span> <a href="#erd">ERD 및 테이블 설명</span> <a href="#juyo">주요 기능</span> <a href="#screen">스크린샷</span>
 
 
  
 
-## <span id="project">PROJECT 구성</span>
+## <span id="projectgu">PROJECT 구성</span>
 
 - 팀 구성 : 1인 (개인 프로젝트)
 - 개발일정
