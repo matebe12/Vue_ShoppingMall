@@ -30,7 +30,13 @@
 Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입니다.
 일반 사용자 페이지와 관리자 페이지로 나뉘어져 있으며 실제 쇼핑몰 사이트 처럼 구현을 했습니다.
 
-## PROJECT 구성
+### 바로가기
+<a href="#project">PROJECT 구성</span> <a href="#erd">ERD 및 테이블 설명</span> <a href="#juyo">주요 기능</span> <a href="#screen">스크린샷</span>
+
+
+ 
+
+## <span id="project">PROJECT 구성</span>
 
 - 팀 구성 : 1인 (개인 프로젝트)
 - 개발일정
@@ -277,7 +283,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
   </tr>
 </table>
 
-## ERD 및 테이블 설명
+## <span id="erd">ERD 및 테이블 설명</span>
 
 ![mysql ERD](https://user-images.githubusercontent.com/42566975/88548297-e328f380-d059-11ea-8aab-501f3f855ff9.PNG)
 
@@ -344,7 +350,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 ```
 
 
-## 주요기능
+## <span id="juyo">주요기능</span>
 #### <span id="gineung">기능</span>
 - <a href="khkjhkj">로그인 프로세스 </a>
 - <a href="khkjhkj">회원가입 프로세스 </a>
@@ -367,7 +373,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
  - <a href="dhdbhd">VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)</a>
  - <a href="dhjbd">MULTER(파일업로드 라이브러리)</a>
  - <a href="jbjkbk">MYSQL MYBATIS-MAPPER(DB, SQL 라이브러리)</a>
-## 스크린샷
+## <span id="screen">스크린샷</span>
 ### 메인화면 
 
 ![2 (1)](https://user-images.githubusercontent.com/42566975/88636324-b45f5b80-d0f3-11ea-8ffb-d21e1d9547ef.gif)
