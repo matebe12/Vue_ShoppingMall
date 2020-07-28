@@ -37,7 +37,6 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
  
 
 ## <span id="projectgu">PROJECT 구성</span>
-
 - 팀 구성 : 1인 (개인 프로젝트)
 - 개발일정
 <table>
@@ -285,7 +284,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 
 ### <a href="#baro">맨 위로</a>
 
-## <span id="erd">ERD 및 테이블 설명</span>
+## <span id="erd">ERD 및 테이블 설명</span>  
 
 ![mysql ERD](https://user-images.githubusercontent.com/42566975/88548297-e328f380-d059-11ea-8aab-501f3f855ff9.PNG)
 
@@ -350,7 +349,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 2) USER_ID -> 유저 아이디(USER_TABLE과 mapping)
 3) GDS_NUM -> 상품 고유아이디(GOODS_TABLE과 mapping)
 ```
-
+### <a href="#baro">맨 위로</a>
 
 ## <span id="juyo">주요기능</span>
 #### <span id="gineung">기능</span>
