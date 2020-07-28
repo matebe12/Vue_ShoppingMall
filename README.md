@@ -31,7 +31,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 일반 사용자 페이지와 관리자 페이지로 나뉘어져 있으며 실제 쇼핑몰 사이트 처럼 구현을 했습니다.
 
 ### 바로가기
-<a href="#projectgu">PROJECT 구성</span> <a href="#erd">ERD 및 테이블 설명</span> <a href="#juyo">주요 기능</span> <a href="#screen">스크린샷</span>
+<a href="#projectgu" id="baro">PROJECT 구성</span> <a href="#erd">ERD 및 테이블 설명</span> <a href="#juyo">주요 기능</span> <a href="#screen">스크린샷</span>
 
 
  
@@ -283,6 +283,8 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
   </tr>
 </table>
 
+### <a href="#baro">맨 위로</a>
+
 ## <span id="erd">ERD 및 테이블 설명</span>
 
 ![mysql ERD](https://user-images.githubusercontent.com/42566975/88548297-e328f380-d059-11ea-8aab-501f3f855ff9.PNG)
@@ -373,6 +375,9 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
  - <a href="dhdbhd">VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)</a>
  - <a href="dhjbd">MULTER(파일업로드 라이브러리)</a>
  - <a href="jbjkbk">MYSQL MYBATIS-MAPPER(DB, SQL 라이브러리)</a>
+ 
+ ### <a href="#baro">맨 위로</a>
+ 
 ## <span id="screen">스크린샷</span>
 ### 메인화면 
 
@@ -421,4 +426,4 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 - 유저목록(유저 수정, 삭제, 유저 목록 엑셀 다운로드)
 
 ![관리자](https://user-images.githubusercontent.com/42566975/88642345-52a2ef80-d0fb-11ea-9373-32313e6c5aae.gif)
-<a href="#library" style="position:fixed; right: 5%;bottom: 5%;color: #333;"> TOP</a>
+### <a href="#baro">맨 위로</a>
