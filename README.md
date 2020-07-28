@@ -353,12 +353,17 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 ![2 (1)](https://user-images.githubusercontent.com/42566975/88636324-b45f5b80-d0f3-11ea-8ffb-d21e1d9547ef.gif)
 
 
+
+
 ### 상품 상세보기 화면
+- 상품 클릭시 상세보기 화면 전환
+- 상품 hover시 카트에 바로 담을 수 있음
 
 ![view](https://user-images.githubusercontent.com/42566975/88638205-22a51d80-d0f6-11ea-8577-2611f5f4a68e.gif)
 
 
 ### 로그인 화면
+- 일반 로그인과 카카오 로그인
 
 ![윈도우10 녹화 - Google 검색 - Chrome 2020-07-28 오후 5_19_57](https://user-images.githubusercontent.com/42566975/88638618-afe87200-d0f6-11ea-81e8-6ec3b56c8d34.png)
 
@@ -367,14 +372,26 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 
 ![윈도우10 녹화 - Google 검색 - Chrome 2020-07-28 오후 5_23_28](https://user-images.githubusercontent.com/42566975/88638928-1a99ad80-d0f7-11ea-8532-c045685f8012.png)
 
+
+#### - (공통) 페이징 처리 10개 단위
+
 ### 장바구니 화면
+- 상품 선택시 주문정보 입력창 show
+- 로그인 유저 정보로 내 주소 클릭시 정보 자동 바인딩 
 
 ![카트](https://user-images.githubusercontent.com/42566975/88640023-6bf66c80-d0f8-11ea-85f2-7be78e5c7ab3.gif)
 
 ### 주문목록 화면
+- 내 주문 목록 보기
+- 상품 이름 클릭시 상품 상세보기 전환
+
 ![주문하기](https://user-images.githubusercontent.com/42566975/88640743-41f17a00-d0f9-11ea-8b25-38de88c97c4c.gif)
 
 
 ### 관리자 화면
+- 상품등록(상품을 등록함)
+- 상품목록(상품들 목록)
+- 주문목록(주문 상태변경, 취소요청일 경우 삭제 가능)
+- 유저목록(유저 수정, 삭제, 유저 목록 엑셀 다운로드)
 
 ![관리자](https://user-images.githubusercontent.com/42566975/88642345-52a2ef80-d0fb-11ea-9373-32313e6c5aae.gif)
