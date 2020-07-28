@@ -345,8 +345,28 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 
 
 ## 주요기능
---
+-- 기능
+- <a href="khkjhkj">로그인 프로세스 </a>
+- <a href="khkjhkj">회원가입 프로세스 </a>
+- <a href="khkjhkj">회원탈퇴 프로세스 </a>
+- <a href="khkjhkj">장바구니에 담기 프로세스 </a>
+- <a href="khkjhkj">주문하기 프로세스 </a>
+- <a href="khkjhkj">내정보 수정 프로세스 </a>
+- <a href="khkjhkj">관리자 -> 상품crud 프로세스 </a>
+- <a href="ffff">관리자 -> 주문목록 프로세스</a>
+- <a href="fjbkjbd">관리자 -> 유저목록 프로세스 </a>
 
+-- Open Api 및 라이브러리 적용
+
+ - <a href="fff">TOAST GRID(그리드 라이브러리)</a>
+ - <a href="fff">TOAST DATEPICKER(데이트피커 라이브러리)</a>
+ - <a href="fff">CKEDITOR(에디터 라이브러리)</a>
+ - <a href="fff">TOAST PAGINATION(페이징 라이브러리)</a>
+ - <a href="scsss">VUE EXCEL EXPORT(엑셀 내보내기)</a>
+ - <a href="dhdbhd">VUE KAKAO LOGIN(카카오 로그인 연동 API)</a>
+ - <a href="dhdbhd">VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)</a>
+ - <a href="dhjbd">MULTER(파일업로드 라이브러리)</a>
+ - <a href="jbjkbk">MYSQL MYBATIS-MAPPER(DB, SQL 라이브러리)</a>
 ## 스크린샷
 ### 메인화면 
 
@@ -395,4 +415,4 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 - 유저목록(유저 수정, 삭제, 유저 목록 엑셀 다운로드)
 
 ![관리자](https://user-images.githubusercontent.com/42566975/88642345-52a2ef80-d0fb-11ea-9373-32313e6c5aae.gif)
-
+- <a href="#" style="position:fixed"> TOP</a>
