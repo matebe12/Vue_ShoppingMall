@@ -345,4 +345,36 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 
 
 ## 주요기능
+--
 
+## 스크린샷
+### 메인화면 
+
+![2 (1)](https://user-images.githubusercontent.com/42566975/88636324-b45f5b80-d0f3-11ea-8ffb-d21e1d9547ef.gif)
+
+
+### 상품 상세보기 화면
+
+![view](https://user-images.githubusercontent.com/42566975/88638205-22a51d80-d0f6-11ea-8577-2611f5f4a68e.gif)
+
+
+### 로그인 화면
+
+![윈도우10 녹화 - Google 검색 - Chrome 2020-07-28 오후 5_19_57](https://user-images.githubusercontent.com/42566975/88638618-afe87200-d0f6-11ea-81e8-6ec3b56c8d34.png)
+
+
+### 회원가입 화면
+
+![윈도우10 녹화 - Google 검색 - Chrome 2020-07-28 오후 5_23_28](https://user-images.githubusercontent.com/42566975/88638928-1a99ad80-d0f7-11ea-8532-c045685f8012.png)
+
+### 장바구니 화면
+
+![카트](https://user-images.githubusercontent.com/42566975/88640023-6bf66c80-d0f8-11ea-85f2-7be78e5c7ab3.gif)
+
+### 주문목록 화면
+![주문하기](https://user-images.githubusercontent.com/42566975/88640743-41f17a00-d0f9-11ea-8b25-38de88c97c4c.gif)
+
+
+### 관리자 화면
+
+![관리자](https://user-images.githubusercontent.com/42566975/88642345-52a2ef80-d0fb-11ea-9373-32313e6c5aae.gif)
