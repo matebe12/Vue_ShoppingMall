@@ -354,28 +354,30 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 ## <span id="juyo">주요기능</span>
 #### <span id="gineung">기능</span>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/loginProcess.md">로그인 프로세스 </a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/signupProcess.md">회원가입 프로세스 </a>
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/signupProcess.md">회원가입 프로세스 </a>  [TOAST DATEPICKER(데이트피커 라이브러리), VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)]
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/Withdrawal.md">회원탈퇴 프로세스 </a>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/Cart.md">장바구니에 담기 프로세스 </a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/OrderProcess.md">주문하기 프로세스 </a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/MyInfoProcess.md">내정보 수정 프로세스 </a>
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/OrderProcess.md">주문하기 프로세스 </a>  [VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)]
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/MyInfoProcess.md">내정보 수정 프로세스 </a>  [MULTER(파일업로드 라이브러리)]
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ReplyProcess.md">댓글, 답글 프로세스</a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/GoodsProcess.md">관리자 -> 상품crud 프로세스 </a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminOrderProcess.md">관리자 -> 주문목록 프로세스</a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ForgotPw.md">비밀번호 찾기 프로세스</a>
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminUserProcess.md">관리자 -> 유저목록 프로세스 </a>
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/GoodsProcess.md">관리자 -> 상품crud 프로세스 </a>  [CKEDITOR(에디터 라이브러리), TOAST PAGINATION(페이징 라이브러리), MULTER(파일업로드 라이브러리)]
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminOrderProcess.md">관리자 -> 주문목록 프로세스</a>  [TOAST GRID(그리드 라이브러리)]
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ForgotPw.md">비밀번호 찾기 프로세스</a> 사용 라이브러리 [TOAST GRID(그리드 라이브러리), VUE EXCEL EXPORT(엑셀 내보내기)]
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminUserProcess.md">관리자 -> 유저목록 프로세스 </a>  [TOAST GRID(그리드 라이브러리), VUE EXCEL EXPORT(엑셀 내보내기)]
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD.md">서버, 프론트 개발환경</a>
 #### <span id="library">Open Api 및 라이브러리 적용</span>
 
- - <a href="fff">TOAST GRID(그리드 라이브러리)</a>
- - <a href="fff">TOAST DATEPICKER(데이트피커 라이브러리)</a>
- - <a href="fff">CKEDITOR(에디터 라이브러리)</a>
- - <a href="fff">TOAST PAGINATION(페이징 라이브러리)</a>
- - <a href="scsss">VUE EXCEL EXPORT(엑셀 내보내기)</a>
- - <a href="dhdbhd">VUE KAKAO LOGIN(카카오 로그인 연동 API)</a>
- - <a href="dhdbhd">VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)</a>
- - <a href="dhjbd">MULTER(파일업로드 라이브러리)</a>
- - <a href="jbjkbk">MYSQL MYBATIS-MAPPER(DB, SQL 라이브러리)</a>
+ - <a href="https://ui.toast.com/tui-grid/">TOAST GRID(그리드 라이브러리)</a>
+ - <a href="https://ui.toast.com/tui-date-picker/">TOAST DATEPICKER(데이트피커 라이브러리)</a>
+ - <a href="https://ckeditor.com/">CKEDITOR(에디터 라이브러리)</a>
+ - <a href="https://ui.toast.com/tui-pagination/">TOAST PAGINATION(페이징 라이브러리)</a>
+ - <a href="https://www.npmjs.com/package/vue-excel-export">VUE EXCEL EXPORT(엑셀 내보내기)</a>
+ - <a href="https://developers.kakao.com/docs">VUE KAKAO LOGIN(카카오 로그인 연동 API)</a>
+ - <a href="http://postcode.map.daum.net/guide">VUEJS DAUM POSTCODE(다음 우편찾기 라이브러리)</a>
+ - <a href="https://www.npmjs.com/package/multer">MULTER(파일업로드 라이브러리)</a>
+ - <a href="https://www.npmjs.com/package/mysql">MYSQL(DB 라이브러리)</a>
+ - <a href="https://www.npmjs.com/package/mybatis-mapper">MYBATIS-MAPPER(SQL 라이브러리)</a>
+  
  - <a href=""> NODE MAILER(메일통신 라이브러리) </a>
  ### <a href="#baro">맨 위로</a>
  
