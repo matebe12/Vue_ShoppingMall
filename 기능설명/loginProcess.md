@@ -39,5 +39,4 @@ this.$store.commit('login', response.data);
 
 ```
 - vuex를 활용해 state에 유저 정보와 토큰을 저장한다. <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">VUEX 소스</a>
- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">VUEX 소스</a>
-<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">로그인 폼 소스</
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">로그인 폼 소스</a>
