@@ -1,5 +1,6 @@
 ## 비밀번호 찾기 
 - 가입시 기재 했던 이메일과 아이디를 비교하여 이메일로 비밀번호를 보내줌
+- 인풋에 입력할 때 마다 select 조회로 결과 
 - 단방향 암호화이기 때문에 임시방편 1234로 보냄
 
 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/views/User/forgotPw.vue">[비밀번호 찾기 소스]</a>
