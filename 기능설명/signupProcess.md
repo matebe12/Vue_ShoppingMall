@@ -25,7 +25,7 @@
     }
 ```
 - 아이디 입력시 중복체크
-<https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/SignUpForm.vue">[회원가입 폼 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/SignUpForm.vue">[회원가입 폼 소스]</a>
 ```
  async checkId() {
       const result = await checkId({ USER_ID: this.USER_ID });
