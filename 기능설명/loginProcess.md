@@ -1,5 +1,5 @@
 ## 로그인 프로세스 
-- 일반 로그인
+- 일반 로그인 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js"> 서버 소스</a>
 ```
 bcrypt.compare(req.body.USER_PW, results[0].USER_PW, (error, result) => {
                     if (error) {
@@ -38,5 +38,6 @@ bcrypt.compare(req.body.USER_PW, results[0].USER_PW, (error, result) => {
 this.$store.commit('login', response.data);
 
 ```
-vuex를 활용해 state에 유저 정보와 토큰을 저장한다.
-
+- vuex를 활용해 state에 유저 정보와 토큰을 저장한다. <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">VUEX 소스</a>
+ <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">VUEX 소스</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">로그인 폼 소스</
