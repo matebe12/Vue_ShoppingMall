@@ -1,6 +1,6 @@
 ## 비밀번호 찾기 
 - 가입시 기재 했던 이메일과 아이디를 비교하여 이메일로 비밀번호를 보내줌
-- 단방향 암호화이기 때문에 1234로 보냄
+- 단방향 암호화이기 때문에 임시방편 1234로 보냄
 
 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/views/User/forgotPw.vue">[비밀번호 찾기 소스]</a>
 ```
@@ -83,7 +83,7 @@ async searchPw() {
     },
 ```
 
-<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js">[비밀번호 찾기 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js">[비밀번호 찾기 서버 소스]</a>
 
 ```
 router.post('/checkId', async(req,res) => {
@@ -146,3 +146,4 @@ router.post('/getPw', async (req, res) => {
 });
 ```
 
+![이메일](https://user-images.githubusercontent.com/42566975/88802877-a0485680-d1e6-11ea-8d89-e89fe2b25614.gif)
