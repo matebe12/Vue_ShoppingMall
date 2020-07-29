@@ -1,0 +1,58 @@
+## 개발환경
+
+### 프론트엔드 개발환경
+
+  - vue-cli로 기본 구조 구축
+  - node_modules -> npm module 관리
+  - public -> 정적 index.html 파일
+  - src 
+    - api axios -> api관리
+      - common -> axios intercetor( token을 헤더에 담아서 보냄)
+      ```
+      import store from '@/store/index';
+
+      // Do something before request is sent
+      store.state.loading = true;
+      config.headers.Authorization = store.state.user.USER_TOKEN;
+      return config;
+    },
+    ```
+  - assets -> 프론트엔드 정적 자료 보관(css, image, logo)
+  
+  - component -> vue 컴포넌트
+    - Admin -> 관리자 페이지 컴포넌트
+    - Cart -> 주문,장바구니 페이지 컴포넌트
+    - common ->  공통으로 사용하는 컴포넌트
+    - Goods -> 상품,댓글 컴포넌트 but 상품은 main폴더와 view폴더에 있음
+    - main -> 메인 화면에 표시되는 컴포넌트
+    - User -> 유저관련 컴포넌트
+  - router -> vue router 정의
+  
+  - store -> VUEX STORE
+    - Cart -> 카트,주문
+    - Category -> 카테고리
+    - Goods -> 상품
+    - User -> 유저
+    
+  - util -> 라이브러리 및 유효성 체크 파일
+    - data -> 유효성
+    - daum -> 주소찾기 라이브러리
+    - tui grid -> toast 관련 라이브러리
+  
+  - views -> 상위 컴포넌트   
+    - Admin -> 관리자 상위 컴포넌트
+    - shop -> 상품관련 상위 컴포넌트
+    - User -> 유저 관련 상위 컴포넌트
+  
+ .env 환경설정 파일
+  ```
+  VUE_APP_API_URL=http://localhost:3000/
+  NODE_ENV=development
+  ```
+  .eslintrc.js -> eslint 설정
+  
+ jsconfig.js -> 컴파일러 옵션 정의 ex(상대경로 설정)
+ vue.config.js -> VUE 빌드 설정
+ 
+  
+    
