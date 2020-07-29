@@ -67,6 +67,7 @@ const mutations = {
     Cookie.set('token', data.token);
     Cookie.set('verify', data.results[0].USER_VERIFY);
     Cookie.set('user', data.results[0]);
+    state.USER_TOKEN = Cookie.get('token');
     return data.token;
   },
 };
