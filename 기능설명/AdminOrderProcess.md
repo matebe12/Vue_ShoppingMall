@@ -3,7 +3,7 @@
 - grid를 이용해 리스트 구현
 - 상품 주문 현황 수정
 - 삭제는 취소요청 된 것만 가능
-<a href="">[상태 수정 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/Admin/OrderList.vue">[상태 수정 소스]</a>
 ```
 async updateState() {
       const checkRow = instance.getCheckedRows();
@@ -46,7 +46,7 @@ async updateState() {
     },
 ```
 
-<a href="">[상태 수정 서버 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/Cart/cart.js">[상태 수정 서버 소스]</a>
 ```
 router.post('/updateOrderList', async (req, res) => {
     if (!Validation.isNull(req.body)) {
