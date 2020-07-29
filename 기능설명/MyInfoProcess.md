@@ -49,3 +49,6 @@ router.post('/updateUser', upload.any(), async (req, res) => {
     });
 });
 ```
+
+
+![myinfo](https://user-images.githubusercontent.com/42566975/88787733-4f793380-d1cf-11ea-96dc-169583b9564c.gif)
