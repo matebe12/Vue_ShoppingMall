@@ -149,6 +149,8 @@ export default {
     },
     replacrUrl() {
       const imgSrc = this.getUrl();
+      const file = document.getElementById('USER_THUMBNAIL');
+      file.value = '';
       this.$refs.image.src = imgSrc;
     },
     setAddress(data) {
@@ -167,20 +169,11 @@ export default {
         const formData = new FormData(form);
         const result = this.checkValidation(formData);
         if (result) {
-          //   const reqData = {
-          //     USER_ID: formData.get('USER_ID'),
-          //     USER_NAME: formData.get('USER_NAME'),
-          //     USER_PHONE: formData.get('USER_PHONE'),
-          //     USER_ADDR1: formData.get('USER_ADDR1'),
-          //     USER_ADDR2: formData.get('USER_ADDR2'),
-          //     USER_THUMBNAIL: formData.get('USER_ADDR2'),
-          //   };
           await updateUser(formData);
           alert('수정이 완료 되었습니다. 다시 로그인 해주세요.');
           this.$store.state.isModal = !this.$store.state.isModal;
           this.$emit('refresh');
         }
-        //await updateUser(formData);
       } catch (error) {
         alert(error);
       }

@@ -62,13 +62,6 @@
               >
                 구매하기
               </button>
-              <button
-                class="like btn btn-default"
-                type="button"
-                style="margin-left: 10px;"
-              >
-                <!-- <span class="fa fa-heart"></span> -->
-              </button>
             </div>
           </div>
         </div>

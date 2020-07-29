@@ -8,6 +8,7 @@ import { jwtObj } from '../../config/jwt.js';
 import { upload } from '../../config/upload.js';
 import { Method } from '../httpMethod.js';
 import { mailOptions, transpoter } from '../../config/email.js';
+import Validation from '../../util/Validation.js';
 MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
 var mapperId = 'userMapper';
@@ -74,7 +75,7 @@ router.post('/login', (req,res) => {
             if (results.length < 1) {
                 resultData.searchUser = false;
                 res.status(400);
-               return res.send(resultData);
+               return res.json('존재하지 않는 아이디입니다.');
             } else {
                 bcrypt.compare(req.body.USER_PW, results[0].USER_PW, (error, result) => {
                     if (error) {

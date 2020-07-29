@@ -2,6 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
 import { Method } from '../httpMethod.js';
+import Validation from '../../util/Validation.js';
 require('dotenv').config();
 
 MybatisMapper.createMapper([`${MapperPath}/reply/ReplyMapper.xml`]);

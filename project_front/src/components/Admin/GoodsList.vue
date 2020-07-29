@@ -46,7 +46,11 @@
         <tr v-for="(goods, index) in goodsList" :key="index">
           <td>{{ goods.GDS_NUM }}</td>
           <td>
-            <img :src="`${getUrl}${goods.GDS_IMG}`" class="goodsImg" />
+            <img
+              :src="`${getUrl}${goods.GDS_IMG}`"
+              class="goodsImg"
+              style="width:300px;height:300px;"
+            />
           </td>
           <td>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{

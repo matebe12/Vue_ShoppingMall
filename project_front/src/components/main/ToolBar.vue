@@ -130,7 +130,7 @@
                       to=""
                       @click.native="deleteUser"
                       v-if="
-                        $store.state.user.ISSNS != 'kakao' ||
+                        $store.state.user.ISSNS != 'kakao' &&
                           this.$store.state.user.USER_VERIFY != 9
                       "
                       >회원 탈퇴</router-link
@@ -196,14 +196,12 @@ export default {
       return this.isModal;
     },
   },
+
   methods: {
     logout() {
       this.$store.commit('logout');
-      if (this.$route.path != '/login') {
-        this.$router.back(-1);
-      } else {
-        this.$router.push('/');
-      }
+      //eslint-disable-next-line
+      this.$router.push({ path: '/' }).catch(error => {});
     },
     openModal() {
       this.$store.state.isModal = !this.$store.state.isModal;

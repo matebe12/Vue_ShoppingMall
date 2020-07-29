@@ -26,7 +26,16 @@ const routes = [
     path: '/',
     name: 'main',
     beforeEnter: (to, from, next) => {
-      next('/shop/list/:category?scode=&page=1&pageStart=0&perPageNum=10');
+      next({
+        path: '/shop/list/:category',
+        query: {
+          scode: '',
+          page: 1,
+          pageStart: 0,
+          perPageNum: 10,
+          t: new Date().getTime(),
+        },
+      });
     },
   },
   {

@@ -82,7 +82,7 @@
                   <input
                     type="text"
                     id="GDS_PRICE"
-                    :value="item.GDS_PRICE"
+                    :value="parsePrice(item.GDS_PRICE)"
                     class="form-control"
                     name="GDS_PRICE"
                   />
@@ -179,21 +179,6 @@ export default {
   },
   props: ['item'],
   async mounted() {
-    // const responseCate = await getCategory(null);
-    // this.firstCategory = responseCate.data.results;
-    // this.selected =
-    //   this.item.CATEGORY_REF == null
-    //     ? this.item.GDS_CATEGORY_CODE
-    //     : this.item.CATEGORY_REF;
-    // let responseCate2;
-    // if (this.item.CATEGORY_REF != null) {
-    //   responseCate2 = await getCategory(this.item.CATEGORY_REF);
-    //   this.secondCategory = responseCate2.data.results;
-    //   this.selected2 = this.item.GDS_CATEGORY_CODE;
-    // } else {
-    //   responseCate2 = await getCategory(this.item.GDS_CATEGORY_CODE);
-    //   this.secondCategory = responseCate2.data.results;
-    // }
     try {
       this.firstCategory = this.getCategory().fmenu;
       this.selected = this.item.CATEGORY_REF;
@@ -205,16 +190,15 @@ export default {
     }
   },
   methods: {
+    parsePrice(str) {
+      const n = parseInt(str.replace(/,/g, ''));
+
+      return n;
+    },
+
     getCategory() {
       let cate = this.$store.state.category.category;
       let returnValue = {};
-      // for (let i = 0; i < cate.length; i++) {
-      //   if (cate[i].CATEGORY_LEVEL == 1) {
-      //     fmenu.push(cate[i]);
-      //   } else {
-      //     if (cate[i].CATEGORY_REF == this.firstCategory) smenu.push(cate[i]);
-      //   }
-      // }
       returnValue.fmenu = cate.filter(x => x.CATEGORY_LEVEL == 1);
       returnValue.smenu = cate.filter(x => x.CATEGORY_LEVEL == 2);
 
@@ -260,7 +244,7 @@ export default {
         const select = document.getElementById('firstOption');
         const reqData = select.options[select.selectedIndex].value;
         const response = await getCategory(reqData);
-        this.secondCategory = response.data.results;
+        this.secondCategory = response.data;
       } catch (error) {
         alert(error);
       }

@@ -305,6 +305,7 @@ export default {
         };
         try {
           await signup(reqData);
+          alert(this.USER_NAME + '님 회원가입이 완료 되었습니다.');
           this.$router.push('/');
         } catch (error) {
           alert(error);

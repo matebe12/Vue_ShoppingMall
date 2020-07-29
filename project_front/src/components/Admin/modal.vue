@@ -193,11 +193,7 @@ export default {
         alert('성별을 선택해주세요.');
         return false;
       }
-      let userverify = Validation.isNull(this.item.USER_VERIFY);
-      if (!userverify) {
-        alert('권한을 입력해주세요.');
-        return false;
-      }
+
       return true;
     },
   },

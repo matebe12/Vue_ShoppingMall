@@ -128,6 +128,11 @@ export default {
     async SelectSecond() {
       try {
         const select = document.getElementById('firstOption');
+        console.log(select.options[select.selectedIndex].value);
+        if (Validation.isNull(!select.options[select.selectedIndex].value)) {
+          this.secondCategory = [];
+          return;
+        }
         const reqData = select.options[select.selectedIndex].value;
         const response = await getCategory(reqData);
         this.secondCategory = response.data;

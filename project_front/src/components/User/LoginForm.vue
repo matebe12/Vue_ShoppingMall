@@ -105,7 +105,7 @@ export default {
         Cookie.set('token', reqData.ACCESS_TOKEN);
         Cookie.set('user', response.data);
         Cookie.set('verify', this.$store.state.user.USER_VERIFY);
-        this.$store.state.USER_TOKEN = Cookie.get('token');
+        this.$store.state.user.USER_TOKEN = Cookie.get('token');
         alert('로그인 되었습니다.');
 
         this.$router.push('/');

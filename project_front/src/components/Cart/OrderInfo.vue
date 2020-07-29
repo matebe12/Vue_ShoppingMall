@@ -97,7 +97,7 @@ export default {
         ITEM: this.checkedItem,
       };
       let checkITEM = Validation.isNull(this.checkedItem);
-      if (!checkITEM || !Validation.isLength(this.checkedItem, 0)) {
+      if (!checkITEM || Validation.isLength(this.checkedItem, 0)) {
         alert('주문할 상품을 선택해주세요.');
         return;
       }

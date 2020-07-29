@@ -113,7 +113,7 @@ router.post('/getOrderList', async (req, res) => {
 });
 
 router.post('/updateOrderList', async (req, res) => {
-    if (req == null || req.params == '') {
+    if (!Validation.isNull(req.body)) {
         return res.status(400).send({
             msg: 'Bad Request Data'
         });

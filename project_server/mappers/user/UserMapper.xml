@@ -122,10 +122,9 @@
 
     <update id="updateUser">
         UPDATE USER_TABLE 
-        SET USER_NAME = #{USER_NAME},
-        USER_PHONE = #{USER_PHONE},
+        SET USER_PHONE = #{USER_PHONE},
         <if test="USER_VERIFY != null">
-            USER_VERIFY = #{USER_VERIFY},
+            USER_VERIFY = ${USER_VERIFY},
         </if>
         <if test="USER_GENDER != null">
             USER_GENDER = #{USER_GENDER},
@@ -139,6 +138,7 @@
         <if test="USER_THUMBNAIL != null">
             USER_THUMBNAIL = #{USER_THUMBNAIL}
         </if>
+        USER_NAME = #{USER_NAME}
         WHERE USER_ID = #{USER_ID}
     </update>
 
