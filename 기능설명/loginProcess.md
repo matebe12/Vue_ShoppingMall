@@ -1,5 +1,5 @@
 ## 로그인 프로세스 
-- 일반 로그인 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js"> 서버 소스</a>
+- 일반 로그인 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js"> [서버 소스]</a>
 ```
 bcrypt.compare(req.body.USER_PW, results[0].USER_PW, (error, result) => {
                     if (error) {
@@ -38,5 +38,72 @@ bcrypt.compare(req.body.USER_PW, results[0].USER_PW, (error, result) => {
 this.$store.commit('login', response.data);
 
 ```
-- vuex를 활용해 state에 유저 정보와 토큰을 저장한다. <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">VUEX 소스</a>
-<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">로그인 폼 소스</a>
+- vuex를 활용해 state에 유저 정보와 토큰을 저장한다. <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">[VUEX 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">[로그인 폼 소스]</a>
+
+
+- 카카오 로그인 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js"> [서버 소스]</a>
+```
+loginKakao(data) {
+      window.Kakao.API.request({
+        url: '/v2/user/me',
+
+        success: res => {
+          let reqData = {
+            USER_ID: res.id,
+            USER_NAME: res.properties.nickname,
+            USER_THUMNAIL: res.properties.thumbnail_image_url,
+            ACCESS_TOKEN: data.access_token,
+          };
+          this.loginKakaoCallBack(reqData);
+        },
+      });
+    },
+    async loginKakaoCallBack(reqData) {
+      try {
+        const response = await loginKakao(reqData);
+        this.$store.state.user.USER_ID = response.data.USER_ID;
+        this.$store.state.user.USER_NAME = response.data.USER_NAME;
+        this.$store.state.user.USER_VERIFY = response.data.USER_VERIFY;
+        this.$store.state.user.USER_ADDR1 = response.data.USER_ADDR1;
+        this.$store.state.user.USER_ADDR2 = response.data.USER_ADDR2;
+        this.$store.state.user.ISSNS = response.data.ISSNS;
+        Cookie.set('token', reqData.ACCESS_TOKEN);
+        Cookie.set('user', response.data);
+        Cookie.set('verify', this.$store.state.user.USER_VERIFY);
+        alert('로그인 되었습니다.');
+
+        this.$router.push('/');
+      } catch (error) {
+        alert(error);
+      }
+```
+
+```
+ if (results.length < 1) {
+                req.body.ISSNS = 'kakao';
+                insertUserKakao('userMapper', 'insertUserKakao', req.body, format);
+            } 
+
+            const query1 = MybatisMapper.getStatement('userMapper', 'selectLoginUserKakao', req.body, format);
+            let resData = {};
+            connection.query(query1, (error, results, fields) => {
+                if (error) {
+                    console.log(error);
+                    resData.error = error
+                    res.status(500).send(resData.error);
+                }
+
+                resData.success = results;
+                res.cookie('token', req.body.ACCESS_TOKEN);
+                res.cookie('verify', resData.success[0].USER_VERIFY);
+                res.cookie('user', JSON.stringify(resData));
+                return res.status(200).send(resData.success[0]);
+            });
+```
+
+- 카카오로 로그인하기 클릭 후 카카오 api /v2/user/me 호출 하여 카카오 유저 정보를 얻어온다.
+- 정보를 얻어오면 콜백함수 호출하고 콜백함수에는 서버와 통신 한다.
+- 로그인 정보가 DB에 존재하지 않는다면 user-table에 insert 시키고 select를 하여 로그인한다.
+- 토큰 쿠키는 일반 로그인과 같다.
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">[로그인 폼 소스]</a>
