@@ -362,8 +362,9 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ReplyProcess.md">댓글, 답글 프로세스</a>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/GoodsProcess.md">관리자 -> 상품crud 프로세스 </a>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminOrderProcess.md">관리자 -> 주문목록 프로세스</a>
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ForgotPw.md">비밀번호 찾기 프로세스</a>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminUserProcess.md">관리자 -> 유저목록 프로세스 </a>
-- <a href="">서버, 프론트 개발환경</a>
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD.md">서버, 프론트 개발환경</a>
 #### <span id="library">Open Api 및 라이브러리 적용</span>
 
  - <a href="fff">TOAST GRID(그리드 라이브러리)</a>
