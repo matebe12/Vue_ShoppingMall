@@ -362,9 +362,10 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ReplyProcess.md">댓글, 답글 프로세스</a>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/GoodsProcess.md">관리자 -> 상품crud 프로세스 </a>  [CKEDITOR(에디터 라이브러리), TOAST PAGINATION(페이징 라이브러리), MULTER(파일업로드 라이브러리)]
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminOrderProcess.md">관리자 -> 주문목록 프로세스</a>  [TOAST GRID(그리드 라이브러리)]
-- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ForgotPw.md">비밀번호 찾기 프로세스</a> 사용 라이브러리 [TOAST GRID(그리드 라이브러리), VUE EXCEL EXPORT(엑셀 내보내기)]
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/ForgotPw.md">비밀번호 찾기 프로세스</a> [NODE MAILER(메일통신 라이브러리)]
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/AdminUserProcess.md">관리자 -> 유저목록 프로세스 </a>  [TOAST GRID(그리드 라이브러리), VUE EXCEL EXPORT(엑셀 내보내기)]
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD.md">서버, 프론트 개발환경</a>
+[ NODE MAILER(메일통신 라이브러리) ]
 #### <span id="library">Open Api 및 라이브러리 적용</span>
 
  - <a href="https://ui.toast.com/tui-grid/">TOAST GRID(그리드 라이브러리)</a>
@@ -377,8 +378,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
  - <a href="https://www.npmjs.com/package/multer">MULTER(파일업로드 라이브러리)</a>
  - <a href="https://www.npmjs.com/package/mysql">MYSQL(DB 라이브러리)</a>
  - <a href="https://www.npmjs.com/package/mybatis-mapper">MYBATIS-MAPPER(SQL 라이브러리)</a>
-  
- - <a href=""> NODE MAILER(메일통신 라이브러리) </a>
+ - <a href="https://nodemailer.com/about/"> NODE MAILER(메일통신 라이브러리) </a>
  ### <a href="#baro">맨 위로</a>
  
 ## <span id="screen">스크린샷</span>
