@@ -42,6 +42,9 @@ this.$store.commit('login', response.data);
 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">[로그인 폼 소스]</a>
 
 
+![project-front-Chrome-2020-07-29](https://user-images.githubusercontent.com/42566975/88769789-d4f0e980-d1b7-11ea-92fc-f08e718a48c9.gif)
+
+
 - 카카오 로그인 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/user/user_sign.js"> [서버 소스]</a>
 ```
 loginKakao(data) {
@@ -107,3 +110,45 @@ loginKakao(data) {
 - 로그인 정보가 DB에 존재하지 않는다면 user-table에 insert 시키고 select를 하여 로그인한다.
 - 토큰 쿠키는 일반 로그인과 같다.
 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/User/LoginForm.vue">[로그인 폼 소스]</a>
+
+![bandicam-2020-07-29-17-26-08-146](https://user-images.githubusercontent.com/42566975/88776458-f0acbd80-d1c0-11ea-9432-98acb4aaa9af.gif)
+
+
+-로그아웃 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">[VUEX 소스]</a>
+href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/main/ToolBar.vue">[VUE 소스]</a>
+```
+
+  logout(state) {
+    state.USER_ID = '';
+    state.USER_NAME = '';
+    state.USER_VERIFY = '';
+    state.USER_ADDR1 = '';
+    state.USER_ADDR2 = '';
+    state.USER_PHONE = '';
+    state.ISSNS = '';
+    state.USER_THUMBNAIL = '';
+    state.USER_TOKEN = '';
+    Cookie.remove('token');
+    Cookie.remove('user');
+    Cookie.remove('verify');
+    Cookie.remove('_karmtea');
+    Cookie.remove('_karmt');
+    Cookie.remove('_kawlt');
+    Cookie.remove('webid');
+    Cookie.remove('webid_ts');
+    Cookie.remove('_TI_NID');
+    Cookie.remove('_kadu');
+    Cookie.remove('TIARA');
+
+    store.state.cart.cart = null;
+    store.state.order.order = null;
+```
+
+```
+logout() {
+      this.$store.commit('logout');
+      //eslint-disable-next-line
+      this.$router.push({ path: '/' }).catch(error => {});
+    },
+```
+- 로그아웃시 쿠키삭제 및 홈으로 이동
