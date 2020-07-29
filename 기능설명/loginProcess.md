@@ -115,7 +115,7 @@ loginKakao(data) {
 
 
 -로그아웃 <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/store/User/User.js">[VUEX 소스]</a>
-href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/main/ToolBar.vue">[VUE 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/main/ToolBar.vue">[VUE 소스]</a>
 ```
 
   logout(state) {
@@ -152,3 +152,4 @@ logout() {
     },
 ```
 - 로그아웃시 쿠키삭제 및 홈으로 이동
+![logout](https://user-images.githubusercontent.com/42566975/88777371-1ab2af80-d1c2-11ea-8815-452da8269e9b.gif)
