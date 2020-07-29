@@ -2,7 +2,7 @@
 
 - 관리자 페이지에서 상품등록 -> 상품 목록 -> 상품 수정 -> 상품 삭제
 
-<a href="">[상품등록 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/Admin/GoodsRegister.vue">[상품등록 소스]</a>
 ```
    async goodsRegist() {
       try {
@@ -24,7 +24,7 @@
       }
     },
 ```
-<a href="">[상품등록 서버 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/Goods/goods.js">[상품등록 서버 소스]</a>
 ```
 router.post('/InsertGoods', upload.any(), async (req,res) => {
     if (!Validation.isNull(req.headers.authorization)) {
@@ -50,7 +50,7 @@ router.post('/InsertGoods', upload.any(), async (req,res) => {
 
 
 
-<a href="">[상품수정 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_front/src/components/common/modal.vue">[상품수정 소스]</a>
 ```
 async updateGoods() {
       try {
@@ -72,7 +72,7 @@ async updateGoods() {
       }
     },
 ```
-<a href="">[상품수정 서버 소스]</a>
+<a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/project_server/api/Goods/goods.js">[상품수정 서버 소스]</a>
 ```
 router.post('/updateGoods', upload.any(), async (req,res) => {
     if (!Validation.isNull(req.headers.authorization)) {
