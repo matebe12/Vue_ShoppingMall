@@ -12,6 +12,10 @@ MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
 
 var mapperId = 'userMapper';
 
+router.post('/test', async (req,res) => {
+    console.log(req.headers.authorization);
+    return res.send(req.headers.authorization);
+});
 
 router.post('/signup', async (req, res) => {
     try {
@@ -68,7 +72,6 @@ router.post('/login', (req,res) => {
             console.log(error);
         } else {
             if (results.length < 1) {
-                console.log('유저를 찾을 수 없음');
                 resultData.searchUser = false;
                 res.status(400);
                return res.send(resultData);
@@ -78,13 +81,10 @@ router.post('/login', (req,res) => {
                         console.log(error);
                         return res.status(500).json('Internal Server Error');
                     } else {
-                        console.log(result);
                         resultData.searchUser = true;
                         resultData.isMatchedPw = result;
-                        console.log(`resultData : ${resultData.searchUser}`);
                         if (!resultData.searchUser || !resultData.isMatchedPw){
-                            console.log('false 되야함');
-                            res.status(400).json('Bad Request please check your account.');
+                            res.status(400).json('아이디 및 비밀번호를 확인해주세요.');
                         } else {
                             if (result){
                                 const token = jwt.sign({
@@ -119,7 +119,6 @@ router.post('/loginKakao', (req,res) => {
             return res.status(500);
         } else {
             if (results.length < 1) {
-                console.log('유저를 찾을 수 없음');
                 req.body.ISSNS = 'kakao';
                 insertUserKakao('userMapper', 'insertUserKakao', req.body, format);
             } 
@@ -134,7 +133,6 @@ router.post('/loginKakao', (req,res) => {
                 }
 
                 resData.success = results;
-                console.log(req.body);
                 res.cookie('token', req.body.ACCESS_TOKEN);
                 res.cookie('verify', resData.success[0].USER_VERIFY);
                 res.cookie('user', JSON.stringify(resData));
@@ -157,13 +155,16 @@ const  insertUserKakao = async (mapperId, queryId, reqData, format) => {
         }
         
         resData.success = results;
-        console.log('resData', resData);
         return resData;
     });
     return resData;
 }
 
 router.post('/getUserList', async(req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
     const query = MybatisMapper.getStatement('userMapper', 'getUserList', reqData, format);
     connection.query(query, (error, results1, fields) => {
@@ -236,6 +237,10 @@ router.post('/getUserDetail', async (req, res) => {
 });
 
 router.post('/updateUser', upload.any(), async (req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     let reqData = req.body;
     console.log(req.files);
     if (req.hasOwnProperty('files'))
@@ -257,6 +262,10 @@ router.post('/updateUser', upload.any(), async (req, res) => {
 });
 
 router.post('/deleteUser', async (req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body.ITEM;
     let resData = [];
     

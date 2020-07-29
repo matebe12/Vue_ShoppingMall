@@ -2,12 +2,17 @@ import { Router } from 'express';
 const router = Router();
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
 import { Method } from '../httpMethod.js';
+import Validation from '../../util/Validation.js';
 require('dotenv').config();
 
 var mapperId = 'cartMapper';
 MybatisMapper.createMapper([`${MapperPath}/cart/CartMapper.xml`]);
 router.post('/addGoodsCart', async (req, res) => {
     try {
+        if(!Validation.isNull(req.headers.authorization)){
+            console.log('Auth error');
+            return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+        }
         const reqData = req.body;
         let result = await Method(mapperId, 'addGoodsCart', reqData, format);
         return res.status(200).send(result);
@@ -24,6 +29,10 @@ router.get('/getCartList/:user_id', async (req, res) => {
     } else {
         reqData = req.params.user_id = null;
     }
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     try {
         let result = await Method(mapperId, 'getCartList', reqData, format);
         return res.status(200).send(result);
@@ -34,6 +43,10 @@ router.get('/getCartList/:user_id', async (req, res) => {
 });
 
 router.post('/deleteCart', async (req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
     if(req.body == null || req.body.USER_ID == '' || req.body.CART_NUM == ''){
         return res.status(400).send({
@@ -51,6 +64,10 @@ router.post('/deleteCart', async (req, res) => {
 
 router.post('/insertOrder', async (req, res) => {
     const reqData = req.body;
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     if (req.body == null || req.body.USER_ID == '' || req.body.ORDER_RECIEVE == '') {
         return res.status(400).send({
             msg: 'Bad Request Data'
@@ -80,6 +97,10 @@ router.post('/getOrderList', async (req, res) => {
             msg: 'Bad Request Data'
         });
     }
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
     try {
         let result = await Method(mapperId, 'getOrderList', reqData, format);
@@ -96,6 +117,10 @@ router.post('/updateOrderList', async (req, res) => {
         return res.status(400).send({
             msg: 'Bad Request Data'
         });
+    }
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
     }
     const reqData = req.body;
     try {
@@ -115,6 +140,10 @@ router.post('/deleteOrderList', async (req, res) => {
         return res.status(400).send({
             msg: 'Bad Request Data'
         });
+    }
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
     }
     const reqData = req.body;
     console.log(reqData);

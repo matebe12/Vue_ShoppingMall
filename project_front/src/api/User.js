@@ -34,6 +34,7 @@ function checkEmail(reqData) {
 function getPw(reqData) {
   return user.post('/getPw', reqData);
 }
+
 export {
   getUserList,
   updateUser,

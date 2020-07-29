@@ -11,6 +11,7 @@ const state = {
       : '',
   USER_ADDR1:
     Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_ADDR1 : '',
+  USER_TOKEN: Cookie.get('user') != null ? Cookie.get('token') : '',
   USER_ADDR2:
     Cookie.get('user') != null ? JSON.parse(Cookie.get('user')).USER_ADDR2 : '',
   USER_PHONE:
@@ -32,7 +33,7 @@ const mutations = {
     state.USER_PHONE = '';
     state.ISSNS = '';
     state.USER_THUMBNAIL = '';
-
+    state.USER_TOKEN = '';
     Cookie.remove('token');
     Cookie.remove('user');
     Cookie.remove('verify');

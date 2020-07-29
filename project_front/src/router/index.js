@@ -184,7 +184,6 @@ router.beforeEach(async function(to, from, next) {
   if (store.state.user.USER_ID != '') {
     await store.dispatch('getCartList', store.state.user.USER_ID);
   }
-
   next();
 });
 

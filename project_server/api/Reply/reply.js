@@ -7,6 +7,10 @@ require('dotenv').config();
 MybatisMapper.createMapper([`${MapperPath}/reply/ReplyMapper.xml`]);
 var mapperId = 'replyMapper';
 router.post('/insertReply', async(req,res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
     try {
         let result = await Method(mapperId, 'insertReply', reqData, format);
@@ -30,6 +34,10 @@ router.post('/getReplyAll', async (req, res) => {
 });
 
 router.post('/updateReply', async (req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
 
     try {
@@ -42,6 +50,10 @@ router.post('/updateReply', async (req, res) => {
 });
 
 router.post('/deleteReply', async (req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
 
     try {

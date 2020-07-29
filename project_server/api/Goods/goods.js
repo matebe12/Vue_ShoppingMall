@@ -2,7 +2,8 @@ import { Router } from 'express';
 const router = Router();
 import {upload} from '../../config/upload.js';
 import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql.js';
-import {Method} from '../httpMethod.js';
+import { Method } from '../httpMethod.js';
+import Validation from '../../util/Validation.js';
 require('dotenv').config();
 
 MybatisMapper.createMapper([`${MapperPath}/user/GoodsMapper.xml`]);
@@ -22,6 +23,10 @@ router.get('/category/:reqData', async (req, res) => {
 });
 
 router.post('/InsertGoods', upload.any(), async (req,res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
     reqData.GDS_IMG = `${req.files[0].filename}`;
     try {
@@ -49,6 +54,10 @@ router.post('/getGoodsList', async (req, res) => {
     }
 });
 router.post('/updateGoods', upload.any(), async (req,res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     const reqData = req.body;
     console.log(reqData);
     if(req.files.length > 0){
@@ -75,6 +84,10 @@ router.post('/getCategoryList', async (req, res) => {
 })
 
 router.post('/deleteGoods', async (req, res) => {
+    if (!Validation.isNull(req.headers.authorization)) {
+        console.log('Auth error');
+        return res.status(401).json('Auth error 토큰 정보가 없습니다.');
+    }
     try {
         const result = await Method(mapperId, 'deleteReply', req.body, format);
         const result1 = await Method(mapperId, 'deleteGoods', req.body, format);
@@ -101,10 +114,6 @@ router.get('/getGoodsOne/:gds_num', async (req,res) => {
         console.log(error);
         res.status(500).send(error);
     }
-});
-
-router.post('/upload', upload.any(), async(req, res) => {
-    console.log(req.body);
 });
 
 
