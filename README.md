@@ -354,7 +354,7 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
 ## <span id="juyo">주요기능</span>
 #### <span id="gineung">기능</span>
 - <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/loginProcess.md">로그인 프로세스 </a>
-- <a href="khkjhkj">회원가입 프로세스 </a>
+- <a href="https://github.com/matebe12/Vue_ShoppingMall/blob/master/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85/signupProcess.md">회원가입 프로세스 </a>
 - <a href="khkjhkj">회원탈퇴 프로세스 </a>
 - <a href="khkjhkj">장바구니에 담기 프로세스 </a>
 - <a href="khkjhkj">주문하기 프로세스 </a>
