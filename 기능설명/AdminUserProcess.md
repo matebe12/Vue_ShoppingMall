@@ -113,3 +113,6 @@ router.post('/deleteUser', async (req, res) => {
     
 });
 ```
+
+![ddd](https://user-images.githubusercontent.com/42566975/88796822-48f1b880-d1dd-11ea-8c34-4d04f8fd07c5.gif)
+
