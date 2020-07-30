@@ -4,7 +4,7 @@
       <div class="row">
         <div class="single-banner">
           <div class="banner-caption">
-            <img :src="getImgUrl().MENU_IMG" alt="" class="BannerImg" />
+            <!-- <img :src="getImgUrl().MENU_IMG" alt="" class="BannerImg" /> -->
 
             <SubMenu></SubMenu>
             <div class="subTotal">
