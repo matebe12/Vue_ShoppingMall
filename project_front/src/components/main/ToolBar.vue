@@ -77,6 +77,28 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>
+                <form
+                  class="navbar-form"
+                  role="search"
+                  @submit.prevent="searchGoods"
+                >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="검색"
+                      name="q"
+                      v-model="searchName"
+                    />
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </li>
+              <li>
                 <router-link to="/cart/list" @click.native="replace"
                   ><i class="fa fa-shopping-cart">
                     <span class="badge badge-primary">{{
@@ -169,6 +191,11 @@ export default {
   components: {
     UserInfoModal,
   },
+  data() {
+    return {
+      searchName: '',
+    };
+  },
   computed: {
     getUser() {
       return this.$store.state.user.USER_ID;
@@ -198,6 +225,20 @@ export default {
   },
 
   methods: {
+    searchGoods() {
+      this.$router.push({
+        query: {
+          fcode: '',
+          scode: '',
+          page: 1,
+          pageStart: (1 - 1) * 9,
+          perPageNum: 9,
+          gdsName: this.searchName,
+          order: 'newItem',
+          t: new Date().getTime(),
+        },
+      });
+    },
     logout() {
       this.$store.commit('logout');
       //eslint-disable-next-line
@@ -251,7 +292,7 @@ export default {
           scode: !Validation.isNull(scode) ? '' : scode,
           page: 1,
           pageStart: 0,
-          perPageNum: 10,
+          perPageNum: 9,
           t: new Date().getTime(),
         },
       });

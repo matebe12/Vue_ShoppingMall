@@ -1,12 +1,7 @@
 <template>
   <div class="featured-items">
     <Banner @changeOrder="changeOrder" @searchGoods="searchGoods"></Banner>
-
-    <div class="container">
-      <div class="row">
-        <GoodsList></GoodsList>
-      </div>
-    </div>
+    <GoodsList></GoodsList>
     <div id="pagination" class="tui-pagination"></div>
   </div>
 </template>
@@ -33,10 +28,10 @@ export default {
       query.page = 1;
     }
     if (query.pageStart == undefined) {
-      query.pageStart = (query.page - 1) * 10;
+      query.pageStart = (query.page - 1) * 9;
     }
     if (query.perPageNum == undefined) {
-      query.perPageNum = 10;
+      query.perPageNum = 9;
     }
     try {
       const response = await getGoodsList(query);
@@ -49,7 +44,7 @@ export default {
     }
   },
   mounted() {
-    pagination = createPageNation('#pagination', 10);
+    pagination = createPageNation('#pagination', 9);
 
     pagination.on('beforeMove', async function(event) {
       changeGoods(event);
@@ -88,10 +83,10 @@ export default {
             this.searchData.selectCategory != '' &&
             this.searchData.selectCategory != undefined
               ? this.searchData.selectCategory
-              : '',
+              : this.$route.query.scode,
           page: page,
-          pageStart: (page - 1) * 10,
-          perPageNum: 10,
+          pageStart: (page - 1) * 9,
+          perPageNum: 9,
           gdsName:
             this.searchData.goodsName == '' ||
             this.searchData.goodsName == undefined

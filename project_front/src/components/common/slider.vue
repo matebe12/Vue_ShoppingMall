@@ -5,10 +5,7 @@
       <div class="carousel-inner">
         <div class="item active">
           <router-link to="" @click.native="replaceUrl()">
-            <img
-              :src="require('@/assets/images/all.png')"
-              style="width:100%; height: 400px"
-            />
+            <img :src="require('@/assets/images/all.png')" />
             <div class="carousel-caption">
               <h3>전체</h3>
             </div>
@@ -18,25 +15,11 @@
 
         <div class="item">
           <router-link @click.native="replaceUrl(100)" to="">
-            <img
-              :src="require('@/assets/images/doll.jpg')"
-              style="width:100%; height: 400px"
-            />
+            <img :src="require('@/assets/images/doll.jpg')" />
             <div class="carousel-caption">
-              <h3>Headline</h3>
+              <h3>인형/토이</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                invidunt ut labore et dolore magna aliquyam erat, sed diam
-                voluptua.
-                <a
-                  href="http://sevenx.de/demo/bootstrap-carousel/"
-                  target="_blank"
-                  class="label label-danger"
-                  >Bootstrap 3 - Carousel Collection</a
-                >
+                작은 인형부터 큰 인형, 장난감 상품을 볼 수 있습니다.
               </p>
             </div>
           </router-link>
@@ -45,26 +28,12 @@
 
         <div class="item">
           <router-link to="" @click.native="replaceUrl(200)">
-            <img
-              :src="require('@/assets/images/moongu.jpg')"
-              style="width:100%; height: 400px"
-            />
+            <img :src="require('@/assets/images/moongu.jpg')" />
 
             <div class="carousel-caption">
-              <h3>Headline</h3>
+              <h3>문구</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                invidunt ut labore et dolore magna aliquyam erat, sed diam
-                voluptua.
-                <a
-                  href="http://sevenx.de/demo/bootstrap-carousel/"
-                  target="_blank"
-                  class="label label-danger"
-                  >Bootstrap 3 - Carousel Collection</a
-                >
+                생활에 필요한 문구상품을 볼 수 있습니다.
               </p>
             </div>
           </router-link>
@@ -73,19 +42,11 @@
 
         <div class="item">
           <router-link @click.native="replaceUrl(300)" to="">
-            <img
-              :src="require('@/assets/images/com.jpeg')"
-              style="width:100%; height: 400px"
-            />
+            <img :src="require('@/assets/images/com.jpeg')" />
             <div class="carousel-caption">
-              <h3>Headline</h3>
+              <h3>컴퓨터/모바일</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                invidunt ut labore et dolore magna aliquyam erat, sed diam
-                voluptua.
+                컴퓨터 및 모바일 용품을 볼 수 있습니다.
               </p>
             </div>
           </router-link>
@@ -93,19 +54,11 @@
 
         <div class="item">
           <router-link to="" @click.native="replaceUrl(400)">
-            <img
-              :src="require('@/assets/images/jubang.jpg')"
-              style="width:100%; height: 400px"
-            />
+            <img :src="require('@/assets/images/jubang.jpg')" />
             <div class="carousel-caption">
-              <h3>Headline</h3>
+              <h3>주방용품</h3>
               <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                invidunt ut labore et dolore magna aliquyam erat, sed diam
-                voluptua.
+                가정 주방 용품을 볼 수 있습니다.
               </p>
             </div>
           </router-link>
@@ -115,7 +68,12 @@
       <!-- End Carousel Inner -->
 
       <ul class="nav nav-pills nav-justified">
-        <li data-target="#myCarousel" data-slide-to="0" class="active">
+        <li
+          data-target="#myCarousel"
+          data-slide-to="0"
+          class="active"
+          id="first"
+        >
           <a href="#"> 전체 상품<small>쇼핑몰의 전체 상품을 봅니다.</small> </a>
         </li>
         <li data-target="#myCarousel" data-slide-to="1">
@@ -138,7 +96,7 @@
   </div>
 </template>
 
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 import Validation from '@/util/data/Validation.js';
 import 'hooper/dist/hooper.css';
@@ -147,7 +105,7 @@ export default {
   mounted() {
     $(document).ready(function() {
       $('#myCarousel').carousel({
-        interval: 4000,
+        interval: 3000,
       });
 
       var clickEvent = false;
@@ -161,17 +119,15 @@ export default {
         })
         .on('slid.bs.carousel', function(e) {
           if (!clickEvent) {
-            var count = $('.nav').children().length - 1;
+            var count = 4; //메뉴 개수
             var current = $('.nav li.active');
             current
               .removeClass('active')
               .next()
               .addClass('active');
             var id = parseInt(current.data('slide-to'));
-            if (count == id) {
-              $('.nav li')
-                .first()
-                .addClass('active');
+            if (4 == id) {
+              $('#first').addClass('active');
             }
           }
           clickEvent = false;
@@ -187,7 +143,7 @@ export default {
           scode: !Validation.isNull(scode) ? '' : scode,
           page: 1,
           pageStart: 0,
-          perPageNum: 10,
+          perPageNum: 9,
           t: new Date().getTime(),
         },
       });
@@ -201,6 +157,10 @@ export default {
 body {
   padding-top: 20px;
 }
+#myCarousel img {
+  width: 100%;
+  height: 400px;
+}
 #myCarousel .nav a small {
   display: block;
 }
@@ -209,5 +169,12 @@ body {
 }
 #myCarousel .nav a {
   border-radius: 0px;
+}
+.carousel-caption h3,
+.carousel-caption p {
+  color: black;
+}
+a {
+  color: black;
 }
 </style>

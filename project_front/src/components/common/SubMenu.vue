@@ -71,7 +71,7 @@ export default {
           scode: !Validation.isNull(scode) ? '' : scode,
           page: 1,
           pageStart: 0,
-          perPageNum: 10,
+          perPageNum: 9,
           t: new Date().getTime(),
         },
       });
@@ -84,8 +84,9 @@ export default {
 <style scoped>
 .menu-list {
   list-style: none;
-  margin-bottom: 10%;
+  margin-bottom: 4%;
   margin-top: 1%;
+  margin-left: 15%;
 }
 .menu-list li {
   float: left;

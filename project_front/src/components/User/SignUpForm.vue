@@ -115,7 +115,7 @@
             <label class="control-label col-sm-3"
               >성별 <span class="text-danger">*</span></label
             >
-            <div class="col-md-8 col-sm-9">
+            <div class="col-sm-9">
               <label>
                 <input
                   name="gender"
@@ -199,32 +199,23 @@
             <label class="control-label col-sm-3"
               >생년월일 <span class="text-danger">*</span></label
             >
-            <div class="col-md-8 col-sm-9">
-              <div
-                class="tui-datepicker-input tui-datetime-input tui-has-focus"
-              >
-                <input
-                  type="text"
-                  id="tui-date-picker-target"
-                  aria-label="Date-Time"
-                  readonly
-                />
-                <span class="tui-ico-date"></span>
-              </div>
-              <div
-                id="tui-date-picker-container"
-                style="margin-top: -1px;"
-              ></div>
-            </div>
-            <div class="control-label col-sm-3">
+            <div class="tui-datepicker-input tui-datetime-input tui-has-focus">
               <input
-                name="Submit"
-                type="submit"
-                value="Sign Up"
-                class="btn btn-default"
-                style="float:right"
+                type="text"
+                id="tui-date-picker-target"
+                aria-label="Date-Time"
+                class="form-control"
               />
+              <span class="tui-ico-date"></span>
             </div>
+            <div
+              id="tui-date-picker-container"
+              style="margin-top: -100px; margin-bottom: -100px;"
+            ></div>
+          </div>
+
+          <div class="center">
+            <input type="submit" class="fadeIn fourth" value="회원가입" />
           </div>
         </form>
       </div>
@@ -412,6 +403,18 @@ body {
   color: #333;
   line-height: 22px;
 }
+.col-md-8 {
+  left: 25%;
+}
+
+.center {
+  margin: 0;
+  position: relative;
+  bottom: -50px;
+  left: 85%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 .input-width-sm {
   width: 61%;
 }
@@ -451,5 +454,45 @@ input.upload {
 }
 .control-label {
   color: #333333;
+}
+
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  background-color: #56baed;
+  border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type='button']:hover,
+input[type='submit']:hover,
+input[type='reset']:hover {
+  background-color: #39ace7;
+}
+
+input[type='button']:active,
+input[type='submit']:active,
+input[type='reset']:active {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
 }
 </style>

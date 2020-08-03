@@ -7,44 +7,45 @@
             <!-- <img :src="getImgUrl().MENU_IMG" alt="" class="BannerImg" /> -->
 
             <SubMenu></SubMenu>
-            <div class="subTotal">
-              <span style="white-space: nowrap;">
-                총
-                <span style="font-weight:bold;">{{ getGoodsTotal }} </span>
-                개의 상품이 있습니다.
-              </span>
-              <select
-                class="form-control x-6"
-                @change="changeOrder()"
-                id="selectedItem"
-              >
-                <option
-                  value="newItem"
-                  :selected="$route.query.order == 'newItem'"
-                  >신상품순</option
-                >
-                <option
-                  value="rowPrice"
-                  :selected="$route.query.order == 'rowPrice'"
-                  >낮은가격순</option
-                >
-                <option
-                  value="highPrice"
-                  :selected="$route.query.order == 'highPrice'"
-                  >높은가격순</option
-                >
-              </select>
-            </div>
           </div>
         </div>
       </div>
     </div>
-    <SearchForm @searchGoods="searchGoods"></SearchForm>
+
+    <!-- <SearchForm @searchGoods="searchGoods"></SearchForm> -->
+
+    <div class="subTotal">
+      <div class="total">
+        <span
+          style="white-space: nowrap;  font-size:1.5em; text-align:center;"
+          class="total"
+        >
+          총
+          <span style="font-weight:bold;">{{ getGoodsTotal }} </span>
+          개의 상품이 있습니다.
+        </span>
+      </div>
+      <div class="align">
+        <select @change="changeOrder()" id="selectedItem" class="form-control">
+          <option value="newItem" :selected="$route.query.order == 'newItem'"
+            >신상품순</option
+          >
+          <option value="rowPrice" :selected="$route.query.order == 'rowPrice'"
+            >낮은가격순</option
+          >
+          <option
+            value="highPrice"
+            :selected="$route.query.order == 'highPrice'"
+            >높은가격순</option
+          >
+        </select>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import SearchForm from '../common/searchForm';
+//import SearchForm from '../common/searchForm';
 import SubMenu from '../common/SubMenu.vue';
 export default {
   data() {
@@ -54,7 +55,7 @@ export default {
   },
   components: {
     SubMenu,
-    SearchForm,
+    // SearchForm,
   },
   methods: {
     changeOrder() {
@@ -93,13 +94,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .form-inline {
   display: inline-flex;
 }
 .subTotal {
-  display: inline-block;
-  padding-left: 3.5%;
+  padding: 0 10px 0 10px;
+  margin-left: 20%;
+  margin-right: 20%;
+  display: block;
+}
+.subTotal .total {
+  float: left;
+}
+
+.subTotal .total span {
+  vertical-align: bottom;
+}
+
+.subTotal .align {
+  float: right;
+}
+.banner-caption {
+  display: flex;
 }
 @media (min-width: 950px) {
   .container {
