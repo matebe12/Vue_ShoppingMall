@@ -39,9 +39,9 @@ router.post('/InsertGoods', upload.any(), async (req,res) => {
 });
 
 router.post('/getGoodsList', async (req, res) => {
-    let reqData;
-    if (req.body != null) {
-        reqData = req.body;
+    let reqData = req.body;
+    if (!reqData.hasOwnProperty('order')){
+        reqData.order = null;
     }
     console.log(reqData);
     try {
