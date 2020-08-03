@@ -196,6 +196,18 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
   </tr>
 </table>
 
+## 추가 수정
+<table>
+ <tr>
+  <td> 수정 날짜</td>
+  <td> 수정 내용 </td>
+ </tr>
+ <tr>
+  <td> 20-08-10</td>
+  <td> ui 및 검색 쿼리 수정 </td>
+ </tr>
+ </table>
+
 ### <a href="#baro">맨 위로</a>
 
 ## <span id="erd">ERD 및 테이블 설명</span>  
