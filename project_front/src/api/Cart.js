@@ -16,7 +16,6 @@ function insertOrderDetail(reqData) {
   return cart.post('/insertOrderDetail', reqData);
 }
 function getOrderList(reqData) {
-  console.log(reqData);
   return cart.post('/getOrderList', reqData);
 }
 
