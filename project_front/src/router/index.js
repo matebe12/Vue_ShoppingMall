@@ -32,7 +32,7 @@ const routes = [
           scode: '',
           page: 1,
           pageStart: 0,
-          perPageNum: 10,
+          perPageNum: 9,
           t: new Date().getTime(),
         },
       });
