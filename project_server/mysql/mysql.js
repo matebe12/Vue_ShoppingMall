@@ -1,7 +1,7 @@
-import mysql from 'mysql';
+import mysql from 'mysql2';
 import MybatisMapper from 'mybatis-mapper';
 require('dotenv').config();
-
+import path from 'path';
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -11,26 +11,17 @@ const connection = mysql.createConnection({
 
 const MapperPath = process.env.MYBATIS_PATH;
 
-MybatisMapper.createMapper([`${MapperPath}testMapper.xml`]);
+MybatisMapper.createMapper([path.join(__dirname, '../mappers/testMapper.xml')]);
 
 
 const format = {
     language: 'sql',
     indent : ''
 };
-connection.connect();
-function getInfo(){
-    const query = MybatisMapper.getStatement('testMapper', 'getInfo', null, format);
+connection.connect((err) => {
+    if(err)
+        console.log(err);
+    
+});
 
-    connection.connect();
-    connection.query(query, (error, results, fields) => {
-        if (error) {
-            console.log(error);
-        }
-        console.log(results);
-        connection.end();
-        return results;
-    });
-}
-
-export { getInfo, connection, MybatisMapper, format, MapperPath };
+export { connection, MybatisMapper, format, MapperPath };

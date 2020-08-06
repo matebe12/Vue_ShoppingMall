@@ -5,8 +5,8 @@ import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql
 import { Method } from '../httpMethod.js';
 import Validation from '../../util/Validation.js';
 require('dotenv').config();
-
-MybatisMapper.createMapper([`${MapperPath}/user/GoodsMapper.xml`]);
+import path from 'path';
+MybatisMapper.createMapper([path.join(__dirname, '../../mappers/goods/GoodsMapper.xml')]);
 
 var mapperId = 'goodsMapper';
 

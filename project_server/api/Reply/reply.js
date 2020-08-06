@@ -4,8 +4,8 @@ import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql
 import { Method } from '../httpMethod.js';
 import Validation from '../../util/Validation.js';
 require('dotenv').config();
-
-MybatisMapper.createMapper([`${MapperPath}/reply/ReplyMapper.xml`]);
+import path from 'path';
+MybatisMapper.createMapper([path.join(__dirname, '../../mappers/reply/ReplyMapper.xml')]);
 var mapperId = 'replyMapper';
 router.post('/insertReply', async(req,res) => {
     if (!Validation.isNull(req.headers.authorization)) {

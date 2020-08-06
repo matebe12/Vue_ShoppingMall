@@ -9,8 +9,8 @@ import { upload } from '../../config/upload.js';
 import { Method } from '../httpMethod.js';
 import { mailOptions, transpoter } from '../../config/email.js';
 import Validation from '../../util/Validation.js';
-MybatisMapper.createMapper([`${MapperPath}/user/UserMapper.xml`]);
-
+import path from 'path';
+MybatisMapper.createMapper([path.join(__dirname, '../../mappers/user/UserMapper.xml')]);
 var mapperId = 'userMapper';
 
 router.post('/test', async (req,res) => {

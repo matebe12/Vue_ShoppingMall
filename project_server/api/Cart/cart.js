@@ -4,9 +4,11 @@ import { MybatisMapper, connection, MapperPath, format } from '../../mysql/mysql
 import { Method } from '../httpMethod.js';
 import Validation from '../../util/Validation.js';
 require('dotenv').config();
+import path from 'path';
+MybatisMapper.createMapper([path.join(__dirname, '../../mappers/cart/CartMapper.xml')]);
+
 
 var mapperId = 'cartMapper';
-MybatisMapper.createMapper([`${MapperPath}/cart/CartMapper.xml`]);
 router.post('/addGoodsCart', async (req, res) => {
     try {
         if(!Validation.isNull(req.headers.authorization)){
