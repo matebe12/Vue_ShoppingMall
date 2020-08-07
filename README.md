@@ -1,6 +1,6 @@
 
 # Vue_ShoppingMall
-### Project
+### Project    <a href="http://mateshop.duckdns.org">사이트 바로가기</a>
 #### develop tool
 <img alt="IDE" src="https://img.shields.io/badge/visual studio code -996600.svg" />
 
@@ -203,8 +203,13 @@ Vue_ShoppingMall은 vue와 nodejs를 활용한 간단한 쇼핑몰 사이트 입
   <td> 수정 내용 </td>
  </tr>
  <tr>
-  <td> 20-08-10</td>
+  <td> 20-08-05</td>
   <td> ui 및 검색 쿼리 수정 </td>
+ </tr>
+ 
+ <tr>
+  <td> 20-08-07</td>
+  <td> node express mysql npm 변경  mysql -> mysql2 </td>
  </tr>
  </table>
 
