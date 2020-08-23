@@ -106,6 +106,7 @@ export default {
 }
 .subTotal .total {
   float: left;
+  margin-left: 5%;
 }
 
 .subTotal .total span {
@@ -114,6 +115,7 @@ export default {
 
 .subTotal .align {
   float: right;
+  margin-right: 6%;
 }
 .banner-caption {
   display: flex;

@@ -1,27 +1,75 @@
 <template>
-  <div class="p-4">
+  <div class="container">
     <h3>주문 현황</h3>
-    <h3>total {{ totalOrder }}</h3>
-    <select class="selectOption" v-model="firstOption">
-      <option value="">
-        전체
-      </option>
-      <option value="0">신규주문</option>
-      <option value="1">발송대기</option>
-      <option value="2">배송중</option>
-      <option value="3">배송완료</option>
-      <option value="4">구매확정</option>
-      <option value="5">취소요청</option>
-    </select>
-    <input
-      type="text"
-      placeholder="상품이름"
-      id=""
-      v-model="goodsName"
-      @keyup.enter="searchOrder()"
-    />
-    <button @click="searchOrder()">검색</button>
-    <table class="table table-bordered track_tbl">
+    <h3 class="total">total {{ totalOrder }}</h3>
+    <div class="search_area">
+      <select class="selectOption" v-model="firstOption">
+        <option value="">
+          전체
+        </option>
+        <option value="0">신규주문</option>
+        <option value="1">발송대기</option>
+        <option value="2">배송중</option>
+        <option value="3">배송완료</option>
+        <option value="4">구매확정</option>
+        <option value="5">취소요청</option>
+      </select>
+      <input
+        type="text"
+        placeholder="상품이름"
+        id="searchInput"
+        v-model="goodsName"
+        @keyup.enter="searchOrder()"
+      />
+      <button @click="searchOrder()" class="searchBtn">검색</button>
+    </div>
+
+    <div v-for="(item, index) in getOrderList" :key="index" class="order_list">
+      <div class="top_area">
+        <span class="order_id">{{ item.ORDER_ID }}</span>
+        <span class="order_date"> &nbsp;|&nbsp; {{ item.ORDER_DATE }} </span>
+      </div>
+      <div class="content">
+        <img :src="`${getUrl}${item.GDS_IMG}`" class="gds_img" />
+        <div class="info">
+          <ul>
+            <li>
+              <router-link :to="`/shop/view/${item.GDS_NUM}`">
+                <span class="gds_name">{{ item.GDS_NAME }}</span>
+              </router-link>
+            </li>
+            <li>
+              <span class="gds_price">{{ item.TOTAL_PRICE }} 원</span>
+              <span class="gds_price">&nbsp;&nbsp;{{ item.CART_STOCK }}개</span>
+            </li>
+            <li>
+              <span v-if="item.STATUS === 0" class="gds_status">
+                <a href="javascript:void(0)" @click="cancleOrder(item)">
+                  신규 주문
+                </a>
+              </span>
+              <span v-if="item.STATUS === 1" class="gds_status">
+                발송 대기
+              </span>
+              <span v-if="item.STATUS === 2" class="gds_status">
+                배송 중
+              </span>
+              <span v-if="item.STATUS === 3" class="gds_status">
+                배송 완료
+              </span>
+              <span v-if="item.STATUS === 4" class="gds_status">
+                구매 확정
+              </span>
+              <span v-if="item.STATUS === 5" class="gds_status">
+                취소 요청
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- <table class="table table-bordered track_tbl">
       <thead>
         <tr>
           <th></th>
@@ -63,7 +111,7 @@
           <td>{{ item.ORDER_DATE }}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
     <div id="pagination" class="tui-pagination"></div>
   </div>
 </template>
@@ -139,46 +187,71 @@ export default {
     getOrderList() {
       return this.$store.state.order.order;
     },
+    getUrl() {
+      return this.$store.state.url;
+    },
   },
 };
 </script>
 
 <style scoped>
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
-a:hover {
-  text-decoration: none;
-  color: #f67800;
+.gds_img {
+  width: 300px;
+  height: 300px;
 }
-a {
-  color: rgb(18, 5, 41);
+.order_id,
+.order_date {
+  font-size: 20px;
+  font-weight: bold;
 }
-.track_tbl td.track_dot {
-  width: 50px;
+.order_list {
   position: relative;
-  padding: 0;
+}
+.top_area {
+  border: 0 0 24px 24px;
+  border-bottom: 6px inset;
+  padding: 3%;
+}
+.info {
+  font-size: 19px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  line-height: 3.2em;
+}
+.info > ul {
+  list-style: none;
+}
+.info > ul > li > span > a {
+  color: #69b5f7;
+}
+.info > ul > li > a {
+  color: #6f8394;
+}
+.content {
+  display: flex;
+  justify-content: center;
   text-align: center;
+  padding: 2%;
 }
-.track_tbl td.track_dot:after {
-  content: '\f111';
-  font-family: FontAwesome;
-  position: absolute;
-  margin-left: -5px;
-  top: 11px;
+.selectOption {
+  width: 100px;
+  height: 33px;
 }
-.track_tbl td.track_dot span.track_line {
-  background: #000;
-  width: 3px;
-  min-height: 50px;
-  position: absolute;
-  height: 101%;
+#searchInput {
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 200px;
+  height: 32px;
 }
-.track_tbl tbody tr:first-child td.track_dot span.track_line {
-  top: 30px;
-  min-height: 25px;
+.search_area {
+  display: flex;
 }
-.track_tbl tbody tr:last-child td.track_dot span.track_line {
-  top: 0;
-  min-height: 25px;
-  height: 10%;
+.searchBtn {
+  width: 100px;
+  border-radius: 8px;
+  background: #000508;
+  color: white;
 }
 </style>
