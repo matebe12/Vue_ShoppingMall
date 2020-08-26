@@ -84,6 +84,7 @@
         B.CART_STOCK,
         B.STATUS,
         C.GDS_NAME,
+        C.GDS_IMG,
         DATE_FORMAT(A.ORDER_DATE, "%Y %c/%e %r") AS ORDER_DATE        
         FROM
         GOODS_ORDER_TABLE AS A

@@ -10,6 +10,7 @@ import userApi from './api/user/user_sign.js';
 import goodsApi from './api/Goods/goods.js';
 import replyApi from './api/Reply/reply.js';
 import cartApi from './api/Cart/cart.js';
+import requestIp from 'request-ip';
 require('dotenv').config();
 const app = express();
 const port = 3000;
@@ -33,6 +34,12 @@ app.use('/api/goods', goodsApi);
 app.use('/api/reply', replyApi);
 app.use('/api/cart', cartApi);
 
+app.use(requestIp.mw());
+app.use((req,res) => {
+    const ip = req.clientIp;
+    console.log(`${ip}가 사이트에 접속하였습니다.`);
+    res.end(ip);
+})
 app.listen(port, () => {
     console.log(`Server is running at ${port}`);
 })
