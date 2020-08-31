@@ -52,7 +52,7 @@
                 type="button"
                 @click="addGoodsCart(1)"
               >
-                장바구니에 담기
+                카트에 담기
               </button>
               <button
                 class="add-to-cart btn btn-default"
