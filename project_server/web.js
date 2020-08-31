@@ -11,8 +11,9 @@ import goodsApi from './api/Goods/goods.js';
 import replyApi from './api/Reply/reply.js';
 import cartApi from './api/Cart/cart.js';
 import requestIp from 'request-ip';
+import geoip from'geoip-country';
 const ipfilter = require('express-ipfilter').IpFilter;
-let ips = ['::ffff:51.159.56.131','::ffff:124.93.26.5', '::ffff:195.54.160.21', '::ffff:195.54.160.21'];
+let ips = ['::ffff:51.159.56.131','::ffff:124.93.26.5', '::ffff:195.54.160.21', '::ffff:195.54.160.21', '::ffff:39.109.126.3'];
 
 require('dotenv').config();
 const app = express();
@@ -42,7 +43,13 @@ app.use('/api/cart', cartApi);
 app.use(requestIp.mw());
 app.use((req,res) => {
     const ip = req.clientIp;
-    console.log(`${ip}가 사이트에 접속하였습니다.${new Date()}`);
+    let geo = geoip.lookup(ip.substr(7,ip.length+1));
+    if(geo == null || geo.country === 'KR'){
+        console.log(`${ip}가 사이트에 접속하였습니다.${new Date()}`);
+    }
+    else{
+        ips.push(req.clientIp);
+    }    
     res.end(ip);
 })
 app.listen(port, () => {
