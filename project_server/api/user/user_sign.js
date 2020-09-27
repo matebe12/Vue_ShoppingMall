@@ -135,7 +135,7 @@ router.post('/loginKakao', (req,res) => {
 
                 resData.success = results;
                 res.cookie('token', req.body.ACCESS_TOKEN);
-                res.cookie('verify', resData.success[0].USER_VERIFY);
+                res.cookie('verify', 0);
                 res.cookie('user', JSON.stringify(resData));
                 return res.status(200).send(resData.success[0]);
             });

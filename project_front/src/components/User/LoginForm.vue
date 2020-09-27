@@ -86,7 +86,7 @@ export default {
           let reqData = {
             USER_ID: res.id,
             USER_NAME: res.properties.nickname,
-            USER_THUMNAIL: res.properties.thumbnail_image_url,
+            USER_THUMBNAIL: res.properties.thumbnail_image,
             ACCESS_TOKEN: data.access_token,
           };
           this.loginKakaoCallBack(reqData);
@@ -98,7 +98,7 @@ export default {
         const response = await loginKakao(reqData);
         this.$store.state.user.USER_ID = response.data.USER_ID;
         this.$store.state.user.USER_NAME = response.data.USER_NAME;
-        this.$store.state.user.USER_VERIFY = response.data.USER_VERIFY;
+        this.$store.state.user.USER_VERIFY = 0;
         this.$store.state.user.USER_ADDR1 = response.data.USER_ADDR1;
         this.$store.state.user.USER_ADDR2 = response.data.USER_ADDR2;
         this.$store.state.user.ISSNS = response.data.ISSNS;

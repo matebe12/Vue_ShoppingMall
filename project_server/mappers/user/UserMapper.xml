@@ -33,14 +33,14 @@
             USER_ID,
             USER_NAME,
             ISSNS,
-            USER_THUMNAIL
+            USER_THUMBNAIL
         )
         VALUES
         (
             #{USER_ID},
             #{USER_NAME},
             #{ISSNS},
-            #{USER_THUMNAIL}
+            #{USER_THUMBNAIL}
         )
     </insert>
     <select id="selectLoginUser">
