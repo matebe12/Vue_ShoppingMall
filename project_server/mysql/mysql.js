@@ -32,7 +32,7 @@ connection.getConnection(function(err,connection){
       //connected!
     }
     // 커넥션을 풀에 반환
-    connection.release();
+    //connection.release();
   });
 
   setInterval( () => {

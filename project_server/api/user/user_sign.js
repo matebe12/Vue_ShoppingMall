@@ -121,6 +121,7 @@ router.post('/loginKakao', (req,res) => {
         } else {
             if (results.length < 1) {
                 req.body.ISSNS = 'kakao';
+                console.log(req.body);
                 insertUserKakao('userMapper', 'insertUserKakao', req.body, format);
             } 
 
@@ -146,7 +147,10 @@ router.post('/loginKakao', (req,res) => {
 });
 
 const  insertUserKakao = async (mapperId, queryId, reqData, format) => {
+    console.log(reqData);
+    reqData.USER_VERIFY = 0;
     const query = MybatisMapper.getStatement(mapperId, queryId, reqData, format);
+    
     let resData = {};
     connection.query(query, (error, results, fields) => {
         if(error){

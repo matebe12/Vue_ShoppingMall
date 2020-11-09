@@ -1,7 +1,9 @@
 <template>
   <div id="#container">
     <h1>상품목록</h1>
-    <h3>total {{ totalGoods }}</h3>
+    <h3>
+      총 <span class="total">{{ totalGoods }} </span>개의 상품이 있습니다.
+    </h3>
     <select class="selectOption" v-model="firstCategory">
       <option value="">
         전체
@@ -30,38 +32,40 @@
       id=""
       v-model="goodsname"
       @keyup.enter="searchGoods()"
+      class="input"
     />
     <button @click="searchGoods()">검색</button>
-    <table>
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>상품</th>
-          <th>이름</th>
-          <th>카테고리</th>
-          <th>등록날짜</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(goods, index) in goodsList" :key="index">
-          <td>{{ goods.GDS_NUM }}</td>
-          <td>
-            <img
-              :src="`${getUrl}${goods.GDS_IMG}`"
-              class="goodsImg"
-              style="width:300px;height:300px;"
-            />
-          </td>
-          <td>
+    <div class="table">
+      <div v-for="(goods, index) in goodsList" :key="index" class="content">
+        <img
+          :src="`${getUrl}${goods.GDS_IMG}`"
+          class="goodsImg"
+          style="width:300px;height:300px;"
+        />
+        <div class="info">
+          <div>
+            <span>상품번호 </span>
+            <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
+              goods.GDS_NUM
+            }}</a>
+          </div>
+          <div>
+            <span>상품명 </span>
             <a onclick="javascript:void(0);" @click="openGoods(goods)">{{
               goods.GDS_NAME
             }}</a>
-          </td>
-          <td>{{ goods.GDS_CATEGORY_NAME }}</td>
-          <td>{{ goods.GDS_DATE }}</td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+          <div>
+            <span>카테고리 </span>
+            {{ goods.GDS_CATEGORY_NAME }}
+          </div>
+          <div>
+            <span>등록날짜 </span>
+            {{ goods.GDS_DATE }}
+          </div>
+        </div>
+      </div>
+    </div>
     <Modal
       v-if="showModal"
       @closeModal="closeModal"
@@ -177,25 +181,63 @@ export default {
 </script>
 
 <style scoped>
-#container table {
-  width: 900;
+.selectOption,
+.input {
+  width: 200px;
+  padding: 10px;
+  margin: 0 0.5% 0 0.5%;
 }
-#container table th {
-  font-size: 20px;
+button {
+  width: 100px;
+  padding: 10px;
+  margin: 0 1% 0 1%;
+  border: none;
+}
+.total {
   font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  border-bottom: 2px solid #666;
 }
-#container table tr:hover {
-  background: #eee;
+@media screen and (min-width: 900px) {
+  .content {
+    display: flex;
+    background-color: aliceblue;
+    box-shadow: 10px 10px 5px darkgrey;
+    border-radius: 10px;
+    margin: 1%;
+  }
+  .info {
+    width: 100%;
+    text-align: center;
+    line-height: 7rem;
+    letter-spacing: 0.2rem;
+    font-size: 3rem;
+    transition-duration: 1s;
+  }
 }
-#container table td {
-  padding: 10px;
-  text-align: center;
+
+@media screen and (max-width: 899px) {
+  .content {
+    background-color: aliceblue;
+    box-shadow: 10px 10px 5px darkgrey;
+    border-radius: 10px;
+    margin: 1%;
+  }
+  .info {
+    width: 100%;
+    line-height: 7rem;
+    letter-spacing: 0.2rem;
+    font-size: 3rem;
+    transition-duration: 1s;
+  }
 }
-#container table img {
-  width: 150px;
-  height: 150px;
+
+.info span {
+  font-weight: bold;
+}
+.info a {
+  color: gray;
+  cursor: pointer;
+}
+.content:hover {
+  background-color: #eee;
 }
 </style>

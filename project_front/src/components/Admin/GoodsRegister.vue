@@ -9,9 +9,9 @@
       ref="form"
       class="form"
     >
-      <div class="inputArea1">
+      <div>
         <select
-          class="category1 form-control"
+          class="category1 "
           v-model="goods.CATEGORY_CODE1"
           @change="SelectSecond"
           id="firstOption"
@@ -26,7 +26,7 @@
           >
         </select>
         <select
-          class="category2 form-control"
+          class="category2 "
           v-model="goods.CATEGORY_CODE2"
           name="category2"
         >
@@ -40,38 +40,38 @@
           </option>
         </select>
       </div>
-
-      <div class="inputArea2">
+      <div>
         <label for="GDS_NAME">상품명</label>
         <input
           type="text"
           id="GDS_NAME"
           name="GDS_NAME"
           v-model="goods.GDS_NAME"
-          class="form-control"
+          class=""
         />
-
+      </div>
+      <div>
         <label for="GDS_PRICE">상품가격</label>
         <input
           type="text"
           id="GDS_PRICE"
           name="GDS_PRICE"
           v-model="goods.GDS_PRICE"
-          class="form-control"
+          class=""
         />
-
+      </div>
+      <div>
         <label for="GDS_STOCK">상품수량</label>
         <input
           type="text"
           id="GDS_STOCK"
           name="GDS_STOCK"
           v-model="goods.GDS_STOCK"
-          class="form-control"
+          class=""
         />
       </div>
 
       <div class="inputArea5">
-        <label for="GDS_DESC">상품소개</label>
         <ckeditor
           id="GDS_DESC"
           name="GDS_DESC"
@@ -84,7 +84,7 @@
           id="file"
           accept="image/*"
         />
-        <button type="submit" id="register_Btn" class="btn btn-primary">
+        <button type="submit" id="register_Btn">
           등록
         </button>
       </div>
@@ -241,52 +241,16 @@ export default {
 </script>
 
 <style scoped>
-.form {
-  margin-left: 15%;
-}
-.inputArea1 {
-  display: flex;
-  margin: 10px 0;
-  width: 30%;
-}
-.inputArea2 {
-  display: -webkit-inline-box;
-  margin: 10px 0;
-  width: 30%;
-}
-@media (max-width: 808px) {
-  .inputArea2 {
-    display: block;
-  }
-  .inputArea1 {
-    display: block;
-  }
-}
-.inputArea5 {
-  display: block;
-  margin: 10px 0;
-  width: 60%;
-}
-.category1,
-.category2 {
-  margin: 2%;
-}
-
 select {
-  width: 100px;
+  width: 200px;
+  padding: 0.5%;
 }
 label {
-  display: inline-block;
-  width: 70px;
-  padding: 5px;
-}
-label[for='GDS_DESC'] {
-  display: block;
+  font-size: 2rem;
+  padding: 0.5%;
 }
 input {
-  width: 150px;
-}
-.cke {
-  width: 400px;
+  width: 200px;
+  padding: 0.5%;
 }
 </style>

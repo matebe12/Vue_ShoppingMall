@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="top">
     <header id="header">
       <ToolBar></ToolBar>
       <div v-if="this.$store.state.isView"></div>
     </header>
     <!-- <img src="" alt="잘되는지 테스트" ref="img" /> -->
-    <Slider v-if="this.$store.state.isView"></Slider>
+    <!-- <Slider v-if="this.$store.state.isView"></Slider> -->
     <router-view :key="$route.fullPath"></router-view>
     <Spinner></Spinner>
     <a href="#" class="topBtn"
@@ -17,12 +17,12 @@
 
 <script>
 import ToolBar from '@/components/main/ToolBar';
-import Slider from '@/components/common/slider';
+//import Slider from '@/components/common/slider';
 import Footer from '@/components/common/footer';
 export default {
   components: {
     ToolBar,
-    Slider,
+    ///Slider,
     Footer,
   },
   data() {
@@ -42,17 +42,18 @@ export default {
 };
 </script>
 <style>
-#footer {
-  position: absolute;
-
-  bottom: 0;
-
-  width: 100%;
-
-  height: 70px;
-}
 * {
   box-sizing: border-box;
+}
+html {
+  position: relative;
+
+  min-height: 100%;
+
+  margin: 0;
+}
+body {
+  min-height: 100%;
 }
 .topBtn {
   position: fixed;

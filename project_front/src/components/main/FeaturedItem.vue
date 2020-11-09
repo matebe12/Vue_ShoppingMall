@@ -1,5 +1,6 @@
 <template>
   <div class="featured-items">
+    <Slider v-if="this.$store.state.isView"></Slider>
     <Banner @changeOrder="changeOrder" @searchGoods="searchGoods"></Banner>
     <GoodsList></GoodsList>
     <div id="pagination" class="tui-pagination"></div>
@@ -11,6 +12,7 @@ import { getGoodsList } from '@/api/Goods.js';
 import { createPageNation } from '@/util/tui grid/tuiPagenation';
 import Banner from './Banner.vue';
 import GoodsList from '../common/GoodsList.vue';
+import Slider from '@/components/common/slider';
 import Validation from '@/util/data/Validation.js';
 var pagination;
 export default {
@@ -61,6 +63,7 @@ export default {
   components: {
     Banner,
     GoodsList,
+    Slider,
   },
 
   methods: {

@@ -138,7 +138,6 @@
         <if test="USER_THUMBNAIL != null">
             USER_THUMBNAIL = #{USER_THUMBNAIL}
         </if>
-        USER_NAME = #{USER_NAME}
         WHERE USER_ID = #{USER_ID}
     </update>
 

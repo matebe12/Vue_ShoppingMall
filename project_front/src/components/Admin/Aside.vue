@@ -23,15 +23,18 @@ export default {
 </script>
 
 <style scoped>
-ul:hover {
-  background-color: whitesmoke;
+ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1%;
 }
 ul li {
-  position: relative;
-  float: left;
   padding: 1%;
-  text-align: center;
-  left: 35%;
+  font-size: 3rem;
+}
+ul:hover {
+  background-color: whitesmoke;
 }
 ul li a {
   color: black;

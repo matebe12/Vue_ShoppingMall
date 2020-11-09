@@ -21,14 +21,15 @@
               ref="form"
               autocomplete="off"
               enctype="application/x-www-form-urlencoded"
+              @submit.prevent="updateUser()"
             >
               <div>
-                <div class="col-xs-7">
+                <div>
                   <span class="text-danger">*</span>주문 시 내 주소를 사용하기
                   위해 작성해주세요.
                 </div>
-                <div class="col-xs-7">
-                  <img :src="getUrl()" ref="image" id="image" />
+                <div class="imageScope">
+                  <img :src="getUrl" ref="image" id="image" />
                   <input
                     type="file"
                     id="USER_THUMBNAIL"
@@ -38,20 +39,25 @@
                     accept="image/*"
                     @change="previewImg"
                   />
-                  <button type="button" @click="replacrUrl()">되돌리기</button>
                 </div>
-                <div class="col-xs-7">
+                <button
+                  type="button"
+                  @click="replacrUrl()"
+                  v-if="$store.state.user.ISSNS != 'kakao'"
+                >
+                  되돌리기
+                </button>
+                <div>
                   <label for="USER_ID">아이디</label>
                   <input
                     type="text"
                     id="USER_ID"
                     readonly
                     v-model="item.USER_ID"
-                    class="form-control"
                     name="USER_ID"
                   />
                 </div>
-                <div class="col-xs-7">
+                <div>
                   <label for="USER_NAME"
                     >이름 <span class="text-danger">*</span></label
                   >
@@ -59,11 +65,11 @@
                     type="text"
                     id="USER_NAME"
                     v-model="item.USER_NAME"
-                    class="form-control"
                     name="USER_NAME"
+                    readonly
                   />
                 </div>
-                <div class="col-xs-7">
+                <div>
                   <label for="USER_PHONE"
                     >전화번호 <span class="text-danger">*</span></label
                   >
@@ -71,16 +77,14 @@
                     type="text"
                     id="USER_PHONE"
                     v-model="item.USER_PHONE"
-                    class="form-control"
                     name="USER_PHONE"
                   />
                 </div>
-                <div class="col-xs-7  address-scope">
+                <div class="address-scope">
                   <label>주소 <span class="text-danger">*</span></label>
                   <div style="display:flex">
                     <input
                       type="text"
-                      class="form-control input-width-sm"
                       name="USER_ADDR1"
                       id="USER_ADDR1"
                       v-model="item.USER_ADDR1"
@@ -101,22 +105,18 @@
                   ></post>
                   <input
                     type="text"
-                    class="form-control"
                     name="USER_ADDR2"
                     id="USER_ADDR2"
                     v-model="item.USER_ADDR2"
                   />
                 </div>
+                <div>
+                  <button class="submitBtn">변경하기</button>
+                </div>
               </div>
             </form>
           </div>
-          <div style="margin-top:10px;">
-            <span>
-              <i class="fas fa-edit fa-2x"
-                ><a href="javascript:void(0);" @click="updateUser">수정</a></i
-              ></span
-            >
-          </div>
+
           <!-- 푸터 -->
         </div>
       </div>
@@ -137,18 +137,20 @@ export default {
       uploadImage: '',
     };
   },
-  methods: {
+  computed: {
     getUrl() {
-      if (!Validation.isNull(this.$store.state.user.ISSNS == '')) {
-        if (Validation.isNull(this.$store.state.user.USER_THUMBNAIL))
+      if (!Validation.isNull(this.$store.state.user.ISSNS)) {
+        if (Validation.isNull(this.$store.state.user.USER_THUMBNAIL)) {
           return this.$store.state.url + this.$store.state.user.USER_THUMBNAIL;
-        else return 'http://bootdey.com/img/Content/user_1.jpg';
+        } else return 'http://bootdey.com/img/Content/user_1.jpg';
       } else {
         return this.$store.state.user.USER_THUMBNAIL;
       }
     },
+  },
+  methods: {
     replacrUrl() {
-      const imgSrc = this.getUrl();
+      const imgSrc = this.getUrl;
       const file = document.getElementById('USER_THUMBNAIL');
       file.value = '';
       this.$refs.image.src = imgSrc;
@@ -286,7 +288,7 @@ export default {
 
 .modal-container {
   width: 700px;
-  height: 600px;
+  height: 700px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -347,5 +349,20 @@ textarea {
 }
 .fa-edit {
   float: left;
+}
+label {
+  font-size: 2rem;
+  padding: 0.5%;
+}
+input {
+  width: 200px;
+  padding: 1%;
+  margin: 1%;
+}
+.submitBtn {
+  padding: 1%;
+}
+.imageScope {
+  display: flex;
 }
 </style>

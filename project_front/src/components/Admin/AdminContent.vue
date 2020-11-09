@@ -1,9 +1,10 @@
 <template>
   <div id="root">
     <section id="container">
-      <div class="container_box"></div>
+      <div class="container_box">
+        <router-view :key="$route.fullPath"></router-view>
+      </div>
     </section>
-    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
