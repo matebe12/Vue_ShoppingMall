@@ -21,7 +21,7 @@ ul {
 
 div#root {
   width: 90%;
-  margin: 0 auto;
+  padding-bottom: 8%;
 }
 
 nav#nav ul li {

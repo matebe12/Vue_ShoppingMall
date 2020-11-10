@@ -113,6 +113,12 @@
                 <router-link to="/login" v-if="!getUser"
                   ><i class="fa fa-user-o"></i>로그인</router-link
                 >
+                <a
+                  v-if="!getUser"
+                  onclick="javascript:void(0);"
+                  @click="login()"
+                  ><i class="fa fa-user-o"></i>관리자 체험하기</a
+                >
                 <a v-else @click="logout" href="javascript:void(0);"
                   >로그아웃</a
                 >
@@ -197,6 +203,9 @@ export default {
     };
   },
   computed: {
+    getUrl() {
+      return this.$store.state.url;
+    },
     getUser() {
       return this.$store.state.user.USER_ID;
     },
@@ -225,6 +234,29 @@ export default {
   },
 
   methods: {
+    login() {
+      const reqData = {
+        USER_ID: 'matebe12',
+        USER_PW: '1234',
+      };
+      this.$http
+        .post(this.getUrl + 'api/user/login', reqData)
+        .then(async response => {
+          if (
+            !response.data.resultData.isMatchedPw ||
+            !response.data.resultData.searchUser
+          ) {
+            alert('아이디 및 비밀번호가 틀립니다.');
+          } else {
+            alert('로그인 되었습니다.');
+            this.$store.commit('login', response.data);
+            this.$router.push({ path: '/admin' });
+          }
+        })
+        .catch(error => {
+          alert(error.response.data);
+        });
+    },
     searchGoods() {
       this.$router.push({
         query: {
