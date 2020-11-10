@@ -117,6 +117,7 @@
                   v-if="!getUser"
                   onclick="javascript:void(0);"
                   @click="login()"
+                  class="login"
                   ><i class="fa fa-user-o"></i>관리자 체험하기</a
                 >
                 <a v-else @click="logout" href="javascript:void(0);"
@@ -335,6 +336,9 @@ export default {
 
 <style scoped>
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+.login {
+  cursor: pointer;
+}
 .badge-default {
   background-color: #777;
 }
